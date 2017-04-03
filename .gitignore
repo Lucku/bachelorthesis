@@ -1,0 +1,8 @@
+*.aux
+*.pdf
+document.toc
+document.bbl
+document.blg
+texput.log
+document.bcf
+document.run.xml
