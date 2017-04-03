@@ -1,8 +1,9 @@
 *.aux
 *.pdf
+*.log
 document.toc
 document.bbl
 document.blg
-texput.log
 document.bcf
 document.run.xml
+document.synctex.gz
