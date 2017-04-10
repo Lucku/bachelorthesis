@@ -1,9 +1,11 @@
 *.aux
 *.pdf
 *.log
-document.toc
-document.bbl
-document.blg
-document.bcf
-document.run.xml
-document.synctex.gz
+Dokument/document.toc
+Dokument/document.bbl
+Dokument/document.blg
+Dokument/document.bcf
+Dokument/document.run.xml
+Dokument/document.synctex.gz
+Referenzen
+Materialien

@@ -1,0 +1,15 @@
+enclave {
+    from "sgx_tstdc.edl" import *;
+
+    trusted {
+        /* define ECALLs here. */
+		/* Put function in here, that allocates a given amount of memory in the enclave */
+		public void enclaveAllocateHeapMemory(int numBytes);
+		public void enclaveAllocateStackMemory();
+    };
+
+    untrusted {
+        /* define OCALLs here. */
+		void ocallLogProgress([in,size=len] const char* message, size_t len);
+    };
+};

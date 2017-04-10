@@ -1,0 +1,9 @@
+*.aux
+*.pdf
+*.log
+document.toc
+document.bbl
+document.blg
+document.bcf
+document.run.xml
+document.synctex.gz

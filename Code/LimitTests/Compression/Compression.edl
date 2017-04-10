@@ -1,0 +1,15 @@
+enclave {
+    from "sgx_tstdc.edl" import *;
+
+    trusted {
+        /* define ECALLs here. */
+		public size_t vByteEncode([in, count=length] uint32_t *in, size_t length, [out, count=5] uint8_t *out);
+		public size_t vByteDecode([in, count=length] uint8_t *in, size_t length, [out, count=1] uint32_t *out);
+		 
+    };
+
+    untrusted {
+        /* define OCALLs here. */
+
+    };
+};
