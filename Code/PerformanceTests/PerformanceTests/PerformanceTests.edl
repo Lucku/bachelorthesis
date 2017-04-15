@@ -1,0 +1,12 @@
+enclave {
+    from "sgx_tstdc.edl" import *;
+
+    trusted {
+        public void enclaveIterate([in, size=length] uint64_t *data, size_t length);
+		public void testCompress(int numCompressions);
+		public void testDecompress(int numDecompressions);
+    };
+
+    untrusted {
+    };
+};

@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Generated Files">
+      <UniqueIdentifier>{3c7c2889-dbfc-4ca6-8d94-39fa703e59be}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{e83eb538-3ad0-4b61-a2fb-fe65b0b6c654}</UniqueIdentifier>
+      <Extensions>cpp;c;edl;def;</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{10dbca25-c17f-4b13-bc6a-5c739ff4443d}</UniqueIdentifier>
+      <Extensions>h;hpp;</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{9a1a9c96-0571-4d27-a86f-35a2953bf3f0}</UniqueIdentifier>
+      <Extensions>rc;xml;pem;</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="PerformanceTests_t.c">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PerformanceTests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="PerformanceTests_t.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="PerformanceTests_private.pem">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="PerformanceTests.config.xml">
+      <Filter>Resource Files</Filter>
+    </Xml>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="PerformanceTests.edl">
+      <Filter>Source Files</Filter>
+    </CustomBuild>
+  </ItemGroup>
+</Project>
