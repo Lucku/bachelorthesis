@@ -1,0 +1,3 @@
+sgx_edger8r "\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\PerformanceTests\PerformanceTests.edl" --trusted-dir "\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\PerformanceTests" --untrusted-dir "\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\PerformanceTestsApp" --search-path "C:\Program Files (x86)\Intel\IntelSGXSDK\include"
+
+pause

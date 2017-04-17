@@ -15,7 +15,9 @@
 
 #include "targetver.h"
 #include "sgx_urts.h"
+#include "PerformanceTests_u.h"
 
+#define ENCLAVE_FILE _T("PerformanceTests.signed.dll")
 #define BM_RESULT long long
 
 // TODO: Hier auf zusätzliche Header, die das Programm erfordert, verweisen.
