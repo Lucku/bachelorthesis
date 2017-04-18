@@ -14,9 +14,9 @@ extern "C" {
 #endif
 
 
-void enclaveIterate(uint64_t* data, size_t length);
-void enclaveVByteEncode(uint32_t* in, size_t inLength, uint8_t* out, size_t outLength);
-void enclaveVByteDecode(uint8_t* in, size_t inLength, uint32_t* out, size_t outLength);
+int enclaveIterate(uint64_t* data, size_t length);
+int enclaveVByteEncode(uint32_t* in, size_t inLength, uint8_t* out, size_t outLength);
+int enclaveVByteDecode(uint8_t* in, size_t inLength, uint32_t* out, size_t outLength);
 
 sgx_status_t SGX_CDECL sgx_oc_cpuidex(int cpuinfo[4], int leaf, int subleaf);
 sgx_status_t SGX_CDECL sgx_thread_wait_untrusted_event_ocall(int* retval, const void* self);

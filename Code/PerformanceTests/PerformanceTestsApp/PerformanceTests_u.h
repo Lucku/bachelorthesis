@@ -20,9 +20,9 @@ int SGX_UBRIDGE(SGX_CDECL, sgx_thread_set_untrusted_event_ocall, (const void* wa
 int SGX_UBRIDGE(SGX_CDECL, sgx_thread_setwait_untrusted_events_ocall, (const void* waiter, const void* self));
 int SGX_UBRIDGE(SGX_CDECL, sgx_thread_set_multiple_untrusted_events_ocall, (const void** waiters, size_t total));
 
-sgx_status_t enclaveIterate(sgx_enclave_id_t eid, uint64_t* data, size_t length);
-sgx_status_t enclaveVByteEncode(sgx_enclave_id_t eid, uint32_t* in, size_t inLength, uint8_t* out, size_t outLength);
-sgx_status_t enclaveVByteDecode(sgx_enclave_id_t eid, uint8_t* in, size_t inLength, uint32_t* out, size_t outLength);
+sgx_status_t enclaveIterate(sgx_enclave_id_t eid, int* retval, uint64_t* data, size_t length);
+sgx_status_t enclaveVByteEncode(sgx_enclave_id_t eid, int* retval, uint32_t* in, size_t inLength, uint8_t* out, size_t outLength);
+sgx_status_t enclaveVByteDecode(sgx_enclave_id_t eid, int* retval, uint8_t* in, size_t inLength, uint32_t* out, size_t outLength);
 
 #ifdef __cplusplus
 }

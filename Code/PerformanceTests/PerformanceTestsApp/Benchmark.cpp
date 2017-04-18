@@ -21,111 +21,71 @@ Benchmark::~Benchmark() {
 	delete timer;
 }
 
-BM_RESULT Benchmark::singleBenchmark(void (*f) (uint64_t *data, size_t length), uint64_t *data, size_t length) {
+BM_RESULT Benchmark::singleBenchmark(int (*f) (uint64_t *data, size_t length), uint64_t *data, size_t length) {
 
-	long long sum = 0;
-
-	for (int i = 0; i < numRepetitions; i++) {
-
-		timer->start();
-		f(data, length);
-		timer->stop();
-
-		sum += timer->duration();
-	}
-
-	BM_RESULT result = sum / numRepetitions;
-
-	return result;
-}
-
-BM_RESULT Benchmark::singleBenchmark(void (*f) (int testSize), int testSize) {
-
-	int _testSize = testSize > 0 ? testSize : TEST_SIZE;
-	long long sum = 0;
+	long long time = 0;
+	int iops = 0;
 
 	for (int i = 0; i < numRepetitions; i++) {
 
 		timer->start();
-		f(_testSize);
+		iops += f(data, length);
 		timer->stop();
 
-		//TODO some kind of outlier detection mechanism, e.g. distance checking of neighboring values
-
-		sum += timer->duration();
+		time += timer->duration();
 	}
 
-	BM_RESULT result = sum / numRepetitions;
+	BM_RESULT result = ((double) iops) / (time * 1000);
 
 	return result;
 }
 
-BM_RESULT Benchmark::singleBenchmark(void(*f) (uint32_t *in, size_t length, uint8_t *out), uint32_t *in, size_t length, uint8_t *out) {
+BM_RESULT Benchmark::singleBenchmark(int (*f) (uint32_t *in, size_t length, uint8_t *out), uint32_t *in, size_t length, uint8_t *out) {
 
-	long long sum = 0;
+	long long time = 0;
+	int iops = 0;
 
 	for (int i = 0; i < numRepetitions; i++) {
 
 		timer->start();
-		f(in, length, out);
+		iops += f(in, length, out);
 		timer->stop();
 
-		sum += timer->duration();
+		time += timer->duration();
 	}
 
-	BM_RESULT result = sum / numRepetitions;
+	BM_RESULT result = ((double) iops) / (time * 1000);
 
 	return result;
 }
 
-BM_RESULT Benchmark::singleBenchmark(void(*f) (uint8_t *in, size_t length, uint32_t *out), uint8_t *in, size_t length, uint32_t *out) {
+BM_RESULT Benchmark::singleBenchmark(int (*f) (uint8_t *in, size_t length, uint32_t *out), uint8_t *in, size_t length, uint32_t *out) {
 
-	long long sum = 0;
+	long long time = 0;
+	int iops = 0;
 
 	for (int i = 0; i < numRepetitions; i++) {
 
 		timer->start();
-		f(in, length, out);
+		iops += f(in, length, out);
 		timer->stop();
 
-		sum += timer->duration();
+		time += timer->duration();
 	}
 
-	BM_RESULT result = sum / numRepetitions;
+	BM_RESULT result = ((double) iops) / (time * 1000);
 
 	return result;
 }
 
-
-void Benchmark::benchmark(const char * file, void(*f)(int testSize), int testRange)
-{
-	std::cout << "Starting benchmark " << name << ": ";
-
-	std::ofstream fileToWrite;
-	fileToWrite.open(file, std::ios::out);
-
-	fileToWrite << "Data,Time" << std::endl;
-
-	int stepSize = testRange / numValues;
-
-	for (int i = 0; i <= testRange; i += stepSize) {
-		fileToWrite << i << "," << singleBenchmark(f, i) << std::endl;
-
-		if (i % (testRange / 10) == 0) std::cout << ".";
-	}
-	std::cout << std::endl;
-
-	fileToWrite.close();
-}
-
-void Benchmark::benchmark(const char * file, void (*f) (uint64_t *data, size_t length), int testRange)
+void Benchmark::benchmark(const char * file, int (*f) (uint64_t *data, size_t length), int testRange)
 {
 	std::cout << "Starting benchmark " << name << ": " << std::endl;
 
 	std::ofstream fileToWrite;
 	fileToWrite.open(file, std::ios::out);
 
-	fileToWrite << "Data,Time" << std::endl;
+	fileToWrite << "Data,MIPS" << std::endl;
 
 	int stepSize = testRange / numValues;
 
@@ -144,14 +104,14 @@ void Benchmark::benchmark(const char * file, void (*f) (uint64_t *data, size_t l
 	fileToWrite.close();
 }
 
-void Benchmark::benchmark(const char * file, void (*f) (uint32_t *in, size_t length, uint8_t *out), int (*sizefunc) (int inSize), int testRange)
+void Benchmark::benchmark(const char * file, int (*f) (uint32_t *in, size_t length, uint8_t *out), int (*sizefunc) (int inSize), int testRange)
 {
 	std::cout << "Starting benchmark " << name << ": " << std::endl;
 
 	std::ofstream fileToWrite;
 	fileToWrite.open(file, std::ios::out);
 
-	fileToWrite << "Data,Time" << std::endl;
+	fileToWrite << "Data,MIPS" << std::endl;
 
 	int stepSize = testRange / numValues;
 
@@ -173,14 +133,14 @@ void Benchmark::benchmark(const char * file, void (*f) (uint32_t *in, size_t len
 	fileToWrite.close();
 }
 
-void Benchmark::benchmark(const char *file, void(*f) (uint8_t *in, size_t length, uint32_t *out), int(*sizefunc) (int inSize), int testRange) {
+void Benchmark::benchmark(const char *file, int (*f) (uint8_t *in, size_t length, uint32_t *out), int(*sizefunc) (int inSize), int testRange) {
 
 	std::cout << "Starting benchmark " << name << ": " << std::endl;
 
 	std::ofstream fileToWrite;
 	fileToWrite.open(file, std::ios::out);
 
-	fileToWrite << "Data,Time" << std::endl;
+	fileToWrite << "Data,MIPS" << std::endl;
 
 	int stepSize = testRange / numValues;
 
