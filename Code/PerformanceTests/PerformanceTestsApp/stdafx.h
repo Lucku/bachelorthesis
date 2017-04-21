@@ -18,6 +18,8 @@
 #include "PerformanceTests_u.h"
 #include "Functions.h"
 #include "Windows.h"
+#include "openssl\aes.h"
+#include "openssl\rand.h"
 
 #define ENCLAVE_FILE _T("PerformanceTests.signed.dll")
 #define BM_RESULT double

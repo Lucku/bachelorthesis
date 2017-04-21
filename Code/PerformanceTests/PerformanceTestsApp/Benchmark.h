@@ -12,9 +12,9 @@ public:
 	BM_RESULT singleBenchmark(int (*f) (uint64_t *data, size_t length), uint64_t *data, size_t length);
 	BM_RESULT singleBenchmark(int (*f) (uint32_t *in, size_t length, uint8_t *out), uint32_t *in, size_t length, uint8_t *out);
 	BM_RESULT singleBenchmark(int (*f) (uint8_t *in, size_t length, uint32_t *out), uint8_t *in, size_t length, uint32_t *out);
-	void benchmark(const char *file, int (*f) (uint64_t *data, size_t length), int testRange);
-	void benchmark(const char *file, int (*f) (uint32_t *in, size_t length, uint8_t *out), int(*sizefunc) (int inSize), int testRange);
-	void benchmark(const char *file, int (*f) (uint8_t *in, size_t length, uint32_t *out), int(*sizefunc) (int inSize), int testRange);
+	virtual void benchmark(const char *file, int(*f) (uint64_t *data, size_t length), int testRange) = 0;
+	virtual void benchmark(const char *file, int(*f) (uint32_t *in, size_t length, uint8_t *out), int(*sizefunc) (int inSize), int testRange) = 0;
+	virtual void benchmark(const char *file, int(*f) (uint8_t *in, size_t length, uint32_t *out), int(*sizefunc) (int inSize), int testRange) = 0;
 
 protected:
 	int numRepetitions;

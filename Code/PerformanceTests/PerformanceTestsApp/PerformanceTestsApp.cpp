@@ -1,5 +1,6 @@
 #include "stdafx.h"
-#include "Benchmark.h"
+#include "BasicBenchmark.h"
+#include "AESCBCCryptoEngine.h"
 
 #define NUM_REPS 100
 #define NUM_VALUES 50000
@@ -15,15 +16,37 @@ int main()
 	int updated = 0;
 	eid = initializeEnclave(ENCLAVE_FILE, 0, &token, &updated);
 	
-	Benchmark *bm1 = new Benchmark("Iteration Benchmark untrusted", NUM_REPS);
+	CryptoEngine *c = new AESCBCCryptoEngine();
+
+	unsigned char input[32] = "This is a test encryption";
+	unsigned char output[32] = "";
+	unsigned char restored[32] = "";
+
+	unsigned char key[256] = "";
+	unsigned char iv[128] = "";
+
+	c->generateParams(key, 16, iv);
+
+	unsigned char iv2[128] = "";
+	memcpy(iv2, iv, 128);
+
+	c->encrypt(input, output, sizeof(input), key, 32, iv);
+	c->decrypt(output, restored, sizeof(output), key, 32, iv2);
+
+	c->printData("\nOriginal\t", input, 32);
+	c->printData("\nEncrypted\t", output, 32);
+	c->printData("\nDecrypted\t", restored, 32);
+
+	/*
+	Benchmark *bm1 = new BasicBenchmark("Iteration Benchmark untrusted", NUM_REPS);
 	const char *file = "iterate_u.csv";
 	bm1->benchmark(file, iterate, NUM_VALUES);
 
-	Benchmark *bm2 = new Benchmark("Compression Benchmark untrusted", NUM_REPS);
+	Benchmark *bm2 = new BasicBenchmark("Compression Benchmark untrusted", NUM_REPS);
 	const char * file2 = "compression_u.csv";
 	bm2->benchmark(file2, vByteEncode, [](int in) { return in * 5; }, NUM_VALUES);
 	
-	Benchmark *bm3 = new Benchmark("Decompression Benchmark untrusted", NUM_REPS);
+	Benchmark *bm3 = new BasicBenchmark("Decompression Benchmark untrusted", NUM_REPS);
 	const char * file3 = "decompression_u.csv";
 	bm3->benchmark(file3, vByteDecode, [](int in) { return in; }, NUM_VALUES);
 	
@@ -38,6 +61,7 @@ int main()
 	Benchmark *bm6 = new Benchmark("Decompression Benchmark trusted", NUM_REPS);
 	const char *file6 = "decompression_t.csv";
 	bm6->benchmark(file6, ecallVByteDecode, [](int in) { return in; }, NUM_VALUES);
+	*/
 
 	getchar();
 

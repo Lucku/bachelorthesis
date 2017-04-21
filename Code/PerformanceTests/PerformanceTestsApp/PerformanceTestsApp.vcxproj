@@ -170,13 +170,13 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SGXSDKInstallPath)\include;$(SGXSDKInstallPath)include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SGXSDKInstallPath)\include;$(SGXSDKInstallPath)include;C:\openssl\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SGXSDKInstallPath)\bin\$(Platform)\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>sgx_urts_sim.lib;sgx_uae_service_sim.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SGXSDKInstallPath)\bin\$(Platform)\Debug;C:\openssl\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>sgx_urts_sim.lib;sgx_uae_service_sim.lib;libeay32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -296,7 +296,12 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AESCBCCryptoEngine.h" />
+    <ClInclude Include="BasicBenchmark.h" />
     <ClInclude Include="Benchmark.h" />
+    <ClInclude Include="Crypto.h" />
+    <ClInclude Include="CryptoBenchmark.h" />
+    <ClInclude Include="CryptoEngine.h" />
     <ClInclude Include="Functions.h" />
     <ClInclude Include="PerformanceTests_u.h" />
     <ClInclude Include="stdafx.h" />
@@ -304,7 +309,10 @@
     <ClInclude Include="Timer.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AESCBCCryptoEngine.cpp" />
+    <ClCompile Include="BasicBenchmark.cpp" />
     <ClCompile Include="Benchmark.cpp" />
+    <ClCompile Include="CryptoBenchmark.cpp" />
     <ClCompile Include="Functions.cpp" />
     <ClCompile Include="PerformanceTestsApp.cpp" />
     <ClCompile Include="PerformanceTests_u.c">

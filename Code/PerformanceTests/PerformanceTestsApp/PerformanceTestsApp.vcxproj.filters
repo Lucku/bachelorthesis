@@ -19,6 +19,24 @@
     <Filter Include="Generated Files">
       <UniqueIdentifier>{d2ca3b03-e57e-4109-a059-ff07c526a813}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Quelldateien\crypto">
+      <UniqueIdentifier>{7afd9992-ab6b-4c0e-a7ca-4f4cd0f40d1b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\crypto">
+      <UniqueIdentifier>{79a74136-0202-46f8-b1ce-597655018fec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\benchmark">
+      <UniqueIdentifier>{8ad44840-7f52-49c0-aba8-16e81d4c8fb2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\benchmark">
+      <UniqueIdentifier>{461f2373-e5aa-480a-b4b8-5117248a98a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\util">
+      <UniqueIdentifier>{4bfabf19-664b-4f1c-a572-e6e275c95449}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\util">
+      <UniqueIdentifier>{6e63f1e9-c927-4ae3-b36b-9b6bee7094f6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -30,17 +48,32 @@
     <ClInclude Include="targetver.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="Timer.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="Benchmark.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
     <ClInclude Include="Functions.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="PerformanceTests_u.h">
       <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Crypto.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="CryptoEngine.h">
+      <Filter>Headerdateien\crypto</Filter>
+    </ClInclude>
+    <ClInclude Include="AESCBCCryptoEngine.h">
+      <Filter>Headerdateien\crypto</Filter>
+    </ClInclude>
+    <ClInclude Include="Benchmark.h">
+      <Filter>Headerdateien\benchmark</Filter>
+    </ClInclude>
+    <ClInclude Include="BasicBenchmark.h">
+      <Filter>Headerdateien\benchmark</Filter>
+    </ClInclude>
+    <ClInclude Include="CryptoBenchmark.h">
+      <Filter>Headerdateien\benchmark</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>Headerdateien\util</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -50,17 +83,26 @@
     <ClCompile Include="PerformanceTestsApp.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="Timer.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="Benchmark.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
     <ClCompile Include="Functions.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="PerformanceTests_u.c">
       <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AESCBCCryptoEngine.cpp">
+      <Filter>Quelldateien\crypto</Filter>
+    </ClCompile>
+    <ClCompile Include="BasicBenchmark.cpp">
+      <Filter>Quelldateien\benchmark</Filter>
+    </ClCompile>
+    <ClCompile Include="Benchmark.cpp">
+      <Filter>Quelldateien\benchmark</Filter>
+    </ClCompile>
+    <ClCompile Include="CryptoBenchmark.cpp">
+      <Filter>Quelldateien\benchmark</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer.cpp">
+      <Filter>Quelldateien\util</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
