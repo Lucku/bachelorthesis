@@ -18,13 +18,11 @@ int iterate(uint64_t *data, size_t length) {
 
 int vByteEncode(uint32_t *in, size_t length, uint8_t *out) {
 
-	int iops = 1;
+	int iops = 0;
 	const uint8_t *initout = out;
 	size_t k;
 
 	for (k = 0; k < length; ++k) {
-
-		iops++;
 
 		const uint32_t val = in[k];
 
@@ -40,7 +38,7 @@ int vByteEncode(uint32_t *in, size_t length, uint8_t *out) {
 			*out = (uint8_t)(val >> 7);
 			++out;
 
-			iops += 6;
+			iops += 8;
 		}
 		else if (val < (1U << 21)) {
 			*out = (uint8_t)((val & 0x7F) | (1U << 7));
@@ -50,7 +48,7 @@ int vByteEncode(uint32_t *in, size_t length, uint8_t *out) {
 			*out = (uint8_t)(val >> 14);
 			++out;
 
-			iops += 9;
+			iops += 13;
 		}
 		else if (val < (1U << 28)) {
 			*out = (uint8_t)((val & 0x7F) | (1U << 7));
@@ -62,7 +60,7 @@ int vByteEncode(uint32_t *in, size_t length, uint8_t *out) {
 			*out = (uint8_t)(val >> 21);
 			++out;
 
-			iops += 12;
+			iops += 18;
 		}
 		else {
 			*out = (uint8_t)((val & 0x7F) | (1U << 7));
@@ -76,8 +74,11 @@ int vByteEncode(uint32_t *in, size_t length, uint8_t *out) {
 			*out = (uint8_t)(val >> 28);
 			++out;
 
-			iops += 14;
+			iops += 22;
 		}
+
+		iops += 2;
+
 	}
 
 	return iops;
@@ -85,48 +86,45 @@ int vByteEncode(uint32_t *in, size_t length, uint8_t *out) {
 
 int vByteDecode(uint8_t *in, size_t length, uint32_t *out) {
 
-	int iops = 1;
+	int iops = 0;
 	const uint32_t *initout = out;
 	size_t k = 0;
 
 	while (k < length) {
 
-		iops++;
-
 		if (in[k] < 1U << 7) {
 			*out = (uint32_t)(in[k] & 0x7F);
 			k += 1;
 
-			iops += 3;
+			iops += 4;
 		}
 		else if (in[k + 1] < 1U << 7) {
 			*out = (uint32_t)(in[k] & 0x7F) | ((uint32_t)(in[k + 1] & 0x7F) << 7);
 			k += 2;
 
-			iops += 3;
+			iops += 9;
 		}
 		else if (in[k + 2] < 1U << 7) {
 			*out = (uint32_t)(in[k] & 0x7F) | ((uint32_t)(in[k + 1] & 0x7F) << 7) | ((uint32_t)(in[k + 2] & 0x7F) << 14);
-
 			k += 3;
 
-			iops += 3;
+			iops += 13;
 		}
 		else if (in[k + 3] < 1U << 7) {
 			*out = (uint32_t)(in[k] & 0x7F) | ((uint32_t)(in[k + 1] & 0x7F) << 7) | ((uint32_t)(in[k + 2] & 0x7F) << 14) | ((uint32_t)(in[k + 2] & 0x7F) << 21);
 			k += 4;
 
-			iops += 3;
+			iops += 17;
 		}
 		else {
 			*out = (uint32_t)(in[k] & 0x7F) | ((uint32_t)(in[k + 1] & 0x7F) << 7) | ((uint32_t)(in[k + 2] & 0x7F) << 14) | ((uint32_t)(in[k + 2] & 0x7F) << 21) | ((uint32_t)(in[k + 2] & 0x7F) << 28);
 			k += 5;
 
-			iops += 3;
+			iops += 19;
 		}
 		out++;
 
-		iops++;
+		iops += 2;
 	}
 	
 	return iops;

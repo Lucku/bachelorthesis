@@ -1,7 +1,7 @@
 #include "stdafx.h"
-#include "CryptoEngine.h"
+#include "CryptoSystem.h"
 
-class AESCBCCryptoEngine : public CryptoEngine {
+class AESCBCCryptoSystem : public CryptoSystem {
 
 public:
 	void encrypt(unsigned char *input, unsigned char *output, int length, const unsigned char *key, int keyLength, unsigned char *iv);

@@ -54,26 +54,26 @@
     <ClInclude Include="PerformanceTests_u.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
-    <ClInclude Include="Crypto.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="CryptoEngine.h">
-      <Filter>Headerdateien\crypto</Filter>
-    </ClInclude>
-    <ClInclude Include="AESCBCCryptoEngine.h">
-      <Filter>Headerdateien\crypto</Filter>
-    </ClInclude>
     <ClInclude Include="Benchmark.h">
       <Filter>Headerdateien\benchmark</Filter>
     </ClInclude>
     <ClInclude Include="BasicBenchmark.h">
       <Filter>Headerdateien\benchmark</Filter>
     </ClInclude>
-    <ClInclude Include="CryptoBenchmark.h">
-      <Filter>Headerdateien\benchmark</Filter>
-    </ClInclude>
     <ClInclude Include="Timer.h">
       <Filter>Headerdateien\util</Filter>
+    </ClInclude>
+    <ClInclude Include="AESCBCCryptoSystem.h">
+      <Filter>Headerdateien\crypto</Filter>
+    </ClInclude>
+    <ClInclude Include="CryptoSystem.h">
+      <Filter>Headerdateien\crypto</Filter>
+    </ClInclude>
+    <ClInclude Include="BulkBenchmark.h">
+      <Filter>Headerdateien\benchmark</Filter>
+    </ClInclude>
+    <ClInclude Include="BMResult.h">
+      <Filter>Headerdateien\benchmark</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -89,20 +89,23 @@
     <ClCompile Include="PerformanceTests_u.c">
       <Filter>Generated Files</Filter>
     </ClCompile>
-    <ClCompile Include="AESCBCCryptoEngine.cpp">
-      <Filter>Quelldateien\crypto</Filter>
-    </ClCompile>
     <ClCompile Include="BasicBenchmark.cpp">
       <Filter>Quelldateien\benchmark</Filter>
     </ClCompile>
     <ClCompile Include="Benchmark.cpp">
       <Filter>Quelldateien\benchmark</Filter>
     </ClCompile>
-    <ClCompile Include="CryptoBenchmark.cpp">
-      <Filter>Quelldateien\benchmark</Filter>
-    </ClCompile>
     <ClCompile Include="Timer.cpp">
       <Filter>Quelldateien\util</Filter>
+    </ClCompile>
+    <ClCompile Include="AESCBCCryptoSystem.cpp">
+      <Filter>Quelldateien\crypto</Filter>
+    </ClCompile>
+    <ClCompile Include="BulkBenchmark.cpp">
+      <Filter>Quelldateien\benchmark</Filter>
+    </ClCompile>
+    <ClCompile Include="BMResult.cpp">
+      <Filter>Quelldateien\benchmark</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

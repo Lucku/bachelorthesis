@@ -1,6 +1,6 @@
 #include "stdafx.h"
 
-class CryptoEngine {
+class CryptoSystem {
 
 public:
 	virtual void encrypt(unsigned char *input, unsigned char *output, int length, const unsigned char *key, int keyLength, unsigned char *iv) = 0;

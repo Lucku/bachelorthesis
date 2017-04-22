@@ -22,6 +22,5 @@
 #include "openssl\rand.h"
 
 #define ENCLAVE_FILE _T("PerformanceTests.signed.dll")
-#define BM_RESULT double
 
 // TODO: Hier auf zusätzliche Header, die das Programm erfordert, verweisen.

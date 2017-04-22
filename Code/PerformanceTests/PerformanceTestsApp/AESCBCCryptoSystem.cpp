@@ -1,7 +1,7 @@
 #include "stdafx.h"
-#include "AESCBCCryptoEngine.h"
+#include "AESCBCCryptoSystem.h"
 
-void AESCBCCryptoEngine::encrypt(unsigned char *input, unsigned char *output, int length, const unsigned char *key, int keyLength, unsigned char * iv)
+void AESCBCCryptoSystem::encrypt(BYTE *input, BYTE *output, int length, const BYTE *key, const int keyLength, BYTE *iv)
 {
 	AES_KEY encKey;
 
@@ -9,7 +9,7 @@ void AESCBCCryptoEngine::encrypt(unsigned char *input, unsigned char *output, in
 	AES_cbc_encrypt(input, output, length, &encKey, iv, AES_ENCRYPT);
 }
 
-void AESCBCCryptoEngine::decrypt(unsigned char *input, unsigned char *output, int length, const unsigned char *key, int keyLength, unsigned char * iv)
+void AESCBCCryptoSystem::decrypt(BYTE *input, BYTE *output, int length, const BYTE *key, const int keyLength, BYTE *iv)
 {
 	AES_KEY decKey;
 
@@ -17,13 +17,13 @@ void AESCBCCryptoEngine::decrypt(unsigned char *input, unsigned char *output, in
 	AES_cbc_encrypt(input, output, length, &decKey, iv, AES_DECRYPT);
 }
 
-void AESCBCCryptoEngine::generateParams(unsigned char *key, int keyLength, unsigned char *iv)
+void AESCBCCryptoSystem::generateParams(BYTE *key, const int keyLength, BYTE *iv)
 {
 	int rc = RAND_bytes(key, keyLength);
 	if (rc != 1)
 		throw std::runtime_error("RAND_bytes key failed");
 
-	rc = RAND_bytes(iv, 16);
+	rc = RAND_bytes(iv, AES_BLOCK_SIZE);
 	if (rc != 1)
 		throw std::runtime_error("RAND_bytes for iv failed");
 }

@@ -1,86 +1,59 @@
 #include "stdafx.h"
 #include "BasicBenchmark.h"
 
-void BasicBenchmark::benchmark(const char * file, int(*f) (uint64_t *data, size_t length), int testRange)
-{
-	std::cout << "Starting benchmark " << name << ": " << std::endl;
+BMResult BasicBenchmark::singleBenchmark(int(*f) (uint64_t *data, size_t length), uint64_t *data, size_t length) {
 
-	std::ofstream fileToWrite;
-	fileToWrite.open(file, std::ios::out);
+	long long time = 0;
+	int iop = 0;
 
-	fileToWrite << "Data,MIPS" << std::endl;
+	for (int i = 0; i < numRepetitions; i++) {
 
-	int stepSize = testRange / numValues;
+		timer->start();
+		for (unsigned int j = 0; j < length; j++) {
+			iop += f(&(data[j]), 1);
+		}
+		timer->stop();
 
-	for (int i = 0; i <= testRange; i += stepSize) {
-
-		uint64_t *data = new uint64_t[i];
-
-		fileToWrite << i << "," << singleBenchmark(f, data, i) << std::endl;
-
-		delete data;
-
-		std::cout << "\r" << (((float)i / testRange) * 100) << "%\t";
+		time += timer->duration();
 	}
-	std::cout << std::endl;
 
-	fileToWrite.close();
+	return { time, iop };
 }
 
-void BasicBenchmark::benchmark(const char * file, int(*f) (uint32_t *in, size_t length, uint8_t *out), int(*sizefunc) (int inSize), int testRange)
-{
-	std::cout << "Starting benchmark " << name << ": " << std::endl;
+BMResult BasicBenchmark::singleBenchmark(int(*f) (uint32_t *in, size_t length, uint8_t *out), uint32_t *in, size_t length, uint8_t *out) {
 
-	std::ofstream fileToWrite;
-	fileToWrite.open(file, std::ios::out);
+	long long time = 0;
+	int iop = 0;
 
-	fileToWrite << "Data,MIPS" << std::endl;
+	for (int i = 0; i < numRepetitions; i++) {
 
-	int stepSize = testRange / numValues;
+		timer->start();
+		for (unsigned int j = 0; j < length; j++) {
+			iop += f(&(in[j]), 1, &(out[j]));
+		}
+		timer->stop();
 
-	for (int i = 0; i <= testRange; i += stepSize) {
-
-		uint32_t *in = new uint32_t[i];
-		initializeRandomData(in, i);
-		uint8_t *out = new uint8_t[sizefunc(i)];
-
-		fileToWrite << i << "," << singleBenchmark(f, in, i, out) << std::endl;
-
-		delete in;
-		delete out;
-
-		std::cout << "\r" << (((float)i / testRange) * 100) << "%\t";
+		time += timer->duration();
 	}
-	std::cout << std::endl;
 
-	fileToWrite.close();
+	return { time, iop };
 }
 
-void BasicBenchmark::benchmark(const char *file, int(*f) (uint8_t *in, size_t length, uint32_t *out), int(*sizefunc) (int inSize), int testRange) {
+BMResult BasicBenchmark::singleBenchmark(int(*f) (uint8_t *in, size_t length, uint32_t *out), uint8_t *in, size_t length, uint32_t *out) {
 
-	std::cout << "Starting benchmark " << name << ": " << std::endl;
+	long long time = 0;
+	int iop = 0;
 
-	std::ofstream fileToWrite;
-	fileToWrite.open(file, std::ios::out);
+	for (int i = 0; i < numRepetitions; i++) {
 
-	fileToWrite << "Data,MIPS" << std::endl;
+		timer->start();
+		for (unsigned int j = 0; j < length; j++) {
+			iop += f(&(in[j]), 1, &(out[j]));
+		}
+		timer->stop();
 
-	int stepSize = testRange / numValues;
-
-	for (int i = 0; i <= testRange; i += stepSize) {
-
-		uint8_t *in = new uint8_t[i];
-		initializeRandomData(in, i);
-		uint32_t *out = new uint32_t[sizefunc(i)];
-
-		fileToWrite << i << "," << singleBenchmark(f, in, i, out) << std::endl;
-
-		delete in;
-		delete out;
-
-		std::cout << "\r" << (((float)i / testRange) * 100) << "%\t";
+		time += timer->duration();
 	}
-	std::cout << std::endl;
 
-	fileToWrite.close();
+	return { time, iop };
 }

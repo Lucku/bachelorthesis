@@ -296,12 +296,12 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AESCBCCryptoEngine.h" />
+    <ClInclude Include="AESCBCCryptoSystem.h" />
     <ClInclude Include="BasicBenchmark.h" />
     <ClInclude Include="Benchmark.h" />
-    <ClInclude Include="Crypto.h" />
-    <ClInclude Include="CryptoBenchmark.h" />
-    <ClInclude Include="CryptoEngine.h" />
+    <ClInclude Include="BMResult.h" />
+    <ClInclude Include="BulkBenchmark.h" />
+    <ClInclude Include="CryptoSystem.h" />
     <ClInclude Include="Functions.h" />
     <ClInclude Include="PerformanceTests_u.h" />
     <ClInclude Include="stdafx.h" />
@@ -309,10 +309,11 @@
     <ClInclude Include="Timer.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="AESCBCCryptoEngine.cpp" />
+    <ClCompile Include="AESCBCCryptoSystem.cpp" />
     <ClCompile Include="BasicBenchmark.cpp" />
     <ClCompile Include="Benchmark.cpp" />
-    <ClCompile Include="CryptoBenchmark.cpp" />
+    <ClCompile Include="BMResult.cpp" />
+    <ClCompile Include="BulkBenchmark.cpp" />
     <ClCompile Include="Functions.cpp" />
     <ClCompile Include="PerformanceTestsApp.cpp" />
     <ClCompile Include="PerformanceTests_u.c">
