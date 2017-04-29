@@ -1,3 +1,3 @@
 TODO:
 
-- auf „echter“ SGX Hardware laufen lassen
+- auf "echter" SGX Hardware laufen lassen
