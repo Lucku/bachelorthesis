@@ -1,10 +1,14 @@
 enclave {
-    from "sgx_tstdc.edl" import *;
+	from "sgx_tssl.edl" import *;
 
     trusted {
-		public int enclaveIterate([in, count=length] uint64_t *data, size_t length);
-        public int enclaveVByteEncode([in, count=inLength] uint32_t *in, size_t inLength, [out, count=outLength] uint8_t *out, size_t outLength);
-		public int enclaveVByteDecode([in, count=inLength] uint8_t *in, size_t inLength, [out, count=outLength] uint32_t *out, size_t outLength);
+		public void enclaveIterate([in, count=length] uint64_t *data, size_t length);
+        public void enclaveVByteEncode([in, count=inLength] uint32_t *in, size_t inLength, [out, count=outLength] uint8_t *out, size_t outLength);
+		public void enclaveVByteDecode([in, count=inLength] uint8_t *in, size_t inLength, [out, count=outLength] uint32_t *out, size_t outLength);
+		public void enclaveVByteEncodeEncrypted([in, count=inLength] uint32_t *in, size_t inLength, [out, count=outLength] uint8_t *out, size_t outLength);
+		public void enclaveVByteDecodeEncrypted([in, count=inLength] uint8_t *in, size_t inLength, [out, count=outLength] uint32_t *out, size_t outLength);
+		int encryptBytes([in, size=inLength] uint8_t *input, size_t inLength, [in, size=outLength] uint8_t *output, size_t outLength, [in, size=keyLength] const uint8_t *key, size_t keyLength, [in, size=16] uint8_t *iv);
+		int decryptBytes([in, size=inLength] uint8_t *input, size_t inLength, [in, size=outLength] uint8_t *output, size_t outLength, [in, size=keyLength] const uint8_t *key, size_t keyLength, [in, size=16] uint8_t *iv);
     };
 
     untrusted {

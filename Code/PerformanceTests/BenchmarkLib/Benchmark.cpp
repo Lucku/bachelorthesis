@@ -24,7 +24,7 @@ Benchmark::~Benchmark() {
 	delete timer;
 }
 
-void Benchmark::benchmark(const char * file, int(*f) (uint64_t *data, size_t length), int testRange)
+void Benchmark::benchmark(const char * file, void(*f) (uint64_t *data, size_t length), int testRange)
 {
 	std::cout << "Starting benchmark " << name << ": " << std::endl;
 
@@ -44,15 +44,15 @@ void Benchmark::benchmark(const char * file, int(*f) (uint64_t *data, size_t len
 		uint64_t *data = new uint64_t[i];
 		initializeRandomData(data, i);
 
-		BMResult res = singleBenchmark(f, data, i);
+		int64_t time = singleBenchmark(f, data, i);
 
 		switch (mode) {
-		case TIME: fileToWrite << i << "," << res.getTime() << std::endl; break;
-		case MIOPS: fileToWrite << i << "," << res.getMIOPS() << std::endl; break;
-		default: fileToWrite << i << "," << res.getIOPS() << std::endl;
+		case TIME: fileToWrite << i << "," << time << std::endl; break;
+		case MIOPS: fileToWrite << i << "," << (((double)i) * 1000) / time << std::endl; break;
+		default: fileToWrite << i << "," << (((double)i) * 1000000000) / time << std::endl;
 		}
 
-		delete data;
+		delete[] data;
 
 		std::cout << "\r" << (((float)i / testRange) * 100) << "%\t";
 	}
@@ -61,7 +61,7 @@ void Benchmark::benchmark(const char * file, int(*f) (uint64_t *data, size_t len
 	fileToWrite.close();
 }
 
-void Benchmark::benchmark(const char * file, int(*f) (uint32_t *in, size_t length, uint8_t *out), int(*sizefunc) (int inSize), int testRange)
+void Benchmark::benchmark(const char * file, void(*f) (uint32_t *in, size_t length, uint8_t *out), int(*sizefunc) (int inSize), int testRange)
 {
 	std::cout << "Starting benchmark " << name << ": " << std::endl;
 
@@ -82,16 +82,16 @@ void Benchmark::benchmark(const char * file, int(*f) (uint32_t *in, size_t lengt
 		initializeRandomData(in, i);
 		uint8_t *out = new uint8_t[sizefunc(i)];
 
-		BMResult res = singleBenchmark(f, in, i, out);
+		int64_t time = singleBenchmark(f, in, i, out);
 
 		switch (mode) {
-		case TIME: fileToWrite << i << "," << res.getTime() << std::endl; break;
-		case MIOPS: fileToWrite << i << "," << res.getMIOPS() << std::endl; break;
-		default: fileToWrite << i << "," << res.getIOPS() << std::endl;
+		case TIME: fileToWrite << i << "," << time << std::endl; break;
+		case MIOPS: fileToWrite << i << "," << (((double) i) * 1000) / time << std::endl; break;
+		default: fileToWrite << i << "," << (((double) i) * 1000000000) / time << std::endl;
 		}
 
-		delete in;
-		delete out;
+		delete[] in;
+		delete[] out;
 
 		std::cout << "\r" << (((float)i / testRange) * 100) << "%\t";
 	}
@@ -100,7 +100,7 @@ void Benchmark::benchmark(const char * file, int(*f) (uint32_t *in, size_t lengt
 	fileToWrite.close();
 }
 
-void Benchmark::benchmark(const char *file, int(*f) (uint8_t *in, size_t length, uint32_t *out), int(*sizefunc) (int inSize), int testRange) {
+void Benchmark::benchmark(const char *file, void(*f) (uint8_t *in, size_t length, uint32_t *out), int(*sizefunc) (int inSize), int testRange) {
 
 	std::cout << "Starting benchmark " << name << ": " << std::endl;
 
@@ -121,18 +121,18 @@ void Benchmark::benchmark(const char *file, int(*f) (uint8_t *in, size_t length,
 		initializeRandomData(in, i);
 		uint32_t *out = new uint32_t[sizefunc(i)];
 
-		BMResult res = singleBenchmark(f, in, i, out);
+		int64_t time = singleBenchmark(f, in, i, out);
 
 		switch (mode) {
-		case TIME: fileToWrite << i << "," << res.getTime() << std::endl; break;
-		case MIOPS: fileToWrite << i << "," << res.getMIOPS() << std::endl; break;
-		default: fileToWrite << i << "," << res.getIOPS() << std::endl;
+		case TIME: fileToWrite << i << "," << time << std::endl; break;
+		case MIOPS: fileToWrite << i << "," << (((double)i) * 1000) / time << std::endl; break;
+		default: fileToWrite << i << "," << (((double)i) * 1000000000) / time << std::endl;
 		}
 
-		delete in;
-		delete out;
+		delete[] in;
+		delete[] out;
 
-		std::cout << "\r" << (((float)i / testRange) * 100) << "%\t";
+		std::cout << "\r" << (((float) i / testRange) * 100) << "%\t";
 	}
 	std::cout << std::endl;
 
@@ -141,52 +141,47 @@ void Benchmark::benchmark(const char *file, int(*f) (uint8_t *in, size_t length,
 
 void Benchmark::initializeRandomData(uint8_t *in, size_t length) {
 
-	/*
 	srand(unsigned(time(NULL)));
 
 	for (unsigned int i = 0; i < length; i++) {
 		in[i] = rand() >> rand() % 8;
 	}
-	*/
+	
 
-	RAND_bytes((BYTE*) in, length);
+	//RAND_bytes((uint8_t*) in, length);
 }
 
 void Benchmark::initializeRandomData(uint16_t *in, size_t length) {
 
-	/*
 	srand(unsigned(time(NULL)));
 
 	for (unsigned int i = 0; i < length; i++) {
 		in[i] = rand() >> rand() % 16;
 	}
-	*/
 
-	RAND_bytes((BYTE*) in, 2 * length);
+
+	//RAND_bytes((uint8_t*) in, 2 * length);
 }
 
 void Benchmark::initializeRandomData(uint32_t *in, size_t length) {
 
-	/*
 	srand(unsigned(time(NULL)));
 
 	for (unsigned int i = 0; i < length; i++) {
 		in[i] = rand() >> rand() % 32;
 	}
-	*/
+	
 
-	RAND_bytes((BYTE*)in, 4 * length);
+	//RAND_bytes((uint8_t*) in, 4 * length);
 }
 
 void Benchmark::initializeRandomData(uint64_t *in, size_t length) {
-
-	/*
+	
 	srand(unsigned(time(NULL)));
 
 	for (unsigned int i = 0; i < length; i++) {
 		in[i] = rand() >> rand() % 64;
 	}
-	*/
 
-	RAND_bytes((BYTE*)in, 8 * length);
+	//RAND_bytes((uint8_t*) in, 8 * length);
 }

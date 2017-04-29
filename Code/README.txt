@@ -1,3 +1,3 @@
 TODO:
 
-- CrpytoTests einrichten
+- auf „echter“ SGX Hardware laufen lassen

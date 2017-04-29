@@ -10,7 +10,7 @@
 void enclaveAllocateHeapMemory(int numBytes) {
 		
 	char* alloc = new char[numBytes];
-
+	
 	char log[100];
 	snprintf(log, sizeof(log), "Successfully allocated %d Bytes of memory on the enclave's heap", numBytes);
 
