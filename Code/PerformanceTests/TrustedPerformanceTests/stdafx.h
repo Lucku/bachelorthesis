@@ -10,7 +10,7 @@
 #include <stdio.h>
 #include <tchar.h>
 #include "sgx_urts.h"
-#include "Windows.h"
+#include <Windows.h>
 //#include <windows.h>
 #include <openssl\aes.h>
 #include <openssl\evp.h>

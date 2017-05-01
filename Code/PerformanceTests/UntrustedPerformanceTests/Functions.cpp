@@ -1,6 +1,56 @@
 #include "stdafx.h"
 #include "AESECBCryptoSystem.h"
 
+int encryptBytes(uint8_t *input, size_t inLength, uint8_t *output, size_t outLength, const uint8_t *key, const size_t keyLength, uint8_t *iv) {
+
+	int cipherOutLength;
+
+	int ciphertextLength;
+
+	OpenSSL_add_all_algorithms();
+
+	EVP_CIPHER_CTX ctx;
+
+	EVP_CIPHER_CTX_init(&ctx);
+
+	EVP_CipherInit_ex(&ctx, EVP_aes_128_ecb(), NULL, key, iv, TRUE);
+
+	EVP_CipherUpdate(&ctx, output, &cipherOutLength, input, inLength);
+
+	ciphertextLength = cipherOutLength;
+
+	EVP_CipherFinal_ex(&ctx, output + cipherOutLength, &cipherOutLength);
+
+	ciphertextLength += cipherOutLength;
+
+	return ciphertextLength;
+}
+
+int decryptBytes(uint8_t *input, size_t inLength, uint8_t *output, size_t outLength, const uint8_t *key, const size_t keyLength, uint8_t *iv) {
+
+	int cipherOutLength;
+
+	int plaintextLength;
+
+	OpenSSL_add_all_algorithms();
+
+	EVP_CIPHER_CTX ctx;
+
+	EVP_CIPHER_CTX_init(&ctx);
+
+	EVP_CipherInit_ex(&ctx, EVP_aes_128_ecb(), NULL, key, iv, FALSE);
+
+	EVP_CipherUpdate(&ctx, output, &cipherOutLength, input, inLength);
+
+	plaintextLength = cipherOutLength;
+
+	EVP_CipherFinal_ex(&ctx, output + cipherOutLength, &cipherOutLength);
+
+	plaintextLength += cipherOutLength;
+
+	return plaintextLength;
+}
+
 void iterate(uint64_t *data, size_t length) {
 
 	uint64_t current;
@@ -96,7 +146,7 @@ void vByteDecode(uint8_t *in, size_t length, uint32_t *out) {
 
 void vByteEncodeEncrypted(uint32_t *in, size_t length, uint8_t *out)
 {
-	AESECBCryptoSystem *aes = new AESECBCryptoSystem();
+	//AESECBCryptoSystem *aes = new AESECBCryptoSystem();
 
 	uint8_t *data = new uint8_t[length * 4];
 	uint8_t *encoded = new uint8_t[length * 5];
@@ -111,7 +161,8 @@ void vByteEncodeEncrypted(uint32_t *in, size_t length, uint8_t *out)
 	// and we want the same consitions on both sides
 	// aes->generateParams(key, AES_KEY_SIZE, iv);
 
-	aes->decrypt((uint8_t*) in, data, length * 4, key, AES_KEY_SIZE, iv);
+	//aes->decrypt((uint8_t*) in, data, length * 4, key, AES_KEY_SIZE, iv);
+	decryptBytes((uint8_t*) in, length * 4, data, length * 4, key, AES_KEY_SIZE, iv);
 
 	//aes->printData("Decrypted", data, length * 4);
 
@@ -119,7 +170,8 @@ void vByteEncodeEncrypted(uint32_t *in, size_t length, uint8_t *out)
 
 	delete[] data;
 
-	aes->encrypt(encoded, out, length * 5, key, AES_KEY_SIZE, iv);
+	//aes->encrypt(encoded, out, length * 5, key, AES_KEY_SIZE, iv);
+	encryptBytes(encoded, length * 5, out, length * 5 + AES_BLOCK_SIZE, key, AES_KEY_SIZE, iv);
 
 	//aes->printData("Encrypted", out, length * 5);
 
@@ -128,7 +180,7 @@ void vByteEncodeEncrypted(uint32_t *in, size_t length, uint8_t *out)
 
 void vByteDecodeEncrypted(uint8_t *in, size_t length, uint32_t *out)
 {
-	AESECBCryptoSystem *aes = new AESECBCryptoSystem();
+	//AESECBCryptoSystem *aes = new AESECBCryptoSystem();
 
 	uint8_t *data = new uint8_t[length];
 	uint32_t *decoded = new uint32_t[length];
@@ -138,13 +190,15 @@ void vByteDecodeEncrypted(uint8_t *in, size_t length, uint32_t *out)
 
 	//aes->generateParams(key, AES_KEY_SIZE, iv);
 
-	aes->decrypt(in, data, length, key, AES_KEY_SIZE, iv);
+	//aes->decrypt(in, data, length, key, AES_KEY_SIZE, iv);
+	decryptBytes(in, length, data, length, key, AES_KEY_SIZE, iv);
 
 	vByteDecode(data, length, decoded);
 
 	delete[] data;
 
-	aes->encrypt((uint8_t*) decoded, (uint8_t*) out, length * 4, key, AES_KEY_SIZE, iv);
+	//aes->encrypt((uint8_t*) decoded, (uint8_t*) out, length * 4, key, AES_KEY_SIZE, iv);
+	encryptBytes((uint8_t*) decoded, length * 4, (uint8_t*) out, length * 4 + AES_BLOCK_SIZE, key, AES_KEY_SIZE, iv);
 
 	delete[] decoded;
 }

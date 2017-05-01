@@ -8,8 +8,8 @@ from pandas import Series
 title = 'VByte Compression with Encrypted Data (Regular vs. SGX)'
 file1 = 'Release/compression_enc_u_b.csv'
 file2 = 'Simulation/compression_enc_t_b.csv'
-label1 = 'regular'
-label2 = 'inside SGX enclave'
+label1 = 'Regular'
+label2 = 'Inside SGX enclave'
 xAxis = 'Data'
 xLabel = 'No of 32 bit values'
 yAxis = 'IOPS'
@@ -27,7 +27,7 @@ spy2.set_index(xAxis, inplace=True)
 #spy3.set_index(xAxis, inplace=True)
 #spy4.set_index(xAxis, inplace=True)
 
-diff = spy1.subtract(spy2).abs()
+diff = spy1.subtract(spy2)
 
 #diff = pd.concat([spy1, spy2]).groupby(level=0).transform(Series.diff)
 #diff.set_index(xAxis, inplace=True)

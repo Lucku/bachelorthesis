@@ -33,13 +33,13 @@
     <ClInclude Include="Timer.h">
       <Filter>Headerdateien\util</Filter>
     </ClInclude>
-    <ClInclude Include="..\BenchmarkLibs\BasicBenchmark.h">
+    <ClInclude Include="BasicBenchmark.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="..\BenchmarkLibs\Benchmark.h">
+    <ClInclude Include="Benchmark.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="..\BenchmarkLibs\BulkBenchmark.h">
+    <ClInclude Include="BulkBenchmark.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>

@@ -2,7 +2,7 @@
 #include "BasicBenchmark.h"
 #include "BulkBenchmark.h"
 
-#define NUM_REPS 50
+#define NUM_REPS 40
 #define NUM_VALUES 10000
 
 sgx_enclave_id_t eid;
@@ -22,10 +22,11 @@ int main()
 
 	Benchmark *basic1 = new BasicBenchmark("Iteration Benchmark trusted single", NUM_REPS, 10000, Benchmark::MeasurementMode::TIME);
 	basic1->benchmark("iterate_t_s.csv", ecallIterate, NUM_VALUES);
-
-	Benchmark *bulk2 = new BulkBenchmark("Compression Benchmark trusted bulk", NUM_REPS);
-	bulk2->benchmark("compression_t_b.csv", ecallVByteEncode, [](int in) { return 5 * in; }, NUM_VALUES);
-
+	*/
+	//Benchmark *bulk2 = new BulkBenchmark("Compression Benchmark trusted bulk", NUM_REPS);
+	//bulk2->benchmark("compression_t_b_new.csv", ecallVByteEncode, [](int in) { return 5 * in; }, NUM_VALUES);
+	
+	/*
 	Benchmark *basic2 = new BasicBenchmark("Compression Benchmark trusted single", NUM_REPS);
 	basic2->benchmark("compression_t_s.csv", ecallVByteEncode, [](int in) { return 5 * in; }, NUM_VALUES);
 	
@@ -35,13 +36,12 @@ int main()
 	Benchmark *basic4 = new BasicBenchmark("Decompression Benchmark trusted single", NUM_REPS);
 	basic4->benchmark("decompression_t_s.csv", ecallVByteDecode, [](int in) { return in; }, NUM_VALUES);
 	*/
-
 	// TODO see if memory is sufficient in real (non-debug) environment (or if delete still doesn't delete)
-	//Benchmark *bulk5 = new BulkBenchmark("Compression Benchmark encrypted trusted bulk", 40);
-	//bulk5->benchmark("compression_enc_t_b.csv", ecallVByteEncodeEncrypted, [](int in) { return 5 * in + AES_BLOCK_SIZE; }, NUM_VALUES);
+	Benchmark *bulk5 = new BulkBenchmark("Compression Benchmark encrypted trusted bulk", NUM_REPS);
+	bulk5->benchmark("compression_enc_t_b.csv", ecallVByteEncodeEncrypted, [](int in) { return 5 * in + AES_BLOCK_SIZE; }, NUM_VALUES);
 
-	Benchmark *bulk6 = new BulkBenchmark("Decompression Benchmark encrypted trusted bulk", 40);
-	bulk6->benchmark("decompression_enc_t_b.csv", ecallVByteDecodeEncrypted, [](int in) {return in + AES_BLOCK_SIZE / 4; }, NUM_VALUES);
+	//Benchmark *bulk6 = new BulkBenchmark("Decompression Benchmark encrypted trusted bulk", NUM_REPS);
+	//bulk6->benchmark("decompression_enc_t_b.csv", ecallVByteDecodeEncrypted, [](int in) {return in + AES_BLOCK_SIZE / 4; }, NUM_VALUES);
 
 	getchar();
 

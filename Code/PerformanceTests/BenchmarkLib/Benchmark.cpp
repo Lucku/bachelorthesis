@@ -44,7 +44,7 @@ void Benchmark::benchmark(const char * file, void(*f) (uint64_t *data, size_t le
 		uint64_t *data = new uint64_t[i];
 		initializeRandomData(data, i);
 
-		int64_t time = singleBenchmark(f, data, i);
+		uint64_t time = singleBenchmark(f, data, i);
 
 		switch (mode) {
 		case TIME: fileToWrite << i << "," << time << std::endl; break;
@@ -82,7 +82,7 @@ void Benchmark::benchmark(const char * file, void(*f) (uint32_t *in, size_t leng
 		initializeRandomData(in, i);
 		uint8_t *out = new uint8_t[sizefunc(i)];
 
-		int64_t time = singleBenchmark(f, in, i, out);
+		uint64_t time = singleBenchmark(f, in, i, out);
 
 		switch (mode) {
 		case TIME: fileToWrite << i << "," << time << std::endl; break;
@@ -121,7 +121,7 @@ void Benchmark::benchmark(const char *file, void(*f) (uint8_t *in, size_t length
 		initializeRandomData(in, i);
 		uint32_t *out = new uint32_t[sizefunc(i)];
 
-		int64_t time = singleBenchmark(f, in, i, out);
+		uint64_t time = singleBenchmark(f, in, i, out);
 
 		switch (mode) {
 		case TIME: fileToWrite << i << "," << time << std::endl; break;

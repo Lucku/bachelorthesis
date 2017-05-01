@@ -10,6 +10,7 @@
 #include <cstdint>
 #include <iostream>
 
+#include <Windows.h>
 #include <stdio.h>
 #include <tchar.h>
 #include <openssl\conf.h>
