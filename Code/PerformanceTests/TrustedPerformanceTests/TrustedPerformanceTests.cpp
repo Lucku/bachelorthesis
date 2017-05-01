@@ -16,36 +16,50 @@ int main()
 	int updated = 0;
 	eid = initializeEnclave(ENCLAVE_FILE, 0, &token, &updated);
 
-	/*
-	Benchmark *bulk1 = new BulkBenchmark("Iteration Benchmark trusted bulk", NUM_REPS, 10000, Benchmark::MeasurementMode::TIME);
-	bulk1->benchmark("iterate_t_b.csv", ecallIterate, NUM_VALUES);
+	Benchmark *b;
 
-	Benchmark *basic1 = new BasicBenchmark("Iteration Benchmark trusted single", NUM_REPS, 10000, Benchmark::MeasurementMode::TIME);
-	basic1->benchmark("iterate_t_s.csv", ecallIterate, NUM_VALUES);
-	*/
-	//Benchmark *bulk2 = new BulkBenchmark("Compression Benchmark trusted bulk", NUM_REPS);
-	//bulk2->benchmark("compression_t_b_new.csv", ecallVByteEncode, [](int in) { return 5 * in; }, NUM_VALUES);
-	
-	/*
-	Benchmark *basic2 = new BasicBenchmark("Compression Benchmark trusted single", NUM_REPS);
-	basic2->benchmark("compression_t_s.csv", ecallVByteEncode, [](int in) { return 5 * in; }, NUM_VALUES);
-	
-	Benchmark *bulk3 = new BulkBenchmark("Decompression Benchmark trusted bulk", NUM_REPS);
-	bulk3->benchmark("decompression_t_b.csv", ecallVByteDecode, [](int in) { return in; }, NUM_VALUES);
+	std::cout << "Choose benchmark method:\n(1) Bulk data processing\n(2) Single data processing\n[default: 1]" << std::endl;
+	int method;
+	std::cin >> method;
 
-	Benchmark *basic4 = new BasicBenchmark("Decompression Benchmark trusted single", NUM_REPS);
-	basic4->benchmark("decompression_t_s.csv", ecallVByteDecode, [](int in) { return in; }, NUM_VALUES);
-	*/
-	// TODO see if memory is sufficient in real (non-debug) environment (or if delete still doesn't delete)
-	Benchmark *bulk5 = new BulkBenchmark("Compression Benchmark encrypted trusted bulk", NUM_REPS);
-	bulk5->benchmark("compression_enc_t_b.csv", ecallVByteEncodeEncrypted, [](int in) { return 5 * in + AES_BLOCK_SIZE; }, NUM_VALUES);
+	std::cout << "Choose benchmark unit:\n(1) Time\n(2) IOPS\n(3) MIOPS\n[default: 2]" << std::endl;
+	int unit;
+	std::cin >> unit;
 
-	//Benchmark *bulk6 = new BulkBenchmark("Decompression Benchmark encrypted trusted bulk", NUM_REPS);
-	//bulk6->benchmark("decompression_enc_t_b.csv", ecallVByteDecodeEncrypted, [](int in) {return in + AES_BLOCK_SIZE / 4; }, NUM_VALUES);
+	Benchmark::MeasurementMode mode = Benchmark::MeasurementMode::IOPS;
 
-	getchar();
+	switch (unit) {
+	case 1: mode = Benchmark::MeasurementMode::TIME; break;
+	case 3: mode = Benchmark::MeasurementMode::MIOPS;
+	}
 
-    return 0;
+	if (method == 2) b = new BasicBenchmark("", NUM_REPS, NUM_VALUES, mode);
+	else b = new BulkBenchmark("", NUM_REPS, NUM_VALUES, mode);
+
+	std::string options[5] = { "iterate", "compress", "decompress", "compress encrypted", "decompress encrypted" };
+
+	std::cout << "Choose function to test\n(1) " << options[0]
+		<< "\n(2) " << options[1]
+		<< "\n(3) " << options[2]
+		<< "\n(4) " << options[3]
+		<< "\n(5) " << options[4] << "\n[default: 2]" << std::endl;
+
+	int func;
+	std::cin >> func;
+
+	switch (func) {
+	case 1: b->benchmark("iterate_t.csv", ecallIterate, NUM_VALUES); break;
+	case 3: b->benchmark("decompress_t.csv", ecallVByteDecode, [](int in) {return in; }, NUM_VALUES); break;
+	case 4: b->benchmark("compress_enc_t.csv", ecallVByteEncodeEncrypted, [](int in) {return 5 * in + AES_BLOCK_SIZE; }, NUM_VALUES); break;
+	case 5: b->benchmark("decompress_enc_t.csv", ecallVByteDecodeEncrypted, [](int in) {return in + AES_BLOCK_SIZE / 4; }, NUM_VALUES); break;
+	default: b->benchmark("compress_t.csv", ecallVByteEncode, [](int in) {return in * 5; }, NUM_VALUES);
+	}
+
+	std::cout << "Done" << std::endl;
+
+	system("pause");
+
+	return 0;
 }
 
 sgx_enclave_id_t initializeEnclave(LPCWSTR file, int debug, sgx_launch_token_t * token, int * updated)
@@ -56,6 +70,9 @@ sgx_enclave_id_t initializeEnclave(LPCWSTR file, int debug, sgx_launch_token_t *
 
 	if (ret != SGX_SUCCESS) {
 		std::cout << "Something went terribly wrong: " << ret << std::endl;
+	}
+	else {
+		std::cout << "Created enclave..." << std::endl;
 	}
 
 	return eid;

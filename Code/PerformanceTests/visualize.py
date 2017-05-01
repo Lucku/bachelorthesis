@@ -6,8 +6,8 @@ from pandas import Series
 
 # -------------- Configuration -------------- #
 title = 'VByte Compression with Encrypted Data (Regular vs. SGX)'
-file1 = 'Release/compression_enc_u_b.csv'
-file2 = 'Simulation/compression_enc_t_b.csv'
+file1 = 'Release/decompress_u_b_new.csv'
+file2 = 'Simulation/decompression_t_b_new.csv'
 label1 = 'Regular'
 label2 = 'Inside SGX enclave'
 xAxis = 'Data'
