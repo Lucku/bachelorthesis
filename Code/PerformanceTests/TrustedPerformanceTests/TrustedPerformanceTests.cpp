@@ -47,15 +47,23 @@ int main()
 	int func;
 	std::cin >> func;
 
+	const char *filename;
+
 	switch (func) {
-	case 1: b->benchmark("iterate_t.csv", ecallIterate, NUM_VALUES); break;
-	case 3: b->benchmark("decompress_t.csv", ecallVByteDecode, [](int in) {return in; }, NUM_VALUES); break;
-	case 4: b->benchmark("compress_enc_t.csv", ecallVByteEncodeEncrypted, [](int in) {return 5 * in + AES_BLOCK_SIZE; }, NUM_VALUES); break;
-	case 5: b->benchmark("decompress_enc_t.csv", ecallVByteDecodeEncrypted, [](int in) {return in + AES_BLOCK_SIZE / 4; }, NUM_VALUES); break;
-	default: b->benchmark("compress_t.csv", ecallVByteEncode, [](int in) {return in * 5; }, NUM_VALUES);
+	case 1: filename = "iterate_t.csv";
+		b->benchmark(filename, ecallIterate, NUM_VALUES); break;
+	case 3: filename = "decompress_t.csv";
+		b->benchmark(filename, ecallVByteDecode, [](int in) {return in; }, NUM_VALUES); break;
+	case 4: filename = "compress_enc_t.csv";
+		b->benchmark(filename, ecallVByteEncodeEncrypted, [](int in) {return 5 * in + AES_BLOCK_SIZE; }, NUM_VALUES); break;
+	case 5: filename = "decompress_enc_t.csv";
+		b->benchmark(filename, ecallVByteDecodeEncrypted, [](int in) {return in + AES_BLOCK_SIZE / 4; }, NUM_VALUES); break;
+	default: filename = "compress_t.csv";
+		b->benchmark(filename, ecallVByteEncode, [](int in) {return in * 5; }, NUM_VALUES);
 	}
 
 	std::cout << "Done" << std::endl;
+	std::cout << "Results saved to " << filename << std::endl;
 
 	system("pause");
 

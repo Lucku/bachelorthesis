@@ -6,14 +6,14 @@ from pandas import Series
 
 # -------------- Configuration -------------- #
 title = 'VByte Compression with Encrypted Data (Regular vs. SGX)'
-file1 = 'Release/decompress_u_b_new.csv'
-file2 = 'Simulation/decompression_t_b_new.csv'
+file1 = 'Release/compress_enc_u.csv'
+file2 = 'Simulation/compress_enc_t.csv'
 label1 = 'Regular'
 label2 = 'Inside SGX enclave'
 xAxis = 'Data'
 xLabel = 'No of 32 bit values'
-yAxis = 'IOPS'
-yLabel = 'Integer operations per second'
+yAxis = 'MIOPS'
+yLabel = 'Million integer operations per second'
 windowSize = 50
 # ------------------------------------------- #
 
@@ -24,7 +24,7 @@ spy2 = pd.read_csv(file2)
 
 spy1.set_index(xAxis, inplace=True)
 spy2.set_index(xAxis, inplace=True)
-#spy3.set_index(xAxis, inplace=True)
+#spy3.set_index(xAxis, inplace=True)s
 #spy4.set_index(xAxis, inplace=True)
 
 diff = spy1.subtract(spy2)

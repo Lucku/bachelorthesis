@@ -16,6 +16,15 @@
     <Filter Include="Headerdateien\crypto">
       <UniqueIdentifier>{2ed0b2dc-b2a3-4e71-bfe8-f18db97422f2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Headerdateien\functions">
+      <UniqueIdentifier>{08dd491b-8f94-4ee8-95c7-628fb07d94ba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\functions">
+      <UniqueIdentifier>{28d47e6b-cca8-4923-aedb-99ec4918a552}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\crypto">
+      <UniqueIdentifier>{04d3520e-7576-4636-ab60-e91fc848c4da}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -30,11 +39,17 @@
     <ClInclude Include="CryptoSystem.h">
       <Filter>Headerdateien\crypto</Filter>
     </ClInclude>
-    <ClInclude Include="Functions.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
     <ClInclude Include="AESECBCryptoSystem.h">
       <Filter>Headerdateien\crypto</Filter>
+    </ClInclude>
+    <ClInclude Include="VByte.h">
+      <Filter>Headerdateien\functions</Filter>
+    </ClInclude>
+    <ClInclude Include="RunLengthEncoding.h">
+      <Filter>Headerdateien\functions</Filter>
+    </ClInclude>
+    <ClInclude Include="Functions.h">
+      <Filter>Headerdateien\functions</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -45,10 +60,16 @@
       <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="AESECBCryptoSystem.cpp">
-      <Filter>Quelldateien</Filter>
+      <Filter>Quelldateien\crypto</Filter>
+    </ClCompile>
+    <ClCompile Include="RunLengthEncoding.cpp">
+      <Filter>Quelldateien\functions</Filter>
+    </ClCompile>
+    <ClCompile Include="VByte.cpp">
+      <Filter>Quelldateien\functions</Filter>
     </ClCompile>
     <ClCompile Include="Functions.cpp">
-      <Filter>Quelldateien</Filter>
+      <Filter>Quelldateien\functions</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

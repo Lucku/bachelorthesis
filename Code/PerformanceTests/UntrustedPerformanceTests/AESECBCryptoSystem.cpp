@@ -35,7 +35,7 @@ int AESECBCryptoSystem::decrypt(uint8_t *input, uint8_t *output, int length, con
 	OpenSSL_add_all_algorithms();
 
 	EVP_CIPHER_CTX ctx;
-	
+
 	EVP_CIPHER_CTX_init(&ctx);
 
 	EVP_CipherInit_ex(&ctx, EVP_aes_128_ecb(), NULL, key, iv, FALSE);
