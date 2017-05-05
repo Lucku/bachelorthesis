@@ -147,8 +147,10 @@ size_t vByteEncodeEncrypted(uint8_t *in, size_t length, uint8_t *out)
 {
 	//AESECBCryptoSystem *aes = new AESECBCryptoSystem();
 
+	size_t encodedLength = (length / sizeof(uint32_t)) * 5;
+
 	uint8_t *data = new uint8_t[length];
-	uint8_t *encoded = new uint8_t[(length / 4) * 5];
+	uint8_t *encoded = new uint8_t[encodedLength];
 
 	uint8_t key[AES_KEY_SIZE] = "123456789012345";
 	uint8_t iv[AES_BLOCK_SIZE] = "123456789012345";
@@ -182,8 +184,10 @@ size_t vByteDecodeEncrypted(uint8_t *in, size_t length, uint8_t *out)
 {
 	//AESECBCryptoSystem *aes = new AESECBCryptoSystem();
 
+	size_t decodedLength = length * sizeof(uint32_t);
+
 	uint8_t *data = new uint8_t[length];
-	uint8_t *decoded = new uint8_t[length * 4];
+	uint8_t *decoded = new uint8_t[decodedLength];
 
 	uint8_t key[AES_KEY_SIZE] = "123456789012345";
 	uint8_t iv[AES_BLOCK_SIZE] = "123456789012345";

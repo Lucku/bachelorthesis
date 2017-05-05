@@ -1,9 +1,7 @@
 #include "stdafx.h"
 #include "BasicBenchmark.h"
 #include "BulkBenchmark.h"
-
-#define NUM_REPS 40
-#define NUM_VALUES 10000
+#include "Functions.h"
 
 sgx_enclave_id_t eid;
 
@@ -33,16 +31,25 @@ int main()
 	case 3: mode = Benchmark::MeasurementMode::MIOPS;
 	}
 
-	if (method == 2) b = new BasicBenchmark("", NUM_REPS, NUM_VALUES, mode);
-	else b = new BulkBenchmark("", NUM_REPS, NUM_VALUES, mode);
+	if (method == 2) b = new BasicBenchmark("", DEFAULT_NUM_REPS, mode);
+	else b = new BulkBenchmark("", DEFAULT_NUM_REPS, mode);
 
-	std::string options[5] = { "iterate", "compress", "decompress", "compress encrypted", "decompress encrypted" };
+	std::string options[7] = { "iterate",
+		"compress",
+		"decompress",
+		"compress encrypted",
+		"decompress encrypted",
+		"run length encode",
+		"RLE aggregation" };
 
-	std::cout << "Choose function to test\n(1) " << options[0]
+	std::cout << "Choose function to test:\n(1) " << options[0]
 		<< "\n(2) " << options[1]
 		<< "\n(3) " << options[2]
 		<< "\n(4) " << options[3]
-		<< "\n(5) " << options[4] << "\n[default: 2]" << std::endl;
+		<< "\n(5) " << options[4]
+		<< "\n(6) " << options[5]
+		<< "\n(7) " << options[6]
+		<< "\n[default: 2]" << std::endl;
 
 	int func;
 	std::cin >> func;
@@ -51,15 +58,19 @@ int main()
 
 	switch (func) {
 	case 1: filename = "iterate_t.csv";
-		b->benchmark(filename, ecallIterate, NUM_VALUES); break;
+		b->benchmark(filename, ecallIterate); break;
 	case 3: filename = "decompress_t.csv";
-		b->benchmark(filename, ecallVByteDecode, [](int in) {return in; }, NUM_VALUES); break;
+		b->benchmark(filename, ecallVByteDecode, [](int in) {return 4 * in; }, DEFAULT_BM_SMALL); break;
 	case 4: filename = "compress_enc_t.csv";
-		b->benchmark(filename, ecallVByteEncodeEncrypted, [](int in) {return 5 * in + AES_BLOCK_SIZE; }, NUM_VALUES); break;
+		b->benchmark(filename, ecallVByteEncodeEncrypted, [](int in) {return (in / 4) * 5 + AES_BLOCK_SIZE; }, DEFAULT_BM_MEDIUM, sizeof(uint32_t)); break;
 	case 5: filename = "decompress_enc_t.csv";
-		b->benchmark(filename, ecallVByteDecodeEncrypted, [](int in) {return in + AES_BLOCK_SIZE / 4; }, NUM_VALUES); break;
-	default: filename = "compress_t.csv";
-		b->benchmark(filename, ecallVByteEncode, [](int in) {return in * 5; }, NUM_VALUES);
+		b->benchmark(filename, ecallVByteDecodeEncrypted, [](int in) {return 4 * in + AES_BLOCK_SIZE; }, DEFAULT_BM_SMALL); break;
+	case 6: filename = "runlengthencode_t.csv";
+		b->benchmark(filename, ecallRunLengthEncode, [](int in) {return 2 * in; }, DEFAULT_BM_BIG, sizeof(uint32_t)); break;
+	case 7: filename = "rlesum_t.csv";
+		b->benchmark(filename, ecallRunLengthEncodeAndSum, [](int in) {return 8; }, DEFAULT_BM_BIG, sizeof(uint32_t)); break;
+	default: filename = "compress_u.csv";
+		b->benchmark(filename, ecallVByteEncode, [](int in) {return (in / 4) * 5; }, DEFAULT_BM_MEDIUM, sizeof(uint32_t));
 	}
 
 	std::cout << "Done" << std::endl;
@@ -86,27 +97,74 @@ sgx_enclave_id_t initializeEnclave(LPCWSTR file, int debug, sgx_launch_token_t *
 	return eid;
 }
 
-void ecallIterate(uint64_t *data, size_t length) {
+size_t ecallIterate(uint8_t *in, size_t length, uint8_t *out) {
 
-	enclaveIterate(eid, data, length);
+	size_t ret;
+
+	enclaveIterate(eid, &ret, in, length, out);
+
+	return ret;
 }
 
-void ecallVByteEncode(uint32_t *in, size_t length, uint8_t *out) {
+size_t ecallVByteEncode(uint8_t *in, size_t length, uint8_t *out) {
 	
-	enclaveVByteEncode(eid, in, length, out, length * 5);
+	size_t ret;
+
+	return enclaveVByteEncode(eid, &ret, in, length, out, (length / sizeof(uint32_t)) * 5);
+
+	return ret;
 }
 
-void ecallVByteDecode(uint8_t *in, size_t length, uint32_t *out) {
+size_t ecallVByteDecode(uint8_t *in, size_t length, uint8_t *out) {
 
-	enclaveVByteDecode(eid, in, length, out, length);
+	size_t ret;
+
+	enclaveVByteDecode(eid, &ret, in, length, out, length * sizeof(uint32_t));
+
+	return ret;
 }
 
-void ecallVByteEncodeEncrypted(uint32_t *in, size_t length, uint8_t *out) {
+size_t ecallVByteEncodeEncrypted(uint8_t *in, size_t length, uint8_t *out) {
 
-	enclaveVByteEncodeEncrypted(eid, in, length, out, length * 5 + AES_BLOCK_SIZE);
+	size_t ret;
+
+	enclaveVByteEncodeEncrypted(eid, &ret, in, length, out);
+
+	return ret;
 }
 
-void ecallVByteDecodeEncrypted(uint8_t *in, size_t length, uint32_t *out) {
+size_t ecallVByteDecodeEncrypted(uint8_t *in, size_t length, uint8_t *out) {
 
-	enclaveVByteDecodeEncrypted(eid, in, length, out, length + AES_BLOCK_SIZE / 4);
+	size_t ret;
+
+	return enclaveVByteDecodeEncrypted(eid, &ret, in, length, out);
+
+	return ret;
+}
+
+size_t ecallRunLengthEncode(uint8_t *in, size_t length, uint8_t *out) {
+
+	size_t ret;
+
+	enclaveRunLengthEncode(eid, &ret, in, length, out, length * 2);
+
+	return ret;
+}
+
+size_t ecallRunLengthDecode(uint8_t *in, size_t length, uint8_t *out) {
+
+	size_t ret;
+	
+	enclaveRunLengthDecode(eid, &ret, in, length, out, length);
+
+	return ret;
+}
+
+size_t ecallRunLengthEncodeAndSum(uint8_t *in, size_t length, uint8_t *out) {
+
+	size_t ret;
+	
+	enclaveRunLengthEncodeAndSum(eid, &ret, in, length, out);
+
+	return ret;
 }

@@ -6,12 +6,12 @@ from pandas import Series
 
 # -------------- Configuration -------------- #
 title = 'VByte Compression with Encrypted Data (Regular vs. SGX)'
-file1 = 'Release/compress_enc_u.csv'
-file2 = 'Simulation/compress_enc_t.csv'
+file1 = 'x64/Release/decompress_enc_u.csv'
+file2 = 'x64/Simulation/decompress_enc_t.csv'
 label1 = 'Regular'
 label2 = 'Inside SGX enclave'
 xAxis = 'Data'
-xLabel = 'No of 32 bit values'
+xLabel = 'Byte of data'
 yAxis = 'MIOPS'
 yLabel = 'Million integer operations per second'
 windowSize = 50

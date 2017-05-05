@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "RunLengthEncoding.h"
+#include "RLESum.h"
 
 size_t runLengthEncode(uint8_t *in, size_t length, uint8_t *out)
 {
@@ -53,4 +53,29 @@ size_t runLengthDecode(uint8_t *in, size_t length, uint8_t *out)
 	}
 
 	return (out32 - initOut32) * sizeof(uint32_t);
+}
+
+size_t runLengthEncodeAndSum(uint8_t *in, size_t length, uint8_t *out)
+{
+	uint8_t *encoded = new uint8_t[length << 1];
+
+	size_t encSize = runLengthEncode(in, length, encoded);
+
+	uint64_t sum64 = 0;
+
+	const uint32_t* in32 = reinterpret_cast<const uint32_t*>(encoded);
+	const size_t countIn32 = encSize >> 2;
+	for (size_t i = 0; i < countIn32; i += 2) {
+		const uint32_t value = in32[i];
+		const uint32_t runlength = in32[i + 1];
+		sum64 += static_cast<uint64_t>(value) * static_cast<uint64_t>(runlength);
+	}
+
+	*reinterpret_cast<uint64_t*>(out) = sum64;
+
+	delete[] encoded;
+
+	std::cout << *reinterpret_cast<uint64_t*>(out) << std::endl;
+
+	return sizeof(uint64_t);
 }

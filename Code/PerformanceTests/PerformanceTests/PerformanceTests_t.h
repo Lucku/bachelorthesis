@@ -15,11 +15,14 @@ extern "C" {
 #endif
 
 
-void enclaveIterate(uint64_t* data, size_t length);
-void enclaveVByteEncode(uint32_t* in, size_t inLength, uint8_t* out, size_t outLength);
-void enclaveVByteDecode(uint8_t* in, size_t inLength, uint32_t* out, size_t outLength);
-void enclaveVByteEncodeEncrypted(uint32_t* in, size_t inLength, uint8_t* out, size_t outLength);
-void enclaveVByteDecodeEncrypted(uint8_t* in, size_t inLength, uint32_t* out, size_t outLength);
+size_t enclaveIterate(uint8_t* in, size_t length, uint8_t* out);
+size_t enclaveVByteEncode(uint8_t* in, size_t inLength, uint8_t* out, size_t outLength);
+size_t enclaveVByteDecode(uint8_t* in, size_t inLength, uint8_t* out, size_t outLength);
+size_t enclaveVByteEncodeEncrypted(uint8_t* in, size_t length, uint8_t* out);
+size_t enclaveVByteDecodeEncrypted(uint8_t* in, size_t length, uint8_t* out);
+size_t enclaveRunLengthEncode(uint8_t* in, size_t inLength, uint8_t* out, size_t outLength);
+size_t enclaveRunLengthDecode(uint8_t* in, size_t inLength, uint8_t* out, size_t outLength);
+size_t enclaveRunLengthEncodeAndSum(uint8_t* in, size_t length, uint8_t* out);
 int encryptBytes(uint8_t* input, size_t inLength, uint8_t* output, size_t outLength, const uint8_t* key, size_t keyLength, uint8_t* iv);
 int decryptBytes(uint8_t* input, size_t inLength, uint8_t* output, size_t outLength, const uint8_t* key, size_t keyLength, uint8_t* iv);
 

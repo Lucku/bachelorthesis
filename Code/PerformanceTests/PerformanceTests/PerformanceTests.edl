@@ -2,11 +2,22 @@ enclave {
 	from "sgx_tssl.edl" import *;
 
     trusted {
-		public void enclaveIterate([in, count=length] uint64_t *data, size_t length);
-        public void enclaveVByteEncode([in, count=inLength] uint32_t *in, size_t inLength, [out, count=outLength] uint8_t *out, size_t outLength);
-		public void enclaveVByteDecode([in, count=inLength] uint8_t *in, size_t inLength, [out, count=outLength] uint32_t *out, size_t outLength);
-		public void enclaveVByteEncodeEncrypted([in, count=inLength] uint32_t *in, size_t inLength, [out, count=outLength] uint8_t *out, size_t outLength);
-		public void enclaveVByteDecodeEncrypted([in, count=inLength] uint8_t *in, size_t inLength, [out, count=outLength] uint32_t *out, size_t outLength);
+		/* Basic functions */
+		public size_t enclaveIterate([in, size=length] uint8_t *in, size_t length, [out, size=length] uint8_t *out);
+        public size_t enclaveVByteEncode([in, size=inLength] uint8_t *in, size_t inLength, [out, size=outLength] uint8_t *out, size_t outLength);
+		public size_t enclaveVByteDecode([in, size=inLength] uint8_t *in, size_t inLength, [out, size=outLength] uint8_t *out, size_t outLength);
+		
+		/* Encrypted data goes in and out, we don't need to care about copying it */
+		public size_t enclaveVByteEncodeEncrypted([user_check] uint8_t *in, size_t length, [user_check] uint8_t *out);
+		public size_t enclaveVByteDecodeEncrypted([user_check] uint8_t *in, size_t length, [user_check] uint8_t *out);
+		
+		/* RLE and aggregation using RLE */
+		public size_t enclaveRunLengthEncode([in, size=inLength] uint8_t *in, size_t inLength, [out, size=outLength] uint8_t *out, size_t outLength);
+		public size_t enclaveRunLengthDecode([in, size=inLength] uint8_t *in, size_t inLength, [out, size=outLength] uint8_t *out, size_t outLength);
+		public size_t enclaveRunLengthEncodeAndSum([in, size=length] uint8_t *in, size_t length, [out, size=8] uint8_t *out);
+		/* public size_t processEncrypted(size_t(*f) (uint8_t *in, size_t length, uint8_t *out), [in, size=encLength] uint8_t *encIn, size_t encLength, size_t outLength, [out, size=decLength + 16] *decOut); */
+
+		/* Utilities */
 		int encryptBytes([in, size=inLength] uint8_t *input, size_t inLength, [in, size=outLength] uint8_t *output, size_t outLength, [in, size=keyLength] const uint8_t *key, size_t keyLength, [in, size=16] uint8_t *iv);
 		int decryptBytes([in, size=inLength] uint8_t *input, size_t inLength, [in, size=outLength] uint8_t *output, size_t outLength, [in, size=keyLength] const uint8_t *key, size_t keyLength, [in, size=16] uint8_t *iv);
     };

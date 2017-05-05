@@ -45,10 +45,10 @@
     <ClInclude Include="VByte.h">
       <Filter>Headerdateien\functions</Filter>
     </ClInclude>
-    <ClInclude Include="RunLengthEncoding.h">
+    <ClInclude Include="Functions.h">
       <Filter>Headerdateien\functions</Filter>
     </ClInclude>
-    <ClInclude Include="Functions.h">
+    <ClInclude Include="RLESum.h">
       <Filter>Headerdateien\functions</Filter>
     </ClInclude>
   </ItemGroup>
@@ -62,13 +62,13 @@
     <ClCompile Include="AESECBCryptoSystem.cpp">
       <Filter>Quelldateien\crypto</Filter>
     </ClCompile>
-    <ClCompile Include="RunLengthEncoding.cpp">
-      <Filter>Quelldateien\functions</Filter>
-    </ClCompile>
     <ClCompile Include="VByte.cpp">
       <Filter>Quelldateien\functions</Filter>
     </ClCompile>
     <ClCompile Include="Functions.cpp">
+      <Filter>Quelldateien\functions</Filter>
+    </ClCompile>
+    <ClCompile Include="RLESum.cpp">
       <Filter>Quelldateien\functions</Filter>
     </ClCompile>
   </ItemGroup>

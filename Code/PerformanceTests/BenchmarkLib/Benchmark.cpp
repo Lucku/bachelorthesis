@@ -5,18 +5,13 @@
 Benchmark::Benchmark(std::string name, int numRepetitions, MeasurementMode mode)
 	: name(name), numRepetitions(numRepetitions), mode(mode)
 {
-	timer = new Timer();
 }
 
 Benchmark::Benchmark(std::string name, int numRepetitions) : Benchmark(name, numRepetitions, IOPS) {}
 
-Benchmark::Benchmark(std::string name) : Benchmark(name, 1) {}
+Benchmark::Benchmark(std::string name) : Benchmark(name, DEFAULT_NUM_REPS) {}
 
 Benchmark::Benchmark() : Benchmark("()") {};
-
-Benchmark::~Benchmark() {
-	delete timer;
-}
 
 void Benchmark::benchmark(const char *file, size_t(*f) (uint8_t *in, size_t length, uint8_t *out), int(*sizefunc) (int inSize), int testRange, int stepSize) {
 

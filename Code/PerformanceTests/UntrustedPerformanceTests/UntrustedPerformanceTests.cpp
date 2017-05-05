@@ -1,12 +1,9 @@
 #include "stdafx.h"
 #include "Functions.h"
 #include "VByte.h"
-#include "RunLengthEncoding.h"
+#include "RLESum.h"
 #include "BasicBenchmark.h"
 #include "BulkBenchmark.h"
-
-#define NUM_REPS 40
-#define NUM_VALUES 40000
 
 /* Performance Tests without using an Intel SGX enclave */
 int main()
@@ -31,8 +28,8 @@ int main()
 	case 3: mode = Benchmark::MeasurementMode::MIOPS;
 	}
 
-	if (method == 2) b = new BasicBenchmark("", NUM_REPS, mode);
-	else b = new BulkBenchmark("", NUM_REPS, mode);
+	if (method == 2) b = new BasicBenchmark("", DEFAULT_NUM_REPS, mode);
+	else b = new BulkBenchmark("", DEFAULT_NUM_REPS, mode);
 
 	std::string options[7] = { "iterate", 
 		"compress", 
@@ -40,9 +37,9 @@ int main()
 		"compress encrypted", 
 		"decompress encrypted",
 		"run length encode",
-		"run length decode" };
+		"RLE aggregation" };
 
-	std::cout << "Choose function to test\n(1) " << options[0] 
+	std::cout << "Choose function to test:\n(1) " << options[0] 
 		<< "\n(2) " << options[1] 
 		<< "\n(3) " << options[2]
 		<< "\n(4) " << options[3]
@@ -58,20 +55,19 @@ int main()
 
 	switch (func) {
 	case 1: filename = "iterate_u.csv";
-		b->benchmark(filename, iterate, [](int in) {return in; }, NUM_VALUES); break;
+		b->benchmark(filename, iterate); break;
 	case 3: filename = "decompress_u.csv";
-		b->benchmark(filename, vByteDecode, [](int in) {return 4 * in; }, NUM_VALUES); break;
+		b->benchmark(filename, vByteDecode, [](int in) {return 4 * in; }, DEFAULT_BM_SMALL); break;
 	case 4: filename = "compress_enc_u.csv";
-		b->benchmark(filename, vByteEncodeEncrypted, [](int in) {return (in / 4) * 5 + AES_BLOCK_SIZE; }, NUM_VALUES, 4); break;
+		b->benchmark(filename, vByteEncodeEncrypted, [](int in) {return (in / 4) * 5 + AES_BLOCK_SIZE; }, DEFAULT_BM_MEDIUM, sizeof(uint32_t)); break;
 	case 5: filename = "decompress_enc_u.csv";
-		b->benchmark(filename, vByteDecodeEncrypted, [](int in) {return 4 * in + AES_BLOCK_SIZE; }, NUM_VALUES); break;
+		b->benchmark(filename, vByteDecodeEncrypted, [](int in) {return 4 * in + AES_BLOCK_SIZE; }, DEFAULT_BM_SMALL); break;
 	case 6: filename = "runlengthencode_u.csv";
-		b->benchmark(filename, runLengthEncode, [](int in) {return 2 * in; }, NUM_VALUES, 4); break;
-	case 7: //filename = "runlengthdecode_u.csv";
-		//b->benchmark(filename, runLengthDecode, [](int in) {return 2 * in; }, NUM_VALUES, 4); break;
-		std::cout << "Run length decode doesn't work standalone, as it needs run length encoded input data" << std::endl; break;
+		b->benchmark(filename, runLengthEncode, [](int in) {return 2 * in; }, DEFAULT_BM_BIG, sizeof(uint32_t)); break;
+	case 7: filename = "rlesum_u.csv";
+		b->benchmark(filename, runLengthEncodeAndSum, [](int in) {return 8; }, DEFAULT_BM_BIG, sizeof(uint32_t)); break;
 	default: filename = "compress_u.csv";
-		b->benchmark(filename, vByteEncode, [](int in) {return (in / 4) * 5; }, NUM_VALUES, 4);
+		b->benchmark(filename, vByteEncode, [](int in) {return (in / 4) * 5; }, DEFAULT_BM_MEDIUM, sizeof(uint32_t));
 	}
 
 	std::cout << "Done" << std::endl;

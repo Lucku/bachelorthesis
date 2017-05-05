@@ -261,7 +261,13 @@
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <Optimization>Disabled</Optimization>
       <WarningLevel>Level3</WarningLevel>
-      <AdditionalIncludeDirectories>$(SGXSDKInstallPath)include;$(SGXSDKInstallPath)include\tlibc;$(SGXSDKInstallPath)include\libc++;$(SolutionDir)lib\sgxssl\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SGXSDKInstallPath)include;$(SGXSDKInstallPath)include\tlibc;$(SGXSDKInstallPath)include\libc++;$(SolutionDir)lib\sgxssl\include;C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2017.2.187\windows\compiler\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <UseProcessorExtensions>SSE3</UseProcessorExtensions>
+      <GenerateAlternateCodePaths>SSE3</GenerateAlternateCodePaths>
+      <IgnoreStandardIncludePath>false</IgnoreStandardIncludePath>
+      <UseMSVC>true</UseMSVC>
+      <EnableEnhancedInstructionSet>StreamingSIMDExtensions</EnableEnhancedInstructionSet>
     </ClCompile>
     <Link>
       <AdditionalDependencies>sgx_trts_sim.lib;sgx_tstdc.lib;sgx_tservice_sim.lib;sgx_tcrypto.lib;sgx_tcxx.lib;sgx_tlibeayfips32.lib;sgx_tssleay32.lib;sgx_tssl.lib;sgx_tfipscanister.lib</AdditionalDependencies>
@@ -273,7 +279,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
-      <Command>"$(SGXSDKInstallPath)bin\win32\release\sgx_sign.exe" sign -key "$(ProjectDir)PerformanceTests_private.pem" -enclave "$(OutDir)PerformanceTests.dll" -out "$(OutDir)PerformanceTests.signed.dll" -config "$(ProjectDir)PerformanceTests.config.xml"</Command>
+      <Command>"$(SGXSDKInstallPath)bin\win32\release\sgx_sign.exe" sign -key "$(ProjectDir)PerformanceTests_private.pem" -enclave "$(OutDir)Enclave.dll" -out "$(OutDir)PerformanceTests.signed.dll" -config "$(ProjectDir)PerformanceTests.config.xml"</Command>
       <Message>sign the enclave</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -325,6 +331,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Crypto.cpp" />
     <ClCompile Include="PerformanceTests.cpp" />
     <ClCompile Include="PerformanceTests_t.c" />
   </ItemGroup>
@@ -357,7 +364,7 @@
       <Message Condition="'$(Configuration)|$(Platform)'=='Simulation|Win32'">Creating proxy/bridge routines</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Simulation|Win32'">%(Filename)_t.h;%(Filename)_t.c;%(Outputs)</Outputs>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Simulation|Win32'">PerformanceTests.config.xml;%(AdditionalInputs)</AdditionalInputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Simulation|x64'">"$(SGXSDKInstallPath)bin\win32\release\sgx_edger8r.exe" --trusted "%(FullPath)" --search-path "$(SGXSDKInstallPath)include"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Simulation|x64'">"$(SGXSDKInstallPath)bin\win32\release\sgx_edger8r.exe" --trusted "%(FullPath)" --search-path "$(SGXSDKInstallPath)include;$(SolutionDir)lib\sgxssl\include"</Command>
       <Message Condition="'$(Configuration)|$(Platform)'=='Simulation|x64'">Creating proxy/bridge routines</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Simulation|x64'">%(Filename)_t.h;%(Filename)_t.c;%(Outputs)</Outputs>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Simulation|x64'">PerformanceTests.config.xml;%(AdditionalInputs)</AdditionalInputs>
