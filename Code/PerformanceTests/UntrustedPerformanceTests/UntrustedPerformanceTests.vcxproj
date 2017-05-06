@@ -149,16 +149,15 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\openssl64\lib;%(AdditionalDependencies)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libeay32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalDependencies)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>ippcoremt.lib;ippcpmt.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AESECBCryptoSystem.h" />
-    <ClInclude Include="CryptoSystem.h" />
+    <ClInclude Include="Crypto.h" />
     <ClInclude Include="Functions.h" />
     <ClInclude Include="RLESum.h" />
     <ClInclude Include="stdafx.h" />
@@ -166,7 +165,7 @@
     <ClInclude Include="VByte.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="AESECBCryptoSystem.cpp" />
+    <ClCompile Include="Crypto.cpp" />
     <ClCompile Include="Functions.cpp" />
     <ClCompile Include="RLESum.cpp" />
     <ClCompile Include="stdafx.cpp">

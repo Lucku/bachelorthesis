@@ -5,13 +5,13 @@ import seaborn
 from pandas import Series
 
 # -------------- Configuration -------------- #
-title = 'VByte Compression with Encrypted Data (Regular vs. SGX)'
-file1 = 'x64/Release/decompress_enc_u.csv'
-file2 = 'x64/Simulation/decompress_enc_t.csv'
+title = 'Run length encoding and aggregation (Regular vs. SGX)'
+file1 = 'x64/Release/rlesum_u.csv'
+file2 = 'x64/Simulation/rlesum_t.csv'
 label1 = 'Regular'
 label2 = 'Inside SGX enclave'
 xAxis = 'Data'
-xLabel = 'Byte of data'
+xLabel = '32 Bit data'
 yAxis = 'MIOPS'
 yLabel = 'Million integer operations per second'
 windowSize = 50

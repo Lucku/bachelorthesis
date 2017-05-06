@@ -35,9 +35,9 @@ void Benchmark::benchmark(const char *file, size_t(*f) (uint8_t *in, size_t leng
 		uint64_t time = singleBenchmark(f, in, i, out);
 
 		switch (mode) {
-		case TIME: fileToWrite << i << "," << time << std::endl; break;
-		case MIOPS: fileToWrite << i << "," << (((double)i) * 1000) / time << std::endl; break;
-		default: fileToWrite << i << "," << (((double)i) * 1000000000) / time << std::endl;
+		case TIME:	fileToWrite	<< i / stepSize << "," << time << std::endl; break;
+		case MIOPS: fileToWrite << i / stepSize << "," << (((double)i) * 1000)			/ (time * stepSize) << std::endl; break;
+		default:	fileToWrite	<< i / stepSize << "," << (((double)i) * 1000000000)	/ (time * stepSize) << std::endl;
 		}
 
 		delete[] in;

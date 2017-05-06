@@ -2,13 +2,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Enclave", "PerformanceTests\PerformanceTests.vcxproj", "{0E51AC12-1253-4523-B935-91ADB7BC2C1E}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BenchmarkLib", "BenchmarkLib\BenchmarkLib.vcxproj", "{9D0FE6A9-60F6-4A2B-B317-9FDF73B47245}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UntrustedPerformanceTests", "UntrustedPerformanceTests\UntrustedPerformanceTests.vcxproj", "{0816E0C9-E0BA-4EC6-98FA-2A3F81EA39B7}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TrustedPerformanceTests", "TrustedPerformanceTests\TrustedPerformanceTests.vcxproj", "{24FAB57F-6C13-4AF5-87E2-E01121535F82}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Enclave", "Enclave\PerformanceTests.vcxproj", "{37349450-7CB2-409B-99C4-3015CC519E2F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -22,22 +22,6 @@ Global
 		Simulation|x86 = Simulation|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{0E51AC12-1253-4523-B935-91ADB7BC2C1E}.Debug|x64.ActiveCfg = Debug|x64
-		{0E51AC12-1253-4523-B935-91ADB7BC2C1E}.Debug|x64.Build.0 = Debug|x64
-		{0E51AC12-1253-4523-B935-91ADB7BC2C1E}.Debug|x86.ActiveCfg = Debug|Win32
-		{0E51AC12-1253-4523-B935-91ADB7BC2C1E}.Debug|x86.Build.0 = Debug|Win32
-		{0E51AC12-1253-4523-B935-91ADB7BC2C1E}.Prerelease|x64.ActiveCfg = Prerelease|x64
-		{0E51AC12-1253-4523-B935-91ADB7BC2C1E}.Prerelease|x64.Build.0 = Prerelease|x64
-		{0E51AC12-1253-4523-B935-91ADB7BC2C1E}.Prerelease|x86.ActiveCfg = Prerelease|Win32
-		{0E51AC12-1253-4523-B935-91ADB7BC2C1E}.Prerelease|x86.Build.0 = Prerelease|Win32
-		{0E51AC12-1253-4523-B935-91ADB7BC2C1E}.Release|x64.ActiveCfg = Release|x64
-		{0E51AC12-1253-4523-B935-91ADB7BC2C1E}.Release|x64.Build.0 = Release|x64
-		{0E51AC12-1253-4523-B935-91ADB7BC2C1E}.Release|x86.ActiveCfg = Simulation|Win32
-		{0E51AC12-1253-4523-B935-91ADB7BC2C1E}.Release|x86.Build.0 = Simulation|Win32
-		{0E51AC12-1253-4523-B935-91ADB7BC2C1E}.Simulation|x64.ActiveCfg = Simulation|x64
-		{0E51AC12-1253-4523-B935-91ADB7BC2C1E}.Simulation|x64.Build.0 = Simulation|x64
-		{0E51AC12-1253-4523-B935-91ADB7BC2C1E}.Simulation|x86.ActiveCfg = Simulation|Win32
-		{0E51AC12-1253-4523-B935-91ADB7BC2C1E}.Simulation|x86.Build.0 = Simulation|Win32
 		{9D0FE6A9-60F6-4A2B-B317-9FDF73B47245}.Debug|x64.ActiveCfg = Debug|x64
 		{9D0FE6A9-60F6-4A2B-B317-9FDF73B47245}.Debug|x64.Build.0 = Debug|x64
 		{9D0FE6A9-60F6-4A2B-B317-9FDF73B47245}.Debug|x86.ActiveCfg = Debug|Win32
@@ -86,6 +70,22 @@ Global
 		{24FAB57F-6C13-4AF5-87E2-E01121535F82}.Simulation|x64.Build.0 = Simulation|x64
 		{24FAB57F-6C13-4AF5-87E2-E01121535F82}.Simulation|x86.ActiveCfg = Simulation|Win32
 		{24FAB57F-6C13-4AF5-87E2-E01121535F82}.Simulation|x86.Build.0 = Simulation|Win32
+		{37349450-7CB2-409B-99C4-3015CC519E2F}.Debug|x64.ActiveCfg = Debug|x64
+		{37349450-7CB2-409B-99C4-3015CC519E2F}.Debug|x64.Build.0 = Debug|x64
+		{37349450-7CB2-409B-99C4-3015CC519E2F}.Debug|x86.ActiveCfg = Debug|Win32
+		{37349450-7CB2-409B-99C4-3015CC519E2F}.Debug|x86.Build.0 = Debug|Win32
+		{37349450-7CB2-409B-99C4-3015CC519E2F}.Prerelease|x64.ActiveCfg = Prerelease|x64
+		{37349450-7CB2-409B-99C4-3015CC519E2F}.Prerelease|x64.Build.0 = Prerelease|x64
+		{37349450-7CB2-409B-99C4-3015CC519E2F}.Prerelease|x86.ActiveCfg = Prerelease|Win32
+		{37349450-7CB2-409B-99C4-3015CC519E2F}.Prerelease|x86.Build.0 = Prerelease|Win32
+		{37349450-7CB2-409B-99C4-3015CC519E2F}.Release|x64.ActiveCfg = Release|x64
+		{37349450-7CB2-409B-99C4-3015CC519E2F}.Release|x64.Build.0 = Release|x64
+		{37349450-7CB2-409B-99C4-3015CC519E2F}.Release|x86.ActiveCfg = Release|Win32
+		{37349450-7CB2-409B-99C4-3015CC519E2F}.Release|x86.Build.0 = Release|Win32
+		{37349450-7CB2-409B-99C4-3015CC519E2F}.Simulation|x64.ActiveCfg = Simulation|x64
+		{37349450-7CB2-409B-99C4-3015CC519E2F}.Simulation|x64.Build.0 = Simulation|x64
+		{37349450-7CB2-409B-99C4-3015CC519E2F}.Simulation|x86.ActiveCfg = Simulation|Win32
+		{37349450-7CB2-409B-99C4-3015CC519E2F}.Simulation|x86.Build.0 = Simulation|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

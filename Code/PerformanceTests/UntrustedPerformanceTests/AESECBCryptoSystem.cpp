@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "AESECBCryptoSystem.h"
-
+/*
 int AESECBCryptoSystem::encrypt(uint8_t *input, uint8_t *output, int length, const uint8_t *key, const int keyLength, uint8_t *iv)
 {
 	int outLength;
@@ -62,3 +62,4 @@ void AESECBCryptoSystem::generateParams(uint8_t *key, const int keyLength, uint8
 	if (rc != 1)
 	throw std::runtime_error("RAND_uint8_ts for iv failed");
 }
+*/

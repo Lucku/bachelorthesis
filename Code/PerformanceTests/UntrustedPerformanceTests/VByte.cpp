@@ -1,55 +1,7 @@
 #include "stdafx.h"
 #include "VByte.h"
-
-int encryptBytes(uint8_t *input, size_t inLength, uint8_t *output, size_t outLength, const uint8_t *key, const size_t keyLength, uint8_t *iv) {
-
-	int cipherOutLength;
-
-	int ciphertextLength;
-
-	OpenSSL_add_all_algorithms();
-
-	EVP_CIPHER_CTX ctx;
-
-	EVP_CIPHER_CTX_init(&ctx);
-
-	EVP_CipherInit_ex(&ctx, EVP_aes_128_ecb(), NULL, key, iv, TRUE);
-
-	EVP_CipherUpdate(&ctx, output, &cipherOutLength, input, inLength);
-
-	ciphertextLength = cipherOutLength;
-
-	EVP_CipherFinal_ex(&ctx, output + cipherOutLength, &cipherOutLength);
-
-	ciphertextLength += cipherOutLength;
-
-	return ciphertextLength;
-}
-
-int decryptBytes(uint8_t *input, size_t inLength, uint8_t *output, size_t outLength, const uint8_t *key, const size_t keyLength, uint8_t *iv) {
-
-	int cipherOutLength;
-
-	int plaintextLength;
-
-	OpenSSL_add_all_algorithms();
-
-	EVP_CIPHER_CTX ctx;
-
-	EVP_CIPHER_CTX_init(&ctx);
-
-	EVP_CipherInit_ex(&ctx, EVP_aes_128_ecb(), NULL, key, iv, FALSE);
-
-	EVP_CipherUpdate(&ctx, output, &cipherOutLength, input, inLength);
-
-	plaintextLength = cipherOutLength;
-
-	EVP_CipherFinal_ex(&ctx, output + cipherOutLength, &cipherOutLength);
-
-	plaintextLength += cipherOutLength;
-
-	return plaintextLength;
-}
+#include "Crypto.h"
+#include "CryptoDebug.h"
 
 size_t vByteEncode(uint8_t *in, size_t length, uint8_t *out) {
 
@@ -145,7 +97,6 @@ size_t vByteDecode(uint8_t *in, size_t length, uint8_t *out) {
 
 size_t vByteEncodeEncrypted(uint8_t *in, size_t length, uint8_t *out)
 {
-	//AESECBCryptoSystem *aes = new AESECBCryptoSystem();
 
 	size_t encodedLength = (length / sizeof(uint32_t)) * 5;
 
@@ -155,24 +106,22 @@ size_t vByteEncodeEncrypted(uint8_t *in, size_t length, uint8_t *out)
 	uint8_t key[AES_KEY_SIZE] = "123456789012345";
 	uint8_t iv[AES_BLOCK_SIZE] = "123456789012345";
 
-	//DEBUG
-	//aes->printData("Original", (uint8_t*) in, length * 4);
+	//Crypto::printData("Original", (uint8_t*) in, length * 4);
 
 	// we can't generate key and iv because it is not possible via openSSL in enclave, 
 	// and we want the same consitions on both sides
 	// aes->generateParams(key, AES_KEY_SIZE, iv);
 
-	//aes->decrypt(in, data, length * 4, key, AES_KEY_SIZE, iv);
-	decryptBytes(in, length, data, length, key, AES_KEY_SIZE, iv);
+	Crypto::decryptBytes(in, length, data, key, AES_KEY_SIZE, iv);
 
-	//aes->printData("Decrypted", data, length * 4);
+	//Crypto::printData("Decrypted", data, length * 4);
 
 	size_t resLength = vByteEncode(data, length, encoded);
 	
 	//aes->encrypt(encoded, out, length * 5, key, AES_KEY_SIZE, iv);
-	encryptBytes(encoded, resLength, out, resLength + AES_BLOCK_SIZE, key, AES_KEY_SIZE, iv);
+	Crypto::encryptBytes(encoded, resLength, out, key, AES_KEY_SIZE, iv);
 
-	//aes->printData("Encrypted", out, length * 5);
+	//Crypto::printData("Encrypted", out, length * 5);
 
 	delete[] data;
 	delete[] encoded;
@@ -182,8 +131,6 @@ size_t vByteEncodeEncrypted(uint8_t *in, size_t length, uint8_t *out)
 
 size_t vByteDecodeEncrypted(uint8_t *in, size_t length, uint8_t *out)
 {
-	//AESECBCryptoSystem *aes = new AESECBCryptoSystem();
-
 	size_t decodedLength = length * sizeof(uint32_t);
 
 	uint8_t *data = new uint8_t[length];
@@ -192,18 +139,13 @@ size_t vByteDecodeEncrypted(uint8_t *in, size_t length, uint8_t *out)
 	uint8_t key[AES_KEY_SIZE] = "123456789012345";
 	uint8_t iv[AES_BLOCK_SIZE] = "123456789012345";
 
-	//aes->generateParams(key, AES_KEY_SIZE, iv);
-
-	//aes->decrypt(in, data, length, key, AES_KEY_SIZE, iv);
-	decryptBytes(in, length, data, length, key, AES_KEY_SIZE, iv);
+	Crypto::decryptBytes(in, length, data, key, AES_KEY_SIZE, iv);
 
 	size_t resLength = vByteDecode(data, length, decoded);
 
+	Crypto::encryptBytes(decoded, resLength, out, key, AES_KEY_SIZE, iv);
+
 	delete[] data;
-
-	//aes->encrypt((uint8_t*) decoded, (uint8_t*) out, length * 4, key, AES_KEY_SIZE, iv);
-	encryptBytes(decoded, resLength, out, resLength + AES_BLOCK_SIZE, key, AES_KEY_SIZE, iv);
-
 	delete[] decoded;
 
 	return resLength + AES_BLOCK_SIZE;

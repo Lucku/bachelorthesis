@@ -17,7 +17,7 @@
       <UniqueIdentifier>{3979bf6e-cd92-450f-accc-500caab93dd9}</UniqueIdentifier>
     </Filter>
     <Filter Include="Generated Files">
-      <UniqueIdentifier>{d2ca3b03-e57e-4109-a059-ff07c526a813}</UniqueIdentifier>
+      <UniqueIdentifier>{2d62916c-cd65-4f74-bec1-35b103c802c6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -41,15 +41,15 @@
     <ClCompile Include="stdafx.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="PerformanceTests_u.c">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
     <ClCompile Include="TrustedPerformanceTests.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
+    <ClCompile Include="PerformanceTests_u.c">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="..\PerformanceTests\PerformanceTests.edl">
+    <CustomBuild Include="..\Enclave\PerformanceTests.edl">
       <Filter>Source Files</Filter>
     </CustomBuild>
   </ItemGroup>

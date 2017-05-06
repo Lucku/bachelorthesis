@@ -35,7 +35,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{0E51AC12-1253-4523-B935-91ADB7BC2C1E}</ProjectGuid>
+    <ProjectGuid>{37349450-7CB2-409B-99C4-3015CC519E2F}</ProjectGuid>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <ProjectName>Enclave</ProjectName>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
@@ -261,16 +261,16 @@
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <Optimization>Disabled</Optimization>
       <WarningLevel>Level3</WarningLevel>
-      <AdditionalIncludeDirectories>$(SGXSDKInstallPath)include;$(SGXSDKInstallPath)include\tlibc;$(SGXSDKInstallPath)include\libc++;$(SolutionDir)lib\sgxssl\include;C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2017.2.187\windows\compiler\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SGXSDKInstallPath)include;$(SGXSDKInstallPath)include\tlibc;$(SGXSDKInstallPath)include\libc++;$(SGXSDKInstallPath)include\ipp;C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2017.2.187\windows\compiler\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <UseProcessorExtensions>SSE3</UseProcessorExtensions>
       <GenerateAlternateCodePaths>SSE3</GenerateAlternateCodePaths>
       <IgnoreStandardIncludePath>false</IgnoreStandardIncludePath>
       <UseMSVC>true</UseMSVC>
-      <EnableEnhancedInstructionSet>StreamingSIMDExtensions</EnableEnhancedInstructionSet>
+      <EnableEnhancedInstructionSet>StreamingSIMDExtensions3</EnableEnhancedInstructionSet>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>sgx_trts_sim.lib;sgx_tstdc.lib;sgx_tservice_sim.lib;sgx_tcrypto.lib;sgx_tcxx.lib;sgx_tlibeayfips32.lib;sgx_tssleay32.lib;sgx_tssl.lib;sgx_tfipscanister.lib</AdditionalDependencies>
+      <AdditionalDependencies>sgx_trts_sim.lib;sgx_tstdc.lib;sgx_tservice_sim.lib;sgx_tcrypto.lib;sgx_tcxx.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SGXSDKInstallPath)bin\$(Platform)\Debug;$(SolutionDir)\lib\sgxssl\lib\fipsopenssl\$(Platform);$(SolutionDir)\lib\sgxssl\lib\openssl\$(Platform)\Debug;$(SolutionDir)\lib\sgxssl\lib\SGX\$(Platform)\Debug</AdditionalLibraryDirectories>
       <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
       <EntryPointSymbol>
@@ -331,8 +331,10 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Crypto.cpp" />
-    <ClCompile Include="PerformanceTests.cpp" />
+    <ClCompile Include="E_Crypto.cpp" />
+    <ClCompile Include="E_RLESum.cpp" />
+    <ClCompile Include="E_VByte.cpp" />
+    <ClCompile Include="E_Basic.cpp" />
     <ClCompile Include="PerformanceTests_t.c" />
   </ItemGroup>
   <ItemGroup>

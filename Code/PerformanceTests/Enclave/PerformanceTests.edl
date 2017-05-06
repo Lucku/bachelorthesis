@@ -1,5 +1,5 @@
 enclave {
-	from "sgx_tssl.edl" import *;
+	from "sgx_tstdc.edl" import *;
 
     trusted {
 		/* Basic functions */
@@ -18,8 +18,8 @@ enclave {
 		/* public size_t processEncrypted(size_t(*f) (uint8_t *in, size_t length, uint8_t *out), [in, size=encLength] uint8_t *encIn, size_t encLength, size_t outLength, [out, size=decLength + 16] *decOut); */
 
 		/* Utilities */
-		int encryptBytes([in, size=inLength] uint8_t *input, size_t inLength, [in, size=outLength] uint8_t *output, size_t outLength, [in, size=keyLength] const uint8_t *key, size_t keyLength, [in, size=16] uint8_t *iv);
-		int decryptBytes([in, size=inLength] uint8_t *input, size_t inLength, [in, size=outLength] uint8_t *output, size_t outLength, [in, size=keyLength] const uint8_t *key, size_t keyLength, [in, size=16] uint8_t *iv);
+		int encryptBytes([in, size=length] uint8_t *input, size_t length, [user_check] uint8_t *output, [in, size=keyLength] const uint8_t *key, size_t keyLength, [in, size=16] uint8_t *iv);
+		int decryptBytes([in, size=length] uint8_t *input, size_t length, [user_check] uint8_t *output, [in, size=keyLength] const uint8_t *key, size_t keyLength, [in, size=16] uint8_t *iv);
     };
 
     untrusted {

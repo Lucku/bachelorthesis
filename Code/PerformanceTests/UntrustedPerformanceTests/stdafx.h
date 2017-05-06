@@ -13,9 +13,7 @@
 #include <Windows.h>
 #include <stdio.h>
 #include <tchar.h>
-#include <openssl\conf.h>
-#include <openssl\evp.h>
-#include <openssl\rand.h>
-#include <openssl\aes.h>
+#include <ippcp.h>
 
 #define AES_KEY_SIZE 16
+#define AES_BLOCK_SIZE 16

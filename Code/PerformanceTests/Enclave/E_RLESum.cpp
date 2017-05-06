@@ -1,10 +1,9 @@
-#include "stdafx.h"
-#include "RLESum.h"
+#include "PerformanceTests_t.h"
 
-size_t runLengthEncode(uint8_t *in, size_t length, uint8_t *out)
+size_t enclaveRunLengthEncode(uint8_t *in, size_t inLength, uint8_t *out, size_t outLength)
 {
 	const uint32_t* in32 = reinterpret_cast<const uint32_t*>(in);
-	const size_t countIn32 = length / sizeof(uint32_t);
+	const size_t countIn32 = inLength / sizeof(uint32_t);
 
 	if (countIn32 == 0) return 0;
 
@@ -36,10 +35,10 @@ size_t runLengthEncode(uint8_t *in, size_t length, uint8_t *out)
 }
 
 /* !WARNING! Decode won't work without encoded data */
-size_t runLengthDecode(uint8_t *in, size_t length, uint8_t *out)
+size_t enclaveRunLengthDecode(uint8_t *in, size_t inLength, uint8_t *out, size_t outLength)
 {
 	uint32_t* out32 = reinterpret_cast<uint32_t*>(out);
-	const size_t countIn32 = length / sizeof(uint32_t);
+	const size_t countIn32 = inLength / sizeof(uint32_t);
 
 	if (countIn32 == 0) return 0;
 
@@ -55,11 +54,11 @@ size_t runLengthDecode(uint8_t *in, size_t length, uint8_t *out)
 	return (out32 - initOut32) * sizeof(uint32_t);
 }
 
-size_t runLengthEncodeAndSum(uint8_t *in, size_t length, uint8_t *out)
-{
+size_t enclaveRunLengthEncodeAndSum(uint8_t *in, size_t length, uint8_t *out) {
+
 	uint8_t *encoded = new uint8_t[length << 1];
 
-	size_t encSize = runLengthEncode(in, length, encoded);
+	size_t encSize = enclaveRunLengthEncode(in, length, encoded, length << 1);
 
 	uint64_t sum64 = 0;
 

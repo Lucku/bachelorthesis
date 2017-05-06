@@ -21,10 +21,16 @@
     <ClCompile Include="PerformanceTests_t.c">
       <Filter>Generated Files</Filter>
     </ClCompile>
-    <ClCompile Include="PerformanceTests.cpp">
+    <ClCompile Include="E_VByte.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Crypto.cpp">
+    <ClCompile Include="E_RLESum.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E_Crypto.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E_Basic.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

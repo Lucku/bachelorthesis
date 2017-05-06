@@ -13,17 +13,11 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Headerdateien\crypto">
-      <UniqueIdentifier>{2ed0b2dc-b2a3-4e71-bfe8-f18db97422f2}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Headerdateien\functions">
       <UniqueIdentifier>{08dd491b-8f94-4ee8-95c7-628fb07d94ba}</UniqueIdentifier>
     </Filter>
     <Filter Include="Quelldateien\functions">
       <UniqueIdentifier>{28d47e6b-cca8-4923-aedb-99ec4918a552}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Quelldateien\crypto">
-      <UniqueIdentifier>{04d3520e-7576-4636-ab60-e91fc848c4da}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -36,12 +30,6 @@
     <ClInclude Include="targetver.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="CryptoSystem.h">
-      <Filter>Headerdateien\crypto</Filter>
-    </ClInclude>
-    <ClInclude Include="AESECBCryptoSystem.h">
-      <Filter>Headerdateien\crypto</Filter>
-    </ClInclude>
     <ClInclude Include="VByte.h">
       <Filter>Headerdateien\functions</Filter>
     </ClInclude>
@@ -51,6 +39,9 @@
     <ClInclude Include="RLESum.h">
       <Filter>Headerdateien\functions</Filter>
     </ClInclude>
+    <ClInclude Include="Crypto.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -59,9 +50,6 @@
     <ClCompile Include="UntrustedPerformanceTests.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="AESECBCryptoSystem.cpp">
-      <Filter>Quelldateien\crypto</Filter>
-    </ClCompile>
     <ClCompile Include="VByte.cpp">
       <Filter>Quelldateien\functions</Filter>
     </ClCompile>
@@ -69,6 +57,9 @@
       <Filter>Quelldateien\functions</Filter>
     </ClCompile>
     <ClCompile Include="RLESum.cpp">
+      <Filter>Quelldateien\functions</Filter>
+    </ClCompile>
+    <ClCompile Include="Crypto.cpp">
       <Filter>Quelldateien\functions</Filter>
     </ClCompile>
   </ItemGroup>
