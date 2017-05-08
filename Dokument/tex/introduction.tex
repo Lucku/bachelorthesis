@@ -2,6 +2,11 @@
 \chapter{Einleitung}
 
 \section{Motivation}
+Die Speicherung und Verarbeitung von Daten in einem nicht vertrauenswürdigen System gewinnt gleichzeitig mit der Auslagerung von Datenbanksystemen in die Cloud zunehmend an Bedeutung. Entsprechende Dienste bieten Firmen die attraktive Möglichkeit, die Handhabung von Daten nicht auf den eigenen Servern vornehmen zu müssen. Nötig ist hierbei aber das Vertrauen in die Systeme des jeweiligen Anbieters, um sicher zu sein, dass vertrauliche Daten nicht in die falschen Hände geraten. Im Grunde ist es jedoch nicht möglich, ein derartiges Vertrauen in die Infrastruktur des Systems zu legen. 
+Neben Gewährleistung der Schutzziele Vertraulichkeit und Integrität ist es auf der anderen Seite auch nötig, Operationen auf den Daten auszuführen, d.h. lesend und schreibend auf sie zuzugreifen. In der Vergangenheit gab es bereits verschiedene Ansätze, die Verarbeitung von verschlüsselten Daten praktikabel zu ermöglichen.
+ 
+Intel stellen mit den Software Guard Extensions (SGX) eine Menge von Erweiterungen für ihre Prozessorarchitektur bereit, die das Ziel verfolgen, die sichere Verarbeitung sensitiver Daten zu gewährleisten. Sämtliche privilegierte Software, etwa der Betriebssystemkern, können gleichzeitig potenziell korrumpiert sein, und werden als nicht vertrauenswürdig angesehen \cite{Costan2016}.
+% TODO Cite nötig??
 
 \section{Zielstellung}
 

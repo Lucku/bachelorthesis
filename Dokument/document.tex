@@ -7,26 +7,46 @@
 
 \begin{document}
 
+\subject{bachelor}
 \faculty{Fakultät Informatik}
 %\department{Informatik}
 \institute{Institut für Systemarchitektur}
 \chair{Lehrstuhl für Datenbanken}
 \date{17.07.2017}
 \author{Lucas Kuhring}
+\matriculationnumber{4038042}
 \title{Untersuchung von Intel SGX für eine sichere Verarbeitung komprimierter Daten}
+\supervisor{Dr.-Ing. Dirk Habich}
+\advisor{Dipl.-Inf. B.Sc. Juliana Hildebrandt}
+\professor{Prof. Dr.-Ing. Wolfgang Lehner}
 \maketitle
+\TUDoption{abstract}{single,fill,notoc}
 
 % Selbstständigkeitserklärung
 \confirmation
 
+\pagenumbering{roman}
+
 % 0. Abstract
 \include{tex/abstract}
+
+\tableofcontents
+\newpage
+
+\pagenumbering{arabic}
 % 1. Einleitung
 \include{tex/introduction}
 % 2. Grundlagen
 \include{tex/foundations}
+% 3. Intel SGX
+\include{tex/intelsgx}
+% 4. Untersuchungen
+\include{tex/studies}
+% 5. Ergebnisse
+\include{tex/results}
+% 6. Fazit
+\include{tex/conclusion}
 
-\tableofcontents
 
 \newpage
 \bibliography{library} 
