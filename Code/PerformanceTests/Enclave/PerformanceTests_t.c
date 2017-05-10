@@ -80,7 +80,7 @@ typedef struct ms_enclaveRunLengthEncodeAndSum_t {
 typedef struct ms_encryptBytes_t {
 	int ms_retval;
 	uint8_t* ms_input;
-	size_t ms_inLength;
+	size_t ms_length;
 	uint8_t* ms_output;
 	uint8_t* ms_key;
 	size_t ms_keyLength;
@@ -90,7 +90,7 @@ typedef struct ms_encryptBytes_t {
 typedef struct ms_decryptBytes_t {
 	int ms_retval;
 	uint8_t* ms_input;
-	size_t ms_inLength;
+	size_t ms_length;
 	uint8_t* ms_output;
 	uint8_t* ms_key;
 	size_t ms_keyLength;
@@ -434,8 +434,8 @@ static sgx_status_t SGX_CDECL sgx_encryptBytes(void* pms)
 	ms_encryptBytes_t* ms = SGX_CAST(ms_encryptBytes_t*, pms);
 	sgx_status_t status = SGX_SUCCESS;
 	uint8_t* _tmp_input = ms->ms_input;
-	size_t _tmp_inLength = ms->ms_inLength;
-	size_t _len_input = _tmp_inLength;
+	size_t _tmp_length = ms->ms_length;
+	size_t _len_input = _tmp_length;
 	uint8_t* _in_input = NULL;
 	uint8_t* _tmp_output = ms->ms_output;
 	uint8_t* _tmp_key = ms->ms_key;
@@ -478,7 +478,7 @@ static sgx_status_t SGX_CDECL sgx_encryptBytes(void* pms)
 
 		memcpy(_in_iv, _tmp_iv, _len_iv);
 	}
-	ms->ms_retval = encryptBytes(_in_input, _tmp_inLength, _tmp_output, (const uint8_t*)_in_key, _tmp_keyLength, _in_iv);
+	ms->ms_retval = encryptBytes(_in_input, _tmp_length, _tmp_output, (const uint8_t*)_in_key, _tmp_keyLength, _in_iv);
 err:
 	if (_in_input) free(_in_input);
 	if (_in_key) free((void*)_in_key);
@@ -492,8 +492,8 @@ static sgx_status_t SGX_CDECL sgx_decryptBytes(void* pms)
 	ms_decryptBytes_t* ms = SGX_CAST(ms_decryptBytes_t*, pms);
 	sgx_status_t status = SGX_SUCCESS;
 	uint8_t* _tmp_input = ms->ms_input;
-	size_t _tmp_inLength = ms->ms_inLength;
-	size_t _len_input = _tmp_inLength;
+	size_t _tmp_length = ms->ms_length;
+	size_t _len_input = _tmp_length;
 	uint8_t* _in_input = NULL;
 	uint8_t* _tmp_output = ms->ms_output;
 	uint8_t* _tmp_key = ms->ms_key;
@@ -536,7 +536,7 @@ static sgx_status_t SGX_CDECL sgx_decryptBytes(void* pms)
 
 		memcpy(_in_iv, _tmp_iv, _len_iv);
 	}
-	ms->ms_retval = decryptBytes(_in_input, _tmp_inLength, _tmp_output, (const uint8_t*)_in_key, _tmp_keyLength, _in_iv);
+	ms->ms_retval = decryptBytes(_in_input, _tmp_length, _tmp_output, (const uint8_t*)_in_key, _tmp_keyLength, _in_iv);
 err:
 	if (_in_input) free(_in_input);
 	if (_in_key) free((void*)_in_key);

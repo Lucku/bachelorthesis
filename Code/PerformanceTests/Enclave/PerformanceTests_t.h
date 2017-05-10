@@ -22,8 +22,8 @@ size_t enclaveVByteDecodeEncrypted(uint8_t* in, size_t length, uint8_t* out);
 size_t enclaveRunLengthEncode(uint8_t* in, size_t inLength, uint8_t* out, size_t outLength);
 size_t enclaveRunLengthDecode(uint8_t* in, size_t inLength, uint8_t* out, size_t outLength);
 size_t enclaveRunLengthEncodeAndSum(uint8_t* in, size_t length, uint8_t* out);
-int encryptBytes(uint8_t* input, size_t inLength, uint8_t* output, const uint8_t* key, size_t keyLength, uint8_t* iv);
-int decryptBytes(uint8_t* input, size_t inLength, uint8_t* output, const uint8_t* key, size_t keyLength, uint8_t* iv);
+int encryptBytes(uint8_t* input, size_t length, uint8_t* output, const uint8_t* key, size_t keyLength, uint8_t* iv);
+int decryptBytes(uint8_t* input, size_t length, uint8_t* output, const uint8_t* key, size_t keyLength, uint8_t* iv);
 
 sgx_status_t SGX_CDECL sgx_oc_cpuidex(int cpuinfo[4], int leaf, int subleaf);
 sgx_status_t SGX_CDECL sgx_thread_wait_untrusted_event_ocall(int* retval, const void* self);

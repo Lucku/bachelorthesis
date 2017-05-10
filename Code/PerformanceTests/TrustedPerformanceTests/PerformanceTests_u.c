@@ -64,7 +64,7 @@ typedef struct ms_enclaveRunLengthEncodeAndSum_t {
 typedef struct ms_encryptBytes_t {
 	int ms_retval;
 	uint8_t* ms_input;
-	size_t ms_inLength;
+	size_t ms_length;
 	uint8_t* ms_output;
 	uint8_t* ms_key;
 	size_t ms_keyLength;
@@ -74,7 +74,7 @@ typedef struct ms_encryptBytes_t {
 typedef struct ms_decryptBytes_t {
 	int ms_retval;
 	uint8_t* ms_input;
-	size_t ms_inLength;
+	size_t ms_length;
 	uint8_t* ms_output;
 	uint8_t* ms_key;
 	size_t ms_keyLength;
@@ -263,12 +263,12 @@ sgx_status_t enclaveRunLengthEncodeAndSum(sgx_enclave_id_t eid, size_t* retval, 
 	return status;
 }
 
-sgx_status_t encryptBytes(sgx_enclave_id_t eid, int* retval, uint8_t* input, size_t inLength, uint8_t* output, const uint8_t* key, size_t keyLength, uint8_t* iv)
+sgx_status_t encryptBytes(sgx_enclave_id_t eid, int* retval, uint8_t* input, size_t length, uint8_t* output, const uint8_t* key, size_t keyLength, uint8_t* iv)
 {
 	sgx_status_t status;
 	ms_encryptBytes_t ms;
 	ms.ms_input = input;
-	ms.ms_inLength = inLength;
+	ms.ms_length = length;
 	ms.ms_output = output;
 	ms.ms_key = (uint8_t*)key;
 	ms.ms_keyLength = keyLength;
@@ -278,12 +278,12 @@ sgx_status_t encryptBytes(sgx_enclave_id_t eid, int* retval, uint8_t* input, siz
 	return status;
 }
 
-sgx_status_t decryptBytes(sgx_enclave_id_t eid, int* retval, uint8_t* input, size_t inLength, uint8_t* output, const uint8_t* key, size_t keyLength, uint8_t* iv)
+sgx_status_t decryptBytes(sgx_enclave_id_t eid, int* retval, uint8_t* input, size_t length, uint8_t* output, const uint8_t* key, size_t keyLength, uint8_t* iv)
 {
 	sgx_status_t status;
 	ms_decryptBytes_t ms;
 	ms.ms_input = input;
-	ms.ms_inLength = inLength;
+	ms.ms_length = length;
 	ms.ms_output = output;
 	ms.ms_key = (uint8_t*)key;
 	ms.ms_keyLength = keyLength;

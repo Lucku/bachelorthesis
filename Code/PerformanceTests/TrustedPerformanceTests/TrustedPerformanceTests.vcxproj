@@ -203,7 +203,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SGXSDKInstallPath)\include;$(SolutionDir)BenchmarkLib;$(SGXSDKInstallPath)include;C:\openssl\include;C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2017.2.187\windows\compiler\include;$(VCInstallDir)include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)BenchmarkLib;$(SGXSDKInstallPath)include;C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2017.2.187\windows\compiler\include;$(VCInstallDir)include</AdditionalIncludeDirectories>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <EnableEnhancedInstructionSet>StreamingSIMDExtensions3</EnableEnhancedInstructionSet>
       <GenerateAlternateCodePaths>SSE3</GenerateAlternateCodePaths>
@@ -214,7 +214,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SGXSDKInstallPath)\bin\$(Platform)\Debug;$(SGXSDKInstallPath)bin\$(Platform)\Debug;$(SolutionDir)lib\sgxssl\lib\SGX\$(Platform)\Debug;$(SolutionDir)lib\sgxssl\lib\openssl\$(Platform)\Debug;$(SolutionDir)lib\sgxssl\lib\fipsopenssl\($Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>sgx_ussl.lib;Ws2_32.lib;sgx_urts_sim.lib;sgx_uae_service_sim.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>sgx_urts_sim.lib;sgx_uae_service_sim.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -267,7 +267,8 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SGXSDKInstallPath)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SGXSDKInstallPath)\include;$(SolutionDir)BenchmarkLib;$(SGXSDKInstallPath)include;C:\openssl\include;C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2017.2.187\windows\compiler\include;$(VCInstallDir)include</AdditionalIncludeDirectories>
+      <UseMSVC>true</UseMSVC>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -287,7 +288,9 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>EDEBUG;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SGXSDKInstallPath)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)BenchmarkLib;$(SGXSDKInstallPath)include;C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2017.2.187\windows\compiler\include;$(VCInstallDir)include</AdditionalIncludeDirectories>
+      <UseMSVC>true</UseMSVC>
+      <EnableEnhancedInstructionSet>AdvancedVectorExtensions</EnableEnhancedInstructionSet>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

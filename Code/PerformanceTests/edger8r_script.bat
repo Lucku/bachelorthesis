@@ -1,3 +1,3 @@
-sgx_edger8r "\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\PerformanceTests\PerformanceTests.edl" --trusted-dir "\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\PerformanceTests" --untrusted-dir "\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\TrustedPerformanceTests" --search-path "C:\Program Files (x86)\Intel\IntelSGXSDK\include;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\lib\sgxssl\include"
+sgx_edger8r "\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\PerformanceTests.edl" --trusted-dir "\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave" --untrusted-dir "\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\TrustedPerformanceTests" --search-path "C:\Program Files (x86)\Intel\IntelSGXSDK\include
 
 pause

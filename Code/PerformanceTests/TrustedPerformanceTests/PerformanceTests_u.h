@@ -28,8 +28,8 @@ sgx_status_t enclaveVByteDecodeEncrypted(sgx_enclave_id_t eid, size_t* retval, u
 sgx_status_t enclaveRunLengthEncode(sgx_enclave_id_t eid, size_t* retval, uint8_t* in, size_t inLength, uint8_t* out, size_t outLength);
 sgx_status_t enclaveRunLengthDecode(sgx_enclave_id_t eid, size_t* retval, uint8_t* in, size_t inLength, uint8_t* out, size_t outLength);
 sgx_status_t enclaveRunLengthEncodeAndSum(sgx_enclave_id_t eid, size_t* retval, uint8_t* in, size_t length, uint8_t* out);
-sgx_status_t encryptBytes(sgx_enclave_id_t eid, int* retval, uint8_t* input, size_t inLength, uint8_t* output, const uint8_t* key, size_t keyLength, uint8_t* iv);
-sgx_status_t decryptBytes(sgx_enclave_id_t eid, int* retval, uint8_t* input, size_t inLength, uint8_t* output, const uint8_t* key, size_t keyLength, uint8_t* iv);
+sgx_status_t encryptBytes(sgx_enclave_id_t eid, int* retval, uint8_t* input, size_t length, uint8_t* output, const uint8_t* key, size_t keyLength, uint8_t* iv);
+sgx_status_t decryptBytes(sgx_enclave_id_t eid, int* retval, uint8_t* input, size_t length, uint8_t* output, const uint8_t* key, size_t keyLength, uint8_t* iv);
 
 #ifdef __cplusplus
 }
