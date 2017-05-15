@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "VByte.h"
 #include "Crypto.h"
-#include "CryptoDebug.h"
 
 size_t vByteEncode(uint8_t *in, size_t length, uint8_t *out) {
 

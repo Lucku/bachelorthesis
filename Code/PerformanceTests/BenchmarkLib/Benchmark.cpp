@@ -31,7 +31,6 @@ void Benchmark::benchmark(const char *file, size_t(*f) (uint8_t *in, size_t leng
 		uint8_t *in = new uint8_t[i];
 		initializeRandomData(in, i);
 		uint8_t *out = new uint8_t[sizefunc(i)];
-		int debug = sizefunc(i);
 		uint64_t time = singleBenchmark(f, in, i, out);
 
 		switch (mode) {
@@ -51,13 +50,10 @@ void Benchmark::benchmark(const char *file, size_t(*f) (uint8_t *in, size_t leng
 }
 
 void Benchmark::initializeRandomData(uint8_t *in, size_t length) {
-
+	
 	srand(unsigned(time(NULL)));
 
 	for (unsigned int i = 0; i < length; i++) {
-		in[i] = rand() >> rand() % 8;
+		in[i] = rand() % 256;
 	}
-	
-
-	//RAND_bytes((uint8_t*) in, length);
 }

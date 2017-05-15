@@ -5,9 +5,9 @@ import seaborn
 from pandas import Series
 
 # -------------- Configuration -------------- #
-title = 'Run length encoding and aggregation (Regular vs. SGX)'
-file1 = 'x64/Release/rlesum_u.csv'
-file2 = 'x64/Simulation/rlesum_t.csv'
+title = 'Run length encoded aggregation (Regular vs. SGX)'
+file1 = 'x64/Real Results/decompress_u_b.csv'
+file2 = 'x64/Release/decompress_u.csv'
 label1 = 'Regular'
 label2 = 'Inside SGX enclave'
 xAxis = 'Data'

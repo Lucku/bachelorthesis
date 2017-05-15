@@ -267,7 +267,7 @@
       <GenerateAlternateCodePaths>SSE3</GenerateAlternateCodePaths>
       <IgnoreStandardIncludePath>false</IgnoreStandardIncludePath>
       <UseMSVC>true</UseMSVC>
-      <EnableEnhancedInstructionSet>StreamingSIMDExtensions3</EnableEnhancedInstructionSet>
+      <EnableEnhancedInstructionSet>AdvancedVectorExtensions</EnableEnhancedInstructionSet>
     </ClCompile>
     <Link>
       <AdditionalDependencies>sgx_trts_sim.lib;sgx_tstdc.lib;sgx_tservice_sim.lib;sgx_tcrypto.lib;sgx_tcxx.lib</AdditionalDependencies>

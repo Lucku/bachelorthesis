@@ -10,13 +10,22 @@ int main()
 	SetThreadPriority(GetCurrentThread(), THREAD_PRIORITY_TIME_CRITICAL);
 	SetPriorityClass(GetCurrentProcess(), REALTIME_PRIORITY_CLASS);
 
+	sgx_device_status_t enableDevice;
+
+	sgx_enable_device(&enableDevice);
+
+	if (enableDevice != SGX_ENABLED) {
+		std::cout << "Error! Intel SGX could not be enabled" << std::endl;
+		getchar();
+	}
+
 	sgx_launch_token_t token = { 0 };
 	int updated = 0;
-	eid = initializeEnclave(ENCLAVE_FILE, 0, &token, &updated);
+	eid = initializeEnclave(ENCLAVE_FILE, SGX_DEBUG_FLAG, &token, &updated);
 
 	Benchmark *b;
 
-	std::cout << "Choose benchmark method:\n(1) Bulk data processing\n(2) Single data processing\n[default: 1]" << std::endl;
+	std::cout << "Choose benchmark method:\n(1) Bulk data processing\n(2) Single data processing\n(3) All benchmarks\n(4) Only bulk benchmarks\n(5) Only basic benchmarks\n[default: 1]" << std::endl;
 	int method;
 	std::cin >> method;
 
@@ -32,7 +41,52 @@ int main()
 	}
 
 	if (method == 2) b = new BasicBenchmark("", DEFAULT_NUM_REPS, mode);
-	else b = new BulkBenchmark("", DEFAULT_NUM_REPS, mode);
+	else if (method == 1) b = new BulkBenchmark("", DEFAULT_NUM_REPS, mode);
+
+	else {
+		const char *filename;
+
+		if (method == 3 || method == 4) {
+			b = new BulkBenchmark("", DEFAULT_NUM_REPS, mode);
+			filename = "iterate_t_b.csv";
+			b->benchmark(filename, ecallIterate);
+			filename = "decompress_t_b.csv";
+			b->benchmark(filename, ecallVByteDecode, [](int in) {return 4 * in; }, DEFAULT_BM_SMALL);
+			filename = "compress_enc_t_b.csv";
+			b->benchmark(filename, ecallVByteEncodeEncrypted, [](int in) {return (in / 4) * 5 + AES_BLOCK_SIZE; }, DEFAULT_BM_MEDIUM, sizeof(uint32_t));
+			filename = "decompress_enc_t_b.csv";
+			b->benchmark(filename, ecallVByteDecodeEncrypted, [](int in) {return 4 * in + AES_BLOCK_SIZE; }, DEFAULT_BM_SMALL);
+			filename = "runlengthencode_t_b.csv";
+			b->benchmark(filename, ecallRunLengthEncode, [](int in) {return 2 * in; }, DEFAULT_BM_BIG, sizeof(uint32_t));
+			filename = "rlesum_t_b.csv";
+			b->benchmark(filename, ecallRunLengthEncodeAndSum, [](int in) {return 8; }, DEFAULT_BM_BIG, sizeof(uint32_t));
+			filename = "compress_t_b.csv";
+			b->benchmark(filename, ecallVByteEncode, [](int in) {return (in / 4) * 5; }, DEFAULT_BM_MEDIUM, sizeof(uint32_t));
+
+			if (method == 4) {
+				getchar();
+				return 0;
+			}
+		}
+
+		b = new BasicBenchmark("", SINGLE_REP, mode);
+		filename = "iterate_t_s.csv";
+		b->benchmark(filename, ecallIterate);
+		filename = "decompress_t_s.csv";
+		b->benchmark(filename, ecallVByteDecode, [](int in) {return 4 * in; }, DEFAULT_BM_SMALL);
+		filename = "compress_enc_t_s.csv";
+		b->benchmark(filename, ecallVByteEncodeEncrypted, [](int in) {return (in / 4) * 5 + AES_BLOCK_SIZE; }, DEFAULT_BM_MEDIUM, sizeof(uint32_t));
+		filename = "decompress_enc_t_s.csv";
+		b->benchmark(filename, ecallVByteDecodeEncrypted, [](int in) {return 4 * in + AES_BLOCK_SIZE; }, DEFAULT_BM_SMALL);
+		filename = "runlengthencode_t_s.csv";
+		b->benchmark(filename, ecallRunLengthEncode, [](int in) {return 2 * in; }, DEFAULT_BM_BIG, sizeof(uint32_t));
+		filename = "compress_t_s.csv";
+		b->benchmark(filename, ecallVByteEncode, [](int in) {return (in / 4) * 5; }, DEFAULT_BM_MEDIUM, sizeof(uint32_t));
+
+		getchar();
+
+		return 0;
+	}
 
 	std::string options[7] = { "iterate",
 		"compress",
@@ -85,7 +139,7 @@ sgx_enclave_id_t initializeEnclave(LPCWSTR file, int debug, sgx_launch_token_t *
 {
 	sgx_enclave_id_t eid;
 
-	sgx_status_t ret = sgx_create_enclave(file, SGX_DEBUG_FLAG, token, updated, &eid, NULL);
+	sgx_status_t ret = sgx_create_enclave(file, debug, token, updated, &eid, NULL);
 
 	if (ret != SGX_SUCCESS) {
 		std::cout << "Something went terribly wrong: " << ret << std::endl;

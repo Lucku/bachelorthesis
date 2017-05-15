@@ -11,16 +11,19 @@ size_t enclaveIterate(uint8_t *in, size_t length, uint8_t *out) {
 		out[i] = in[i];
 	}
 
-	/* TODO Test with real enclave
-	
-	float test = 0xFFFFFFFF;
+	/* TODO Test with real enclave */
+	/*
+	float test = 0xFFFFFFFFf;
 
 	__m128 a = _mm_load_ps1(&test);
 
 	__m128 b = _mm_load_ps1(&test);
 
 	__m128 result = _mm_add_ps(a, b);
-	*/
 
+	double testD = 0xFFFFFFFFFFFFFFFF;
+
+	//__m256 d = _mm_load_pd1(&testD);
+	*/
 	return 0;
 }

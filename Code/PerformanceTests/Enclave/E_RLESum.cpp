@@ -17,7 +17,6 @@ size_t enclaveRunLengthEncode(uint8_t *in, size_t inLength, uint8_t *out, size_t
 
 	while (current32 != end32) {
 		if (*current32 != currentRunValue) {
-
 			*out32++ = currentRunValue;
 			*out32++ = static_cast<uint32_t>(in32 - currentRunStart32);
 			currentRunStart32 = current32;
