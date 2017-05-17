@@ -1,0 +1,22 @@
+
+\chapter{Kompression}
+%TODO Intro
+
+\section{Grundlagen}
+%TODO notes
+\begin{itemize}
+	\item In-Memory Datenbanken sind eine große Entwicklung in den letzten Jahren
+	\item dabei werden sämtliche Daten im Hauptspeicher gespeichert und verarbeitet, statt im Sekundärspeicher (Festplatte), wo Zugriffszeiten bei weitem größer sind
+	\item um den Speicherplatz im Hauptspeicher effektiv zu nutzen, eignen sich schnelle Kompressionsverfahren, welche den Speicherplatz bei der Speicherung und Verarbeitung jener Daten reduzieren
+	\item diese leichtgewichtigen Kompressionsverfahren sind schneller als schwergewichtige Varianten wie Huffman Kodierung, weisen jedoch keine derart hohen Kompressionsraten auf, da kein Kontextwissen in die Berechnung einfließt, bspw. die Frequenz eines bestimmten Wortes, wie das bei Huffman der Fall ist
+	\item Im Folgenden werden zwei jener Verfahren vorgestellt, die auch bei späteren Tests zum Einsatz kommen: VByte und Lauflängenkodierung
+	\item Ziel ist es, ein grundlegendes Verständnis für die Funktionsweise der beiden Verfahren zu vermitteln, da diese bei späteren Performancetests eingesetzt werden und in einer Intel SGX Enclave laufengelassen werden
+\end{itemize}
+
+\section{Verwandte Arbeiten}
+%TODO Notes
+
+\section{Algorithmen}
+%TODO Notes
+\subsection{VByte}
+\subsection{Lauflängenkodierung}
