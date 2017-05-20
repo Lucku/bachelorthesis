@@ -1,30 +1,51 @@
 
 \chapter{Sicherheit in Datenbanken}
-%TODO Overhaul
-\begin{itemize}
-	\item im nachfolgenden Erklärungen zu den grundlegenden Konzepten der Arbeit
-	\item zunächst werden einfache Kompressionsverfahren angesprochen, welche für die späteren Untersuchungen relevant sind
-	\item Danach wird der Fragestellung nachgegangen, warum ein großer Wert auf Sicherheitsmerkmale in Datenbanksystemen gelegt wird
-	\item Mit dieser Grundlage wird nun auf Intel SGX eingegangen, die allgemeine Funktionsweise erklärt und ein technischer Überblick gegeben
-\end{itemize}
+%TODO Formulierungen anpassen
+Datenbanken stellen heutzutage allgegenwärtige Systeme dar. Die persistente Datenhaltung sowie die effiziente Möglichkeit zur Bereitstellung angefragter Datenmengen machen sie unverzichtbar in Infrastrukturen, welche auf Grundlage größerer Informationsbestände arbeiten. Maßnahmen in Bezug auf die Sicherheit jener Systeme bezogen sich klassischerweise auf den Schutz vor unberechtigtem Zugriff auf entsprechende Datenbankserver bzw. das Absichern vor unerlaubter Modifikation des Datenbestandes, jeweils von Seiten des Clients \cite{BSI1}. Durch den stärkeren Einsatz von Datenbanklösungen in nicht vertraulichen Umgebungen, wie etwa in der Cloud, ergeben sich neue Herausforderungen in Bezug auf den Schutz der Informationen. In diesem Kapitel soll ein Überblick über jene Sicherheitsaspekte gegeben werden. Neben der Darstellung verschiedener Lösungskonzepte dieser Problematik aus anderen Publikationen wird ein besonderer Fokus auf die Funktionsweise von Intel SGX, als den später zu untersuchenden Ansatz, gelegt. Im Grundlagenteil werden zunächst eine erweitere Einführung in die Datenbanksicherheit im Kontext der Arbeit gegeben und relevante Begriffe erklärt. Nachfolgend stehen verwandte Arbeiten im Vordergrund. Das Konzept und der Aufbau von Intel SGX werden im letzten Teil untersucht.
 
 \section{Grundlagen}
-%TODO notes
-\begin{itemize}
-	\item Trusted Computing Base (TCB) %möglicherweise als Definition
-	\item Schutzziele
-	\subitem Vertraulichkeit
-	\subitem Integrität
-	\item Zunächst muss Angreifermodell geklärt werden
-	\subitem Neugieriger/böswilliger Datenbankadministrator
-\end{itemize}
+Um grundsätzlich ein System in Bezug auf seine (Informations-)sicherheit zu betrachten, ist es notwendig, dieses auf die Einhaltung gewisser Merkmale hin zu charakterisieren. Diese als Schutzziele bezeichneten Eigenschaften fallen je nach Kontext anders aus. Im Allgemeinen bestehen sie jedoch den drei Begriffen Vertraulichkeit, Integrität und Verfügbarkeit:
 
+%TODO Frage: Darf man Materialien aus der Universität als Quellen nutzen? Sac-1-1 Folie 39
+\paragraph{Vertraulichkeit}
+Als Vertraulichkeit bezeichnet man die Eigenschaft, dass Informationen in einem System nur denjenigen Subjekten zur Verfügung steht, welche dazu berechtigt sind.
+
+\paragraph{Integrität}
+Integrität liegt vor, wenn jegliche Modifikation einer Datenmenge zu jeder Zeit erkannt werden kann.
+
+\paragraph{Verfügbarkeit}
+Ein System besitzt Verfügbarkeit, wenn es fortlaufend unter korrekter Funktionsweise verfügbar ist.
+
+\paragraph{}
+Im Kontext dieser Arbeit wird konkret ein Datenbanksystem betrachtet, welches sich zwar unter der Kontrolle einer berechtigten Partei, jedoch in einem nicht vertrauenswürdigen Umfeld befindet. Ein potenzieller Angreifer ist in diesem Fall zum einen ein böswilliger oder neugieriger Administrator des Drittsystems. Auf der anderen Seite ist es stets möglich, dass sich eine Person unbemerkt physischen Zugriff auf das System verschaffen hat, welches sich schließlich außerhalb des eigenen Zuständigkeitsbereichs befindet \cite{Popa2012}. Da es im Kontext dieser Arbeit hauptsächlich um die Vertraulichkeit in Bezug auf sensitive Daten geht, werden Integrität und Verfügbarkeit im Folgenden stets außer Acht gelassen. 
+
+Erreicht wird Vertraulichkeit in der Regel durch den Einsatz eines kryptographischen Verfahrens, welches die Ver- und Entschlüsselung von Daten erlaubt. Einem Angreifer ist es ohne das Wissen über den Schlüssel nicht möglich, Informationen aus den verschlüsselten Daten zu gewinnen, zumindest falls es sich um ein kryptographisch sicheres Verfahren handelt. Während jene Schemata in vielen Kontexten, wie etwa Kommunikationsprotokollen, ihren Einsatz finden, ergeben sich besondere Bedingungen bei der Verwendung innerhalb eines Datenbanksystems. Eine reine Speicherung verschlüsselter Daten stellt m Grunde kein Problem dar, jedoch ist es nötig, Berechnungen auf dem Datenbestand durchzuführen, um beispielsweise die Ergebnismenge zu einer Datenbankanfrage (Query) zu bestimmen. Da übliche Verschlüsselungsverfahren keine Berechnungen auf Schlüsseltexten erlauben, ist eine temporäre Entschlüsselung notwendig. Diese kann unter Gewährleistung der Vertraulichkeit nicht auf dem Server selbst ausgeführt werden, da sonst Klartextdaten im Speicher verfügbar wären. Eine reine Entschlüsselung und Verarbeitung vom Client ist auf der anderen Seite hoch unpraktikabel, wenn es sich um große Datenbestände handelt \cite{Popa2012}.
+%Im Kontext der sicheren Speicherung und Verarbeitung von Daten unter Nutzung von Intel SGX spielt primär das Merkmal der Vertraulichkeit eine entscheidende Rolle. Integrität und Verfügbarkeit sind im Folgenden eher sekundär und werden nicht genauer untersucht. Zur Gewährleistung der Vertraulichkeit werden in der Regel kryptographische Verfahren angewandt, um die Daten zu ver- und entschlüsseln. Zum Einsatz kommt hierbei ein Verschlüsselungsschema, welches im einfachen Fall aus einer Verschlüsselungsfunktion Enc und einer Entschlüsselungsfunktion Dec besteht. Die Anwendung von Enc auf eine Datenmenge m (Klartext) unter Nutzung des Schlüssels k resultiert im Schlüsseltext c. 
+%
+%\begin{equation}
+%	Enc(k,m) = c
+%\end{equation}
+%
+%Handelt es sich um ein kryptographisch sicheres Schema, so liefert der Schlüsseltext keinerlei Informationen über den eingangs betrachteten Klartext. Unter Nutzung von Dec und des Schlüssels k ist es nun möglich, den Klartext m zurückzugewinnen.  
+%
+%\begin{equation}
+%	Dec(k,c) = m
+%\end{equation}
+%
+%Im eben betrachteten Fall handelt es sich um ein symmetrisches Verschlüsselungsschema, da schlussendlich folgende Gleichung gilt:
+%
+%\begin{equation}
+%	Dec(k,Enc(k,m)) = m
+%\end{equation}
+
+%TODO Krypto erklären?
+%TODO Frage 4 wäre hier interessant
 \section{Verwandte Arbeiten}
-%TODO Shorten!!
+%TODO Kürzen!!
 Auf dem Gebiet der sicheren Datenhaltung und -verarbeitung gab es in der Vergangenheit bereits viele vielversprechende Lösungsansätze. In diesem Kapitel wird ein Überblick über entsprechende Arbeiten gegeben. Die größten Vertreter werden zudem etwas genauer auf ihre Vor- und Nachteile untersucht. Hierbei sind die Hauptmerkmale vor allem die zur Verfügung gestellte Sicherheit, unter dem kryptographischen Gesichtspunkt und auch der Möglichkeit zur Anpassbarkeit jener. Darüber hinaus stellt sich auch die Frage, inwieweit die Funktionalität des Datenbanksystems beeinflusst wird. Etwa, ob es eine Einschränkung der Datenbankschnittstelle gibt, z.B. in Bezug auf die zur Verfügung stehenden Anfragen, oder ob starke Kompromisse auf leistungstechnischer Ebene eingegangen werden müssen.
 
-Ein grundlegender Ansatz, den alle betrachteten Arbeiten gemeinsam haben, ist die Auslagerung und Verschlüsselung der zugrundeliegenden Datenbank. Entsprechend findet meist eine klare Trennung zwischen der reinen Datenspeicherung und der Verarbeitung statt, wobei letztere stets eine unabhängig betrachtete Komponente darstellt. Es lassen sich dennoch zwei Kategorien von Ansätzen festmachen. Zum Ersten ist dies ein rein auf dem Verschlüsselungsverfahren beruhendes Prinzip. Die Daten werden hierbei mit einem bestimmten Schema verschlüsselt, so dass weiterhin eine Verarbeitung stattfinden kann, ohne auf eine Repräsentation in Klartext zugreifen zu müssen. Der zweite Ansatz beruht auf die Einbeziehung von vertraulichen Hardwarekomponenten in den Berechnungsprozess. Diese agieren als sogenannte Vertrauensbereiche und erlauben ein Arbeiten auf den Klartextdaten, ohne dass ein potenzieller Angreifer einen Einblick in diese bekommen kann.
-
+Ein grundlegender Ansatz, den alle betrachteten Arbeiten gemeinsam haben, ist die Auslagerung und Verschlüsselung der zugrundeliegenden Datenbank. Entsprechend findet meist eine klare Trennung zwischen der reinen Datenspeicherung und der Verarbeitung statt, wobei letztere stets eine unabhängig betrachtete Komponente darstellt. Es lassen sich dennoch zwei Kategorien von Ansätzen festmachen. Zum Ersten ist dies ein rein auf dem Verschlüsselungsverfahren beruhendes Prinzip. Die Daten werden hierbei mit einem bestimmten Schema verschlüsselt, so dass weiterhin eine Verarbeitung stattfinden kann, ohne auf eine Repräsentation in Klartext zugreifen zu müssen. Der zweite Ansatz beruht auf die Einbeziehung von vertraulichen Hardwarekomponenten in den Berechnungsprozess. Diese agieren als sogenannte Vertrauensbereiche und erlauben ein Arbeiten auf den Klartextdaten, ohne dass ein potenzieller Angreifer einen Einblick in diese bekommen kann. Zusammen mit der Software, die innerhalb von ihnen ausgeführt wird, bilden diese Bereiche die sogenannte Trusted Computing Base (TCB) des Systems.
+%TODO Verfahren werden kombiniert
 Zunächst wird in diesem Kapitel auf Arbeiten aus der ersten Kategorie eingegangen. Der bekannteste Vertreter ist hierbei CryptDB. In seinem Bereich bildet es den Grundstein für die weiteren hier aufgeführten Arbeiten und wird etwas genauer behandelt. Basierend auf Vertrauensbereichen sind sehr vielfältige Arbeiten entstanden. Betrachtet werden hier vor allem TrustedDB, Cipherbase und VC3. Letzteres ist einer der neuesten Entwicklungen und nutzt selbst Intel SGX. In Abbildung \ref{fig:timeline} ist eine einfache zeitliche Einordnung der verschiedenen Arbeiten zu sehen. Für einen besseren Überblick sind Intel SGX und VC3 in einer eigenen Zeitlinie dargestellt.
 
 \begin{figure}
@@ -67,7 +88,7 @@ Im Gegensatz zu TrustedDB setzt Cipherbase \cite{Arasu2012}\cite{Arasu} auf eine
 Zuletzt wird mit VC3 (Verifiable Confidential Cloud Computing) \cite{Schuster2015} kurz ein auf Intel SGX basierender Ansatz behandelt. Der konkrete Anwendungsfall ist hierbei die sichere Ausführung von verteilten Berechnungen nach dem \textit{MapReduce} Modell in der Cloud. Jeder Arbeitsknoten führt seine Funktion (\textit{Map} oder \textit{Reduce}) in einer gesicherten Enclave aus, während die Daten zwischen den Knoten stets verschlüsselt vorliegen. Vor Beginn des Verarbeitungsprozesses werden jene Funktionen zunächst als Schlüsseltexte in die Knoten geladen. Zu Beginn eines Jobs laden diese jeweils ein Programm zum sicheren Schlüsselaustausch in die Enclave und führen es aus, um sich mit dem Nutzer auf einen Schlüssel zu einigen. Dieser wird benutzt um die Map und Reduce Funktionen sowie die später ein- und ausgehenden Daten zu entschlüsseln. Der große Vorteil ist in diesem Szenario, dass die Knoten nach außen hin auf herkömmliche Art behandelt werden können, wodurch Mechanismen wie eine Lastverteilung auch weiterhin problemlos funktionieren.
 
 \section{Intel SGX}
-%TODO notes
+%TODO Notizen
 % Intro
 \begin{itemize}
 	\item erstmals 2013 beschrieben
