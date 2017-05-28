@@ -1,6 +1,7 @@
 *.aux
 *.pdf
 *.log
+*.bst
 document.toc
 document.bbl
 document.blg

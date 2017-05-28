@@ -20,7 +20,7 @@ size_t runLengthEncode(uint8_t *in, size_t length, uint8_t *out)
 		if (*current32 != currentRunValue) {
 
 			*out32++ = currentRunValue;
-			*out32++ = static_cast<uint32_t>(in32 - currentRunStart32);
+			*out32++ = static_cast<uint32_t>(current32 - currentRunStart32);
 			currentRunStart32 = current32;
 			currentRunValue = *currentRunStart32;
 		}
@@ -28,7 +28,7 @@ size_t runLengthEncode(uint8_t *in, size_t length, uint8_t *out)
 	}
 
 	*out32++ = currentRunValue;
-	*out32++ = static_cast<uint32_t>(in32 - currentRunStart32);
+	*out32++ = static_cast<uint32_t>(current32 - currentRunStart32);
 	currentRunStart32 = current32;
 	currentRunValue = *currentRunStart32;
 
