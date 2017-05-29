@@ -9,6 +9,9 @@
 #define DEFAULT_NUM_REPS_PREC 1000
 #define SINGLE_REP 1
 
+typedef size_t(*bytefunc) (uint8_t *in, size_t length, uint8_t *out);
+typedef int(*sizefunc) (int inSize);
+
 class Benchmark {
 
 public:
@@ -17,18 +20,20 @@ public:
 	explicit Benchmark(std::string name, int numRepetitions);
 	explicit Benchmark(std::string name);
 	explicit Benchmark();
-	void benchmark(const char *file, 
-		size_t(*f) (uint8_t *in, size_t length, uint8_t *out), 
-		int(*sizefunc) (int inSize) = [](int in) {return in; }, 
-		int testRange = DEFAULT_BM_MEDIUM, 
-		int stepSize = 1);
+	void benchmark(const char *file,
+		bytefunc f,
+		sizefunc s = [](int in) {return in; },
+		int testRange = DEFAULT_BM_MEDIUM,
+		int stepSize = 1,
+		bytefunc preproc = nullptr,
+		sizefunc preprocS = [](int in) {return in; });
 
 protected:
 	int numRepetitions;
 	Timer timer;
 	std::string name;
 
-	virtual uint64_t singleBenchmark(size_t(*f) (uint8_t *in, size_t length, uint8_t *out), uint8_t *in, size_t length, uint8_t *out) = 0;
+	virtual uint64_t singleBenchmark(bytefunc f, uint8_t *in, size_t length, uint8_t *out) = 0;
 
 	virtual void initializeRandomData(uint8_t *in, size_t length);
 };

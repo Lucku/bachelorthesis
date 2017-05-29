@@ -88,13 +88,14 @@ int main()
 		return 0;
 	}
 
-	std::string options[7] = { "iterate",
+	std::string options[8] = { "iterate",
 		"compress",
 		"decompress",
 		"compress encrypted",
 		"decompress encrypted",
 		"run length encode",
-		"RLE aggregation" };
+		"RLE aggregation",
+		"run length decode" };
 
 	std::cout << "Choose function to test:\n(1) " << options[0]
 		<< "\n(2) " << options[1]
@@ -103,6 +104,7 @@ int main()
 		<< "\n(5) " << options[4]
 		<< "\n(6) " << options[5]
 		<< "\n(7) " << options[6]
+		<< "\n(8) " << options[7]
 		<< "\n[default: 2]" << std::endl;
 
 	int func;
@@ -114,7 +116,7 @@ int main()
 	case 1: filename = "iterate_t.csv";
 		b->benchmark(filename, ecallIterate); break;
 	case 3: filename = "decompress_t.csv";
-		b->benchmark(filename, ecallVByteDecode, [](int in) {return 4 * in; }, DEFAULT_BM_SMALL); break;
+		b->benchmark(filename, ecallVByteDecode, [](int in) {return 4 * in; }, DEFAULT_BM_MEDIUM, 1, ecallVByteEncodePreproc, [](int in) {return (in / 4) * 5; }); break;
 	case 4: filename = "compress_enc_t.csv";
 		b->benchmark(filename, ecallVByteEncodeEncrypted, [](int in) {return (in / 4) * 5 + AES_BLOCK_SIZE; }, DEFAULT_BM_MEDIUM, sizeof(uint32_t)); break;
 	case 5: filename = "decompress_enc_t.csv";
@@ -123,6 +125,8 @@ int main()
 		b->benchmark(filename, ecallRunLengthEncode, [](int in) {return 2 * in; }, DEFAULT_BM_BIG, sizeof(uint32_t)); break;
 	case 7: filename = "rlesum_t.csv";
 		b->benchmark(filename, ecallRunLengthEncodeAndSum, [](int in) {return 8; }, DEFAULT_BM_BIG, sizeof(uint32_t)); break;
+	case 8: filename = "runlengthdecode_u.csv";
+		b->benchmark(filename, ecallRunLengthDecode, [](int in) {return 6 * in; }, DEFAULT_BM_BIG, 2 * sizeof(uint32_t), ecallRunLengthEncodePreproc, [](int in) {return 2 * in; }); break;
 	default: filename = "compress_u.csv";
 		b->benchmark(filename, ecallVByteEncode, [](int in) {return (in / 4) * 5; }, DEFAULT_BM_MEDIUM, sizeof(uint32_t));
 	}
@@ -164,7 +168,16 @@ size_t ecallVByteEncode(uint8_t *in, size_t length, uint8_t *out) {
 	
 	size_t ret;
 
-	return enclaveVByteEncode(eid, &ret, in, length, out, (length / sizeof(uint32_t)) * 5);
+	enclaveVByteEncode(eid, &ret, in, length, out, (length / sizeof(uint32_t)) * 5);
+
+	return ret;
+}
+
+size_t ecallVByteEncodePreproc(uint8_t *in, size_t length, uint8_t *out) {
+
+	size_t ret;
+
+	enclaveVByteEncode(eid, &ret, in, length, out, length * 5);
 
 	return ret;
 }
@@ -205,11 +218,20 @@ size_t ecallRunLengthEncode(uint8_t *in, size_t length, uint8_t *out) {
 	return ret;
 }
 
+size_t ecallRunLengthEncodePreproc(uint8_t *in, size_t length, uint8_t *out) {
+
+	size_t ret;
+
+	enclaveRunLengthEncode(eid, &ret, in, length, out, length * 2 * 6);
+
+	return ret;
+}
+
 size_t ecallRunLengthDecode(uint8_t *in, size_t length, uint8_t *out) {
 
 	size_t ret;
 	
-	enclaveRunLengthDecode(eid, &ret, in, length, out, length);
+	enclaveRunLengthDecode(eid, &ret, in, length, out, length * 6);
 
 	return ret;
 }

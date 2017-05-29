@@ -13,9 +13,9 @@ Benchmark::Benchmark(std::string name) : Benchmark(name, DEFAULT_NUM_REPS) {}
 
 Benchmark::Benchmark() : Benchmark("()") {};
 
-void Benchmark::benchmark(const char *file, size_t(*f) (uint8_t *in, size_t length, uint8_t *out), int(*sizefunc) (int inSize), int testRange, int stepSize) {
+void Benchmark::benchmark(const char *file, bytefunc f, sizefunc s, int testRange, int stepSize, bytefunc preproc, sizefunc preprocS) {
 
-	std::cout << "Starting benchmark " << name << ": " << std::endl;
+	std::cout << "Starting benchmark " << name << " (" << "reps: " << numRepetitions << " range: " << testRange << " stepSize: " << stepSize << "): " << std::endl;
 
 	std::ofstream fileToWrite;
 	fileToWrite.open(file, std::ios::out);
@@ -29,8 +29,23 @@ void Benchmark::benchmark(const char *file, size_t(*f) (uint8_t *in, size_t leng
 	for (int i = 0; i <= testRange; i += stepSize) {
 
 		uint8_t *in = new uint8_t[i];
-		initializeRandomData(in, i);
-		uint8_t *out = new uint8_t[sizefunc(i)];
+
+		if (preproc == nullptr) {
+			initializeRandomData(in, i);
+		}
+		else {
+			// s(i) is the size so that you get the amount of values, even in best case compression
+			uint8_t *pre = new uint8_t[s(i)];
+			// preprocS(s(i)) to handle the worst case compression
+			uint8_t *preOut = new uint8_t[preprocS(s(i))];
+			initializeRandomData(pre, s(i));
+			preproc(pre, s(i), preOut);
+			std::memcpy(in, preOut, i);
+			delete[] pre;
+			delete[] preOut;
+		}
+
+		uint8_t *out = new uint8_t[s(i)];
 		uint64_t time = singleBenchmark(f, in, i, out);
 
 		switch (mode) {

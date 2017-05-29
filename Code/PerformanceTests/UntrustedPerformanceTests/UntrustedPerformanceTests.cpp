@@ -75,7 +75,7 @@ int main()
 		"decompress encrypted",
 		"run length encode",
 		"RLE aggregation",
-		"All benchmarks" };
+		"run length decode" };
 
 	std::cout << "Choose function to test:\n(1) " << options[0] 
 		<< "\n(2) " << options[1] 
@@ -84,6 +84,7 @@ int main()
 		<< "\n(5) " << options[4]
 		<< "\n(6) " << options[5]
 		<< "\n(7) " << options[6]
+		<< "\n(8) " << options[7]
 		<< "\n[default: 2]" << std::endl;
 
 	int func;
@@ -95,7 +96,7 @@ int main()
 	case 1: filename = "iterate_u.csv";
 		b->benchmark(filename, iterate); break;
 	case 3: filename = "decompress_u.csv";
-		b->benchmark(filename, vByteDecode, [](int in) {return 4 * in; }, DEFAULT_BM_SMALL); break;
+		b->benchmark(filename, vByteDecode, [](int in) {return 4 * in; }, DEFAULT_BM_MEDIUM, 1, vByteEncode, [](int in) {return (in / 4) * 5; }); break;
 	case 4: filename = "compress_enc_u.csv";
 		b->benchmark(filename, vByteEncodeEncrypted, [](int in) {return (in / 4) * 5 + AES_BLOCK_SIZE; }, DEFAULT_BM_MEDIUM, sizeof(uint32_t)); break;
 	case 5: filename = "decompress_enc_u.csv";
@@ -104,6 +105,8 @@ int main()
 		b->benchmark(filename, runLengthEncode, [](int in) {return 2 * in; }, DEFAULT_BM_BIG, sizeof(uint32_t)); break;
 	case 7: filename = "rlesum_u.csv";
 		b->benchmark(filename, runLengthEncodeAndSum, [](int in) {return 8; }, DEFAULT_BM_BIG, sizeof(uint32_t)); break;
+	case 8: filename = "runlengthdecode_u.csv";
+		b->benchmark(filename, runLengthDecode, [](int in) {return 6 * in; }, DEFAULT_BM_BIG, 2 * sizeof(uint32_t), runLengthEncode, [](int in) {return 2 * in; }); break;
 	default: filename = "compress_u.csv";
 		b->benchmark(filename, vByteEncode, [](int in) {return (in / 4) * 5; }, DEFAULT_BM_MEDIUM, sizeof(uint32_t));
 	}

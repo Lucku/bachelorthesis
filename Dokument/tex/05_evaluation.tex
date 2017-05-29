@@ -5,6 +5,34 @@
 \section{Konzept}
 %TODO notes
 
+\begin{figure}[h]
+	\includegraphics[width=\linewidth]{img/Iteration.pdf}
+	\centering
+	\caption{Vergleich Iteration innerhalb und außerhalb einer Enclave}
+	\label{fig:iteration}
+\end{figure}
+
+\begin{figure}[h]
+	\includegraphics[width=\linewidth]{img/VByteDekomprimierung.pdf}
+	\centering
+	\caption{Vergleich Dekomprimierung innerhalb und außerhalb einer Enclave}
+	\label{fig:decompress}
+\end{figure}
+
+\begin{figure}[h]
+	\includegraphics[width=\linewidth]{img/VByteDekomprimierungKrypto.pdf}
+	\centering
+	\caption{Vergleich Dekomprimierung und Verschlüsselung innerhalb und außerhalb einer Enclave}
+	\label{fig:decompresscrypto}
+\end{figure}
+
+\begin{itemize}
+	\item Lauflängendekodierung
+	\item Summenbildung über RLE kodierten Daten vs. Dekomprimieren und Summe
+	\item Vergleich Kopieren der Buffer in die Enclave vs. direktes Arbeiten auf Daten (Overhead durch Kopieren)
+	\item Nur Dekomprimierung und Entschlüsselung ohne Verschlüsselung am Ende
+\end{itemize}
+
 % \section{Punkt 1}
 % \section{Punkt 2}
 % \section{Punkt 3} ...

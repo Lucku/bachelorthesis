@@ -36,12 +36,14 @@ size_t runLengthEncode(uint8_t *in, size_t length, uint8_t *out)
 }
 
 /* !WARNING! Decode won't work without encoded data */
+/* Note: Although the input should always be dividable by 2 (value, runlength),
+it only counts as 1 decoded integer (the runlength doesn't count)*/
 size_t runLengthDecode(uint8_t *in, size_t length, uint8_t *out)
 {
 	uint32_t* out32 = reinterpret_cast<uint32_t*>(out);
 	const size_t countIn32 = length / sizeof(uint32_t);
 
-	if (countIn32 == 0) return 0;
+	if (countIn32 < 2) return 0;
 
 	const uint32_t* const initOut32 = out32;
 	const uint32_t* in32 = reinterpret_cast<const uint32_t*>(in);

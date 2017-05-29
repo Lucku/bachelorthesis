@@ -3,7 +3,7 @@
 size_t enclaveRunLengthEncode(uint8_t *in, size_t inLength, uint8_t *out, size_t outLength)
 {
 	const uint32_t* in32 = reinterpret_cast<const uint32_t*>(in);
-	const size_t countIn32 = inLength / sizeof(uint32_t);
+	const size_t countIn32 = length / sizeof(uint32_t);
 
 	if (countIn32 == 0) return 0;
 
@@ -17,8 +17,9 @@ size_t enclaveRunLengthEncode(uint8_t *in, size_t inLength, uint8_t *out, size_t
 
 	while (current32 != end32) {
 		if (*current32 != currentRunValue) {
+
 			*out32++ = currentRunValue;
-			*out32++ = static_cast<uint32_t>(in32 - currentRunStart32);
+			*out32++ = static_cast<uint32_t>(current32 - currentRunStart32);
 			currentRunStart32 = current32;
 			currentRunValue = *currentRunStart32;
 		}
@@ -26,7 +27,7 @@ size_t enclaveRunLengthEncode(uint8_t *in, size_t inLength, uint8_t *out, size_t
 	}
 
 	*out32++ = currentRunValue;
-	*out32++ = static_cast<uint32_t>(in32 - currentRunStart32);
+	*out32++ = static_cast<uint32_t>(current32 - currentRunStart32);
 	currentRunStart32 = current32;
 	currentRunValue = *currentRunStart32;
 
@@ -39,7 +40,7 @@ size_t enclaveRunLengthDecode(uint8_t *in, size_t inLength, uint8_t *out, size_t
 	uint32_t* out32 = reinterpret_cast<uint32_t*>(out);
 	const size_t countIn32 = inLength / sizeof(uint32_t);
 
-	if (countIn32 == 0) return 0;
+	if (countIn32 < 2) return 0;
 
 	const uint32_t* const initOut32 = out32;
 	const uint32_t* in32 = reinterpret_cast<const uint32_t*>(in);

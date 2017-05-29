@@ -5,15 +5,15 @@ import seaborn
 from pandas import Series
 
 # -------------- Configuration -------------- #
-title = 'Run length encoded aggregation (Regular vs. SGX)'
-file1 = 'x64/Real Results/decompress_u_b.csv'
-file2 = 'x64/Release/decompress_u.csv'
-label1 = 'Regular'
-label2 = 'Inside SGX enclave'
+title = 'VByte Dekomprimierung und Kryptographie'
+file1 = 'x64/Release/decompress_u.csv'
+file2 = 'x64/Real Results/decompress_enc_t_b.csv'
+label1 = 'Normal'
+label2 = 'In SGX enclave'
 xAxis = 'Data'
-xLabel = '32 Bit data'
+xLabel = '8 Bit Werte'
 yAxis = 'MIOPS'
-yLabel = 'Million integer operations per second'
+yLabel = 'Millionen Integer Operationen je Sekunde'
 windowSize = 50
 # ------------------------------------------- #
 
@@ -32,9 +32,9 @@ diff = spy1.subtract(spy2)
 #diff = pd.concat([spy1, spy2]).groupby(level=0).transform(Series.diff)
 #diff.set_index(xAxis, inplace=True)
 
-spy1[yAxis].rolling(window=windowSize).mean().plot(figsize=(16,12), label=label1)
-spy2[yAxis].rolling(window=windowSize).mean().plot(figsize=(16,12), label=label2)
-diff[yAxis].rolling(window=windowSize * 5).mean().plot(figsize=(16,12), label='Difference')
+spy1[yAxis].rolling(window=windowSize).mean().plot(figsize=(16,8), label=label1)
+spy2[yAxis].rolling(window=windowSize).mean().plot(figsize=(16,8), label=label2)
+diff[yAxis].rolling(window=windowSize * 5).mean().plot(figsize=(16,8), label='Differenz')
 #spy3[yAxis].rolling(window=windowSize).mean().plot(figsize=(16,12), label="sgx bulk processing")
 #spy4[yAxis].rolling(window=windowSize).mean().plot(figsize=(16,12), label="sgx single processing")
 
@@ -42,4 +42,5 @@ pp.title(title)
 pp.xlabel(xLabel)
 pp.ylabel(yLabel)
 pp.legend(loc='upper left')
+pp.savefig(title + '.pdf')
 pp.show();

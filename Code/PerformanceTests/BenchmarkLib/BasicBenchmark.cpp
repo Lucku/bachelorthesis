@@ -2,7 +2,7 @@
 #include "BasicBenchmark.h"
 
 /* "One byte at a time processing" doesn't make sense with most algorithms here */
-uint64_t BasicBenchmark::singleBenchmark(size_t(*f) (uint8_t *in, size_t length, uint8_t *out), uint8_t *in, size_t length, uint8_t *out) {
+uint64_t BasicBenchmark::singleBenchmark(bytefunc f, uint8_t *in, size_t length, uint8_t *out) {
 
 	uint64_t time = 0;
 
