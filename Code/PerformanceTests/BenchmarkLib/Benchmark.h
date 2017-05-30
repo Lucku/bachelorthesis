@@ -10,11 +10,12 @@
 #define SINGLE_REP 1
 
 typedef size_t(*bytefunc) (uint8_t *in, size_t length, uint8_t *out);
-typedef int(*sizefunc) (int inSize);
+typedef size_t(*sizefunc) (size_t inSize);
 
 class Benchmark {
 
 public:
+
 	enum MeasurementMode { IOPS, MIOPS, TIME } mode;
 	explicit Benchmark(std::string name, int numRepetitions, MeasurementMode mode);
 	explicit Benchmark(std::string name, int numRepetitions);
@@ -22,13 +23,19 @@ public:
 	explicit Benchmark();
 	void benchmark(const char *file,
 		bytefunc f,
-		sizefunc s = [](int in) {return in; },
+		sizefunc s = [](size_t in) {return in; },
 		int testRange = DEFAULT_BM_MEDIUM,
 		int stepSize = 1,
 		bytefunc preproc = nullptr,
-		sizefunc preprocS = [](int in) {return in; });
+		sizefunc preprocS = [](size_t in) {return in; });
+
+	void setNumRepetitions(int numRepetitions);
+	void setMode(MeasurementMode mode);
+	std::string getName();
+	void setName(std::string name);
 
 protected:
+
 	int numRepetitions;
 	Timer timer;
 	std::string name;

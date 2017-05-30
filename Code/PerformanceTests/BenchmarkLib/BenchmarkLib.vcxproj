@@ -134,6 +134,7 @@
   <ItemGroup>
     <ClInclude Include="BasicBenchmark.h" />
     <ClInclude Include="Benchmark.h" />
+    <ClInclude Include="BenchmarkSuite.h" />
     <ClInclude Include="BulkBenchmark.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
@@ -142,6 +143,7 @@
   <ItemGroup>
     <ClCompile Include="BasicBenchmark.cpp" />
     <ClCompile Include="Benchmark.cpp" />
+    <ClCompile Include="BenchmarkSuite.cpp" />
     <ClCompile Include="BulkBenchmark.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

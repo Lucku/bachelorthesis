@@ -15,7 +15,7 @@ Benchmark::Benchmark() : Benchmark("()") {};
 
 void Benchmark::benchmark(const char *file, bytefunc f, sizefunc s, int testRange, int stepSize, bytefunc preproc, sizefunc preprocS) {
 
-	std::cout << "Starting benchmark " << name << " (" << "reps: " << numRepetitions << " range: " << testRange << " stepSize: " << stepSize << "): " << std::endl;
+	std::cout << "Starting benchmark " << name << " (-> " << file << ") (reps: " << numRepetitions << " range: " << testRange << " stepSize: " << stepSize << "): " << std::endl;
 
 	std::ofstream fileToWrite;
 	fileToWrite.open(file, std::ios::out);
@@ -62,6 +62,26 @@ void Benchmark::benchmark(const char *file, bytefunc f, sizefunc s, int testRang
 	std::cout << std::endl;
 
 	fileToWrite.close();
+}
+
+void Benchmark::setNumRepetitions(int numRepetitions)
+{
+	this->numRepetitions = numRepetitions;
+}
+
+void Benchmark::setMode(MeasurementMode mode)
+{
+	this->mode = mode;
+}
+
+std::string Benchmark::getName()
+{
+	return name;
+}
+
+void Benchmark::setName(std::string name)
+{
+	this->name = name;
 }
 
 void Benchmark::initializeRandomData(uint8_t *in, size_t length) {

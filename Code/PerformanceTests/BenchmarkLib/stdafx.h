@@ -9,7 +9,11 @@
 
 #define WIN32_LEAN_AND_MEAN             // Selten verwendete Komponenten aus Windows-Headern ausschlieﬂen
 
+#include <Windows.h>
+
 #include <iostream>
 #include <chrono>
 #include <fstream>
 #include <string>
+#include <sstream>
+#include <vector>
