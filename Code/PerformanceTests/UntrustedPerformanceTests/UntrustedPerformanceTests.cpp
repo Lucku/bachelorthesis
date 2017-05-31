@@ -5,7 +5,7 @@
 #include "RLESum.h"
 
 /* Performance Tests without using an Intel SGX enclave */
-int main()
+int main(int argc, char **argv)
 {
 	BenchmarkSuite *b = new BenchmarkSuite('u');
 

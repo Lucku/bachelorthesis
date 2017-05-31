@@ -291,3 +291,4 @@ __pycache__/
 # Own libraries
 
 lib/
+BenchmarkLib/rapidjson

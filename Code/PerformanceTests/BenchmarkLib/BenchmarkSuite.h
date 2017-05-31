@@ -30,6 +30,7 @@ public:
 	void registerFunction(bytefunc b, sizefunc s, std::string name, size_t valueSize);
 	void registerFunctionWithPreprocessing(bytefunc b, sizefunc s, bytefunc preFunc, sizefunc preSize, std::string name, size_t valueSize);
 	void start();
+	void startFromJSON(const char *file);
 
 private:
 

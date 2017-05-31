@@ -39,6 +39,36 @@ int readIntFromConsole(int defaultValue) {
 	return i;
 }
 
+std::vector<std::string> getJSONFilesFromDirectory() {
+
+	WIN32_FIND_DATA ffd;
+	HANDLE hFind = INVALID_HANDLE_VALUE;
+
+	TCHAR dir[MAX_PATH];
+
+	DWORD len = GetCurrentDirectory(MAX_PATH, dir);
+
+	std::wstring path(dir);
+	path.append(TEXT("/*.*"));
+
+	std::string suffix = ".json";
+
+	std::vector<std::string> files;
+
+	hFind = FindFirstFile(path.c_str(), &ffd);
+
+	do {
+		std::wstring currentFile(ffd.cFileName);
+
+		if (std::equal(suffix.rbegin(), suffix.rend(), currentFile.rbegin())) {
+			files.push_back(std::string(currentFile.begin(), currentFile.end()));
+		}
+
+	} while (FindNextFile(hFind, &ffd));
+
+	return files;
+}
+
 void BenchmarkSuite::start()
 {
 	SetThreadPriority(GetCurrentThread(), THREAD_PRIORITY_TIME_CRITICAL);
@@ -46,41 +76,32 @@ void BenchmarkSuite::start()
 
 	std::string name;
 
-	std::cout << "Choose benchmark unit: [default: 2]" << std::endl
-		<< "(1) Time" << std::endl 
-		<< "(2) IOPS" << std::endl
-		<< "(3) MIOPS" << std::endl;
+	std::vector<std::string> jsonFiles = getJSONFilesFromDirectory();
 
-	int unit = readIntFromConsole(2);
+	if (jsonFiles.size() > 0) {
 
-	if (unit < 1 || unit > 3) goto error;
+		std::cout << "There are config files in the current dir. Want to use one?: [default: 1]" << std::endl
+			<< "(1) Hell no!" << std::endl;
 
-	Benchmark::MeasurementMode mode;
+		int i = 1;
 
-	switch (unit) {
-	case 1: mode = Benchmark::MeasurementMode::TIME; break;
-	case 2: mode = Benchmark::MeasurementMode::IOPS; break;
-	case 3: mode = Benchmark::MeasurementMode::MIOPS;
+		for each (auto s in jsonFiles) {
+			std::cout << "(" << ++i << ") " << s << std::endl;
+		}
+
+		int json = readIntFromConsole(1);
+
+		if (json < 1 || json > jsonFiles.size() + 1) goto error;
+
+		if (json != 1) {
+			startFromJSON((jsonFiles.at(json - 2)).c_str());
+			system("pause");
+			return;
+		}
 	}
-
-	bulk->setMode(mode);
-	basic->setMode(mode);
-
-	std::cout << "Choose number of repetitions per value (the bigger the more precise): [default: 200]" << std::endl;
-	int numReps = readIntFromConsole(DEFAULT_NUM_REPS);
-
-	if (numReps < 1 || numReps > 10000000) goto error;
-
-	bulk->setNumRepetitions(numReps);
-	basic->setNumRepetitions(numReps);
-
-	std::cout << "Choose a name for the benchmark (just for display purposes) [default: MyBenchmark]" << std::endl;
-	std::getline(std::cin, name);
-	
-	if (name == "") name = "MyBenchmark";
-
-	bulk->setName(name);
-	basic->setName(name);
+	else {
+		std::cout << "No config files found..." << std::endl;
+	}
 
 	std::cout << "Choose benchmark method: [default: 1]" << std::endl
 		<< "(1) Bulk data processing" << std::endl
@@ -101,6 +122,39 @@ void BenchmarkSuite::start()
 		b = basic;
 		suffix = 's';
 	}
+
+	std::cout << "Choose benchmark unit: [default: 2]" << std::endl
+		<< "(1) Time" << std::endl 
+		<< "(2) IOPS" << std::endl
+		<< "(3) MIOPS" << std::endl;
+
+	int unit = readIntFromConsole(2);
+
+	if (unit < 1 || unit > 3) goto error;
+
+	Benchmark::MeasurementMode mode;
+
+	switch (unit) {
+	case 1: mode = Benchmark::MeasurementMode::TIME; break;
+	case 2: mode = Benchmark::MeasurementMode::IOPS; break;
+	case 3: mode = Benchmark::MeasurementMode::MIOPS;
+	}
+
+	b->setMode(mode);
+
+	std::cout << "Choose number of repetitions per value (the bigger the more precise): [default: 200]" << std::endl;
+	int numReps = readIntFromConsole(DEFAULT_NUM_REPS);
+
+	if (numReps < 1 || numReps > 10000000) goto error;
+
+	b->setNumRepetitions(numReps);
+
+	std::cout << "Choose a name for the benchmark (just for display purposes) [default: MyBenchmark]" << std::endl;
+	std::getline(std::cin, name);
+	
+	if (name == "") name = "MyBenchmark";
+
+	b->setName(name);
 
 	std::cout << "Choose function to test: [default: 1]" << std::endl;
 
@@ -127,7 +181,6 @@ void BenchmarkSuite::start()
 
 			Function f = functions->at(i);
 
-			b->setName(b->getName() + " (" + std::to_string(i + 1) + "/" + std::to_string(size) + ") ");
 			b->benchmark((f.name + "_" + fileSuffix + "_" + suffix + ".csv").c_str(), f.b, f.s, testRange / f.valueSize, f.valueSize, f.preFunc, f.preSize);
 			std::cout << "Results saved to " << f.name.c_str() << std::endl;
 		}
@@ -148,4 +201,50 @@ void BenchmarkSuite::start()
 error:
 	std::cout << "Something went wrong! Please read the instructions clearly!" << std::endl;
 	getchar();
+}
+
+void BenchmarkSuite::startFromJSON(const char *file) {
+
+	std::ifstream f(file);
+	rapidjson::IStreamWrapper isw(f);
+	rapidjson::Document d;
+	d.ParseStream(isw);
+	f.close();
+
+	int testRange = d["testRange"].GetInt();
+	Benchmark::MeasurementMode mode;
+	switch (d["unit"].GetInt()) {
+	case 1: mode = Benchmark::MeasurementMode::TIME; break;
+	case 2: mode = Benchmark::MeasurementMode::IOPS; break;
+	case 3: mode = Benchmark::MeasurementMode::MIOPS;
+	}
+	int numReps = d["numReps"].GetInt();
+	std::string name = d["name"].GetString();
+	int method = d["method"].GetInt();
+	auto funs = d["functions"].GetArray();
+
+	char suffix = 'b';
+	Benchmark *b;
+
+	if (method == 1) {
+		b = bulk;
+	}
+	else {
+		b = basic;
+		suffix = 's';
+	}
+	
+	b->setMode(mode);
+	b->setName(name);
+	b->setNumRepetitions(numReps);
+
+	for (int i = 0; i < funs.Size(); i++) {
+
+		Function f = functions->at(funs[i].GetInt() - 1);
+
+		b->benchmark((f.name + "_" + fileSuffix + "_" + suffix + ".csv").c_str(), f.b, f.s, testRange / f.valueSize, f.valueSize, f.preFunc, f.preSize);
+		std::cout << "Results saved to " << f.name.c_str() << std::endl;
+	}
+
+	std::cout << "Done" << std::endl;
 }
