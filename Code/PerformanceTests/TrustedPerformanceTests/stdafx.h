@@ -6,6 +6,7 @@
 #pragma once
 
 #include <iostream>
+#include <functional>
 
 #include <stdio.h>
 #include <tchar.h>
@@ -15,7 +16,6 @@
 
 #include "targetver.h"
 #include "PerformanceTests_u.h"
-#include "Functions.h"
 
 #define ENCLAVE_FILE _T("PerformanceTests.signed.dll")
 #define AES_KEY_SIZE 16

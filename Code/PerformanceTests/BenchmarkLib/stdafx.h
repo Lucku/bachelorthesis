@@ -18,6 +18,7 @@
 #include <sstream>
 #include <vector>
 #include <filesystem>
+#include <functional>
 
 #include "rapidjson\istreamwrapper.h"
 #include "rapidjson\filereadstream.h"

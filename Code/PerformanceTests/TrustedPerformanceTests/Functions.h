@@ -1,16 +1,14 @@
 #pragma once
 
 #include "stdafx.h"
+#include "Benchmark.h"
+
+typedef sgx_status_t(*ecallIOFunc) (sgx_enclave_id_t eid, size_t *ret, uint8_t *in, size_t inLength, uint8_t *out, size_t outLength);
+typedef sgx_status_t(*ecallFunc)  (sgx_enclave_id_t eid, size_t *ret, uint8_t *in, size_t inLength, uint8_t *out);
 
 /* Enclave initialisation and wrapper functions for ECALLs */
 sgx_enclave_id_t initializeEnclave(LPCWSTR file, int debug, sgx_launch_token_t * token, int *updated);
-size_t ecallIterate(uint8_t *in, size_t length, uint8_t *out);
-size_t ecallVByteEncode(uint8_t *in, size_t length, uint8_t *out);
-size_t ecallVByteEncodePreproc(uint8_t *in, size_t length, uint8_t *out);
-size_t ecallVByteDecode(uint8_t *in, size_t length, uint8_t *out);
-size_t ecallVByteEncodeEncrypted(uint8_t *in, size_t length, uint8_t *out);
-size_t ecallVByteDecodeEncrypted(uint8_t *in, size_t length, uint8_t *out);
-size_t ecallRunLengthEncode(uint8_t *in, size_t length, uint8_t *out);
-size_t ecallRunLengthEncodePreproc(uint8_t *in, size_t length, uint8_t *out);
-size_t ecallRunLengthDecode(uint8_t *in, size_t length, uint8_t *out);
-size_t ecallRunLengthEncodeAndSum(uint8_t *in, size_t length, uint8_t *out);
+
+/* ECALL wrapper */
+bytefunc ecall(const sgx_enclave_id_t eid, ecallIOFunc func, float outBufferFactor);
+bytefunc ecall(const sgx_enclave_id_t eid, ecallFunc func);

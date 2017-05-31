@@ -60,7 +60,7 @@ std::vector<std::string> getJSONFilesFromDirectory() {
 	do {
 		std::wstring currentFile(ffd.cFileName);
 
-		if (std::equal(suffix.rbegin(), suffix.rend(), currentFile.rbegin())) {
+		if (currentFile.length() > suffix.length() && std::equal(suffix.rbegin(), suffix.rend(), currentFile.rbegin())) {
 			files.push_back(std::string(currentFile.begin(), currentFile.end()));
 		}
 

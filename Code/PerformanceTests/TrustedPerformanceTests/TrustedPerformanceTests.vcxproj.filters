@@ -47,6 +47,9 @@
     <ClCompile Include="PerformanceTests_u.c">
       <Filter>Generated Files</Filter>
     </ClCompile>
+    <ClCompile Include="Functions.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="..\Enclave\PerformanceTests.edl">

@@ -27,3 +27,13 @@ size_t enclaveIterate(uint8_t *in, size_t length, uint8_t *out) {
 	*/
 	return 0;
 }
+
+size_t justCopy(uint8_t *in, size_t length, uint8_t *out) {
+
+	return 0;
+}
+
+size_t noCopy(uint8_t *in, size_t length, uint8_t *out) {
+
+	return 0;
+}
