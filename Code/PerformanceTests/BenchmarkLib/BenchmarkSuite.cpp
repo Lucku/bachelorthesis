@@ -168,10 +168,10 @@ void BenchmarkSuite::start()
 
 	if (func < 1 || func > size + 1) goto error;
 
-	std::cout << "Choose test range maximum of bytes: [default: 100000]" << std::endl;
+	std::cout << "Choose test range maximum of bytes: [default: 200000]" << std::endl;
 	int testRange = readIntFromConsole(DEFAULT_BM_BIG);
 
-	if (testRange < 1 || testRange > 1000000) goto error;
+	if (testRange < 1 || testRange > DEFAULT_BM_BIG) goto error;
 
 	if (func == size + 1) {
 
@@ -179,7 +179,7 @@ void BenchmarkSuite::start()
 
 			Function f = functions->at(i);
 
-			b->benchmark((f.name + "_" + fileSuffix + "_" + suffix + ".csv").c_str(), f.b, f.s, testRange / f.valueSize, f.valueSize, f.preFunc, f.preSize);
+			b->benchmark((f.name + "_" + fileSuffix + "_" + suffix + ".csv").c_str(), f.b, f.s, testRange * (((float) f.valueSize) / 8), f.valueSize, f.preFunc, f.preSize);
 			std::cout << "Results saved to " << f.name.c_str() << std::endl;
 		}
 
@@ -187,7 +187,7 @@ void BenchmarkSuite::start()
 	}
 	else {
 		Function f = functions->at(func - 1);
-		b->benchmark((f.name + "_" + fileSuffix + "_" + suffix + ".csv").c_str(), f.b, f.s, testRange / f.valueSize, f.valueSize, f.preFunc, f.preSize);
+		b->benchmark((f.name + "_" + fileSuffix + "_" + suffix + ".csv").c_str(), f.b, f.s, testRange * (((float) f.valueSize) / 8), f.valueSize, f.preFunc, f.preSize);
 
 		std::cout << "Done" << std::endl;
 		std::cout << "Results saved to " << f.name.c_str() << std::endl;
@@ -240,7 +240,7 @@ void BenchmarkSuite::startFromJSON(const char *file) {
 
 		Function f = functions->at(funs[i].GetInt() - 1);
 
-		b->benchmark((f.name + "_" + fileSuffix + "_" + suffix + ".csv").c_str(), f.b, f.s, testRange / f.valueSize, f.valueSize, f.preFunc, f.preSize);
+		b->benchmark((f.name + "_" + fileSuffix + "_" + suffix + ".csv").c_str(), f.b, f.s, testRange * (((float) f.valueSize) / 8), f.valueSize, f.preFunc, f.preSize);
 		std::cout << "Results saved to " << f.name.c_str() << std::endl;
 	}
 
