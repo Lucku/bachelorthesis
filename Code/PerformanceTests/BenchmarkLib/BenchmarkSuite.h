@@ -10,8 +10,6 @@ class BenchmarkSuite {
 
 public:
 
-	static sizefunc IDENT;
-
 	struct Function {
 		std::string name;
 		bytefunc b;

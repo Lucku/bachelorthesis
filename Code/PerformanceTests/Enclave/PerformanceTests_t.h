@@ -15,8 +15,12 @@ extern "C" {
 
 
 size_t enclaveIterate(uint8_t* in, size_t length, uint8_t* out);
+size_t enclaveJustCopy(uint8_t* in, size_t length, uint8_t* out);
+size_t enclaveNoCopy(uint8_t* in, size_t length, uint8_t* out);
+size_t enclaveCompleteProcess(uint8_t* in, size_t length, uint8_t* out);
 size_t enclaveVByteEncode(uint8_t* in, size_t inLength, uint8_t* out, size_t outLength);
 size_t enclaveVByteDecode(uint8_t* in, size_t inLength, uint8_t* out, size_t outLength);
+size_t enclaveVByte(uint8_t* in, size_t inLength, uint8_t* out, size_t outLength);
 size_t enclaveVByteEncodeEncrypted(uint8_t* in, size_t length, uint8_t* out);
 size_t enclaveVByteDecodeEncrypted(uint8_t* in, size_t length, uint8_t* out);
 size_t enclaveRunLengthEncode(uint8_t* in, size_t inLength, uint8_t* out, size_t outLength);

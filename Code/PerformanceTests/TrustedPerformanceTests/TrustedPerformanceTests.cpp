@@ -1,8 +1,9 @@
 #include "stdafx.h"
 #include "BenchmarkSuite.h"
+#include "Funs.h"
 #include "Functions.h"
 
-sgx_enclave_id_t eid;
+using namespace Funs;
 
 int main()
 {
@@ -17,17 +18,21 @@ int main()
 
 	sgx_launch_token_t token = { 0 };
 	int updated = 0;
-	eid = initializeEnclave(ENCLAVE_FILE, SGX_DEBUG_FLAG, &token, &updated);
+	sgx_enclave_id_t eid = initializeEnclave(ENCLAVE_FILE, SGX_DEBUG_FLAG, &token, &updated);
 	
 	BenchmarkSuite *b = new BenchmarkSuite('t');
-	b->registerFunction(ecall(eid, enclaveIterate), BenchmarkSuite::IDENT, "iterate", 1);
-	b->registerFunction(ecall(eid, enclaveVByteEncode, ((float) 5) / 4), [](size_t in) {return (in / 4) * 5; }, "compression", 4);
-	//b->registerFunctionWithPreprocessing(ecallVByteDecode, [](size_t in) {return 4 * in; }, ecallVByteEncodePreproc, [](size_t in) {return (in / 4) * 5; }, "decompression", 1);
-	b->registerFunction(ecall(eid, enclaveVByteEncodeEncrypted), [](size_t in) {return (in / 4) * 5 + AES_BLOCK_SIZE; }, "compression_enc", 4);
-	b->registerFunction(ecall(eid, enclaveVByteDecodeEncrypted), [](size_t in) {return 4 * in + AES_BLOCK_SIZE; }, "decompression_enc", 1);
-	b->registerFunction(ecall(eid, enclaveRunLengthEncode, 2), [](size_t in) {return 2 * in; }, "runlengthencode", 4);
-	//b->registerFunctionWithPreprocessing(ecallRunLengthDecode, [](size_t in) {return 6 * in; }, ecallRunLengthEncodePreproc, [](size_t in) {return 2 * in; }, "runlengthdecode", 8);
-	b->registerFunction(ecall(eid, enclaveRunLengthEncodeAndSum), [](size_t in) {return (size_t) 8; }, "rlesum", 4);
+	b->registerFunction(ecall(eid, enclaveIterate), IDENT, "iterate", 1);
+	b->registerFunction(ecall(eid, enclaveVByteEncode, 5.f / 4), DIVMULT(4, 5), "compression", 4);
+	b->registerFunctionWithPreprocessing(ecall(eid, enclaveVByteDecode, 4), MULT(4), ecall(eid, enclaveVByteEncode, 5), DIVMULT(4, 5), "decompression", 1);
+	b->registerFunction(ecall(eid, enclaveVByteEncodeEncrypted), DIVMULTADD(4, 5, AES_BLOCK_SIZE), "compression_enc", 4);
+	b->registerFunction(ecall(eid, enclaveVByteDecodeEncrypted), MULT(4), "decompression_enc", 1);
+	b->registerFunction(ecall(eid, enclaveRunLengthEncode, 2), MULT(2), "runlengthencode", 4);
+	b->registerFunctionWithPreprocessing(ecall(eid, enclaveRunLengthDecode, 6), MULT(6), ecall(eid, enclaveRunLengthEncode, 2), MULT(2), "runlengthdecode", 8);
+	b->registerFunction(ecall(eid, enclaveRunLengthEncodeAndSum), CONSTANT(8), "rlesum", 4);
+	b->registerFunction(ecall(eid, enclaveJustCopy), IDENT, "just_copy", 1);
+	b->registerFunction(ecall(eid, enclaveNoCopy), IDENT, "no_copy", 1);
+	b->registerFunction(ecall(eid, enclaveVByte, 5.f / 4), DIVMULT(4, 5), "vbyte", 4);
+	b->registerFunction(ecall(eid, enclaveCompleteProcess), MULTADD(8, AES_BLOCK_SIZE), "complete", 4);
 
 	b->start();
 

@@ -10,7 +10,7 @@
 #define SINGLE_REP 1
 
 typedef std::function<size_t(uint8_t*, size_t, uint8_t*)> bytefunc;
-typedef size_t(*sizefunc) (size_t inSize);
+typedef std::function<size_t(size_t)> sizefunc;
 
 class Benchmark {
 

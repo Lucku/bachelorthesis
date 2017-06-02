@@ -45,6 +45,9 @@
     <ClInclude Include="BenchmarkSuite.h">
       <Filter>Headerdateien\util</Filter>
     </ClInclude>
+    <ClInclude Include="Funs.h">
+      <Filter>Headerdateien\util</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -63,6 +66,9 @@
       <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="BenchmarkSuite.cpp">
+      <Filter>Quelldateien\util</Filter>
+    </ClCompile>
+    <ClCompile Include="Funs.cpp">
       <Filter>Quelldateien\util</Filter>
     </ClCompile>
   </ItemGroup>

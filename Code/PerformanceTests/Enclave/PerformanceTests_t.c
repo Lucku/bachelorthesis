@@ -24,6 +24,27 @@ typedef struct ms_enclaveIterate_t {
 	uint8_t* ms_out;
 } ms_enclaveIterate_t;
 
+typedef struct ms_enclaveJustCopy_t {
+	size_t ms_retval;
+	uint8_t* ms_in;
+	size_t ms_length;
+	uint8_t* ms_out;
+} ms_enclaveJustCopy_t;
+
+typedef struct ms_enclaveNoCopy_t {
+	size_t ms_retval;
+	uint8_t* ms_in;
+	size_t ms_length;
+	uint8_t* ms_out;
+} ms_enclaveNoCopy_t;
+
+typedef struct ms_enclaveCompleteProcess_t {
+	size_t ms_retval;
+	uint8_t* ms_in;
+	size_t ms_length;
+	uint8_t* ms_out;
+} ms_enclaveCompleteProcess_t;
+
 typedef struct ms_enclaveVByteEncode_t {
 	size_t ms_retval;
 	uint8_t* ms_in;
@@ -39,6 +60,14 @@ typedef struct ms_enclaveVByteDecode_t {
 	uint8_t* ms_out;
 	size_t ms_outLength;
 } ms_enclaveVByteDecode_t;
+
+typedef struct ms_enclaveVByte_t {
+	size_t ms_retval;
+	uint8_t* ms_in;
+	size_t ms_inLength;
+	uint8_t* ms_out;
+	size_t ms_outLength;
+} ms_enclaveVByte_t;
 
 typedef struct ms_enclaveVByteEncodeEncrypted_t {
 	size_t ms_retval;
@@ -175,6 +204,80 @@ err:
 	return status;
 }
 
+static sgx_status_t SGX_CDECL sgx_enclaveJustCopy(void* pms)
+{
+	ms_enclaveJustCopy_t* ms = SGX_CAST(ms_enclaveJustCopy_t*, pms);
+	sgx_status_t status = SGX_SUCCESS;
+	uint8_t* _tmp_in = ms->ms_in;
+	size_t _tmp_length = ms->ms_length;
+	size_t _len_in = _tmp_length;
+	uint8_t* _in_in = NULL;
+	uint8_t* _tmp_out = ms->ms_out;
+	size_t _len_out = _tmp_length;
+	uint8_t* _in_out = NULL;
+
+	CHECK_REF_POINTER(pms, sizeof(ms_enclaveJustCopy_t));
+	CHECK_UNIQUE_POINTER(_tmp_in, _len_in);
+	CHECK_UNIQUE_POINTER(_tmp_out, _len_out);
+
+	if (_tmp_in != NULL) {
+		_in_in = (uint8_t*)malloc(_len_in);
+		if (_in_in == NULL) {
+			status = SGX_ERROR_OUT_OF_MEMORY;
+			goto err;
+		}
+
+		memcpy(_in_in, _tmp_in, _len_in);
+	}
+	if (_tmp_out != NULL) {
+		if ((_in_out = (uint8_t*)malloc(_len_out)) == NULL) {
+			status = SGX_ERROR_OUT_OF_MEMORY;
+			goto err;
+		}
+
+		memset((void*)_in_out, 0, _len_out);
+	}
+	ms->ms_retval = enclaveJustCopy(_in_in, _tmp_length, _in_out);
+err:
+	if (_in_in) free(_in_in);
+	if (_in_out) {
+		memcpy(_tmp_out, _in_out, _len_out);
+		free(_in_out);
+	}
+
+	return status;
+}
+
+static sgx_status_t SGX_CDECL sgx_enclaveNoCopy(void* pms)
+{
+	ms_enclaveNoCopy_t* ms = SGX_CAST(ms_enclaveNoCopy_t*, pms);
+	sgx_status_t status = SGX_SUCCESS;
+	uint8_t* _tmp_in = ms->ms_in;
+	uint8_t* _tmp_out = ms->ms_out;
+
+	CHECK_REF_POINTER(pms, sizeof(ms_enclaveNoCopy_t));
+
+	ms->ms_retval = enclaveNoCopy(_tmp_in, ms->ms_length, _tmp_out);
+
+
+	return status;
+}
+
+static sgx_status_t SGX_CDECL sgx_enclaveCompleteProcess(void* pms)
+{
+	ms_enclaveCompleteProcess_t* ms = SGX_CAST(ms_enclaveCompleteProcess_t*, pms);
+	sgx_status_t status = SGX_SUCCESS;
+	uint8_t* _tmp_in = ms->ms_in;
+	uint8_t* _tmp_out = ms->ms_out;
+
+	CHECK_REF_POINTER(pms, sizeof(ms_enclaveCompleteProcess_t));
+
+	ms->ms_retval = enclaveCompleteProcess(_tmp_in, ms->ms_length, _tmp_out);
+
+
+	return status;
+}
+
 static sgx_status_t SGX_CDECL sgx_enclaveVByteEncode(void* pms)
 {
 	ms_enclaveVByteEncode_t* ms = SGX_CAST(ms_enclaveVByteEncode_t*, pms);
@@ -255,6 +358,51 @@ static sgx_status_t SGX_CDECL sgx_enclaveVByteDecode(void* pms)
 		memset((void*)_in_out, 0, _len_out);
 	}
 	ms->ms_retval = enclaveVByteDecode(_in_in, _tmp_inLength, _in_out, _tmp_outLength);
+err:
+	if (_in_in) free(_in_in);
+	if (_in_out) {
+		memcpy(_tmp_out, _in_out, _len_out);
+		free(_in_out);
+	}
+
+	return status;
+}
+
+static sgx_status_t SGX_CDECL sgx_enclaveVByte(void* pms)
+{
+	ms_enclaveVByte_t* ms = SGX_CAST(ms_enclaveVByte_t*, pms);
+	sgx_status_t status = SGX_SUCCESS;
+	uint8_t* _tmp_in = ms->ms_in;
+	size_t _tmp_inLength = ms->ms_inLength;
+	size_t _len_in = _tmp_inLength;
+	uint8_t* _in_in = NULL;
+	uint8_t* _tmp_out = ms->ms_out;
+	size_t _tmp_outLength = ms->ms_outLength;
+	size_t _len_out = _tmp_outLength;
+	uint8_t* _in_out = NULL;
+
+	CHECK_REF_POINTER(pms, sizeof(ms_enclaveVByte_t));
+	CHECK_UNIQUE_POINTER(_tmp_in, _len_in);
+	CHECK_UNIQUE_POINTER(_tmp_out, _len_out);
+
+	if (_tmp_in != NULL) {
+		_in_in = (uint8_t*)malloc(_len_in);
+		if (_in_in == NULL) {
+			status = SGX_ERROR_OUT_OF_MEMORY;
+			goto err;
+		}
+
+		memcpy(_in_in, _tmp_in, _len_in);
+	}
+	if (_tmp_out != NULL) {
+		if ((_in_out = (uint8_t*)malloc(_len_out)) == NULL) {
+			status = SGX_ERROR_OUT_OF_MEMORY;
+			goto err;
+		}
+
+		memset((void*)_in_out, 0, _len_out);
+	}
+	ms->ms_retval = enclaveVByte(_in_in, _tmp_inLength, _in_out, _tmp_outLength);
 err:
 	if (_in_in) free(_in_in);
 	if (_in_out) {
@@ -547,13 +695,17 @@ err:
 
 SGX_EXTERNC const struct {
 	size_t nr_ecall;
-	struct {void* call_addr; uint8_t is_priv;} ecall_table[10];
+	struct {void* call_addr; uint8_t is_priv;} ecall_table[14];
 } g_ecall_table = {
-	10,
+	14,
 	{
 		{(void*)(uintptr_t)sgx_enclaveIterate, 0},
+		{(void*)(uintptr_t)sgx_enclaveJustCopy, 0},
+		{(void*)(uintptr_t)sgx_enclaveNoCopy, 0},
+		{(void*)(uintptr_t)sgx_enclaveCompleteProcess, 0},
 		{(void*)(uintptr_t)sgx_enclaveVByteEncode, 0},
 		{(void*)(uintptr_t)sgx_enclaveVByteDecode, 0},
+		{(void*)(uintptr_t)sgx_enclaveVByte, 0},
 		{(void*)(uintptr_t)sgx_enclaveVByteEncodeEncrypted, 0},
 		{(void*)(uintptr_t)sgx_enclaveVByteDecodeEncrypted, 0},
 		{(void*)(uintptr_t)sgx_enclaveRunLengthEncode, 0},
@@ -566,15 +718,15 @@ SGX_EXTERNC const struct {
 
 SGX_EXTERNC const struct {
 	size_t nr_ocall;
-	uint8_t entry_table[5][10];
+	uint8_t entry_table[5][14];
 } g_dyn_entry_table = {
 	5,
 	{
-		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
-		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
-		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
-		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
-		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
+		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
+		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
+		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
+		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
+		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
 	}
 };
 

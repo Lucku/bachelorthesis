@@ -97,24 +97,19 @@ size_t enclaveVByteDecode(uint8_t *in, size_t inLength, uint8_t *out, size_t out
 
 size_t enclaveVByteEncodeEncrypted(uint8_t *in, size_t length, uint8_t *out)
 {
-	size_t encodedLength = (length / sizeof(uint32_t)) * 5;
-
-	uint8_t *data = new uint8_t[length];
-	uint8_t *encoded = new uint8_t[encodedLength];
-
-	const uint8_t key[AES_KEY_SIZE] = "123456789012345";
+	uint8_t key[AES_KEY_SIZE] = "123456789012345";
 	uint8_t iv[AES_BLOCK_SIZE] = "123456789012345";
 
-	decryptBytes(in, length, data, key, AES_KEY_SIZE, iv);
+	size_t encodedLength = (length / sizeof(uint32_t)) * 5;
+	uint8_t *encoded = new uint8_t[encodedLength];
 
-	size_t resLength = enclaveVByteEncode(data, length, encoded, encodedLength);
+	size_t encLength = enclaveVByteEncode(in, length, encoded, encodedLength);
 
-	encryptBytes(encoded, resLength, out, key, AES_KEY_SIZE, iv);
+	encryptBytes(encoded, encLength, out, key, AES_KEY_SIZE, iv);
 
-	delete[] data;
 	delete[] encoded;
 
-	return resLength + AES_BLOCK_SIZE;
+	return encLength + AES_BLOCK_SIZE;
 }
 
 size_t enclaveVByteDecodeEncrypted(uint8_t *in, size_t length, uint8_t *out)
@@ -122,19 +117,32 @@ size_t enclaveVByteDecodeEncrypted(uint8_t *in, size_t length, uint8_t *out)
 	size_t decodedLength = length * sizeof(uint32_t);
 
 	uint8_t *data = new uint8_t[length];
-	uint8_t *decoded = new uint8_t[decodedLength];
 
-	const uint8_t key[AES_KEY_SIZE] = "123456789012345";
+	uint8_t key[AES_KEY_SIZE] = "123456789012345";
 	uint8_t iv[AES_BLOCK_SIZE] = "123456789012345";
 
 	decryptBytes(in, length, data, key, AES_KEY_SIZE, iv);
 
-	size_t resLength = enclaveVByteDecode(data, length, decoded, decodedLength);
-
-	encryptBytes(decoded, resLength, out, key, AES_KEY_SIZE, iv);
+	size_t resLength = enclaveVByteDecode(data, length, out, decodedLength);
 
 	delete[] data;
+
+	return resLength;
+}
+
+size_t enclaveVByte(uint8_t *in, size_t inLength, uint8_t *out, size_t outLength) {
+
+	size_t decodedLength = inLength * sizeof(uint32_t);
+
+	uint8_t *decoded = new uint8_t[decodedLength];
+
+	size_t decSize = enclaveVByteDecode(in, inLength, decoded, decodedLength);
+
+	// * processing on the data *
+
+	size_t outSize = enclaveVByteEncode(decoded, decSize, out, outLength);
+
 	delete[] decoded;
 
-	return resLength + AES_BLOCK_SIZE;
+	return outSize;
 }

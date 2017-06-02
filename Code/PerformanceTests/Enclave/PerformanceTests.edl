@@ -4,13 +4,15 @@ enclave {
     trusted {
 		/* Basic functions */
 		public size_t enclaveIterate([in, size=length] uint8_t *in, size_t length, [out, size=length] uint8_t *out);
-		public size_t justCopy([in, size=length] uint8_t *in, size_t length, [out, size=length] uint8_t *out);
-		public size_t noCopy([user_check] uint8_t *in, size_t length, [user_check] uint8_t *out);
+		public size_t enclaveJustCopy([in, size=length] uint8_t *in, size_t length, [out, size=length] uint8_t *out);
+		public size_t enclaveNoCopy([user_check] uint8_t *in, size_t length, [user_check] uint8_t *out);
+		public size_t enclaveCompleteProcess([user_check] uint8_t *in, size_t length, [user_check] uint8_t *out);
 
 		/* VByte */
         public size_t enclaveVByteEncode([in, size=inLength] uint8_t *in, size_t inLength, [out, size=outLength] uint8_t *out, size_t outLength);
 		public size_t enclaveVByteDecode([in, size=inLength] uint8_t *in, size_t inLength, [out, size=outLength] uint8_t *out, size_t outLength);
-		
+		public size_t enclaveVByte([in, size=inLength] uint8_t *in, size_t inLength, [out, size=outLength] uint8_t *out, size_t outLength);		
+
 		/* Encrypted data goes in and out, we don't need to care about copying it */
 		public size_t enclaveVByteEncodeEncrypted([user_check] uint8_t *in, size_t length, [user_check] uint8_t *out);
 		public size_t enclaveVByteDecodeEncrypted([user_check] uint8_t *in, size_t length, [user_check] uint8_t *out);

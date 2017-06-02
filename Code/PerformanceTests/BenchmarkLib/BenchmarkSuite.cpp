@@ -1,8 +1,6 @@
 ﻿#include "stdafx.h"
 #include "BenchmarkSuite.h"
 
-sizefunc BenchmarkSuite::IDENT = [](size_t in) {return in; };
-
 BenchmarkSuite::BenchmarkSuite(char fileSuffix) : fileSuffix(fileSuffix)
 {
 	bulk = new BulkBenchmark();

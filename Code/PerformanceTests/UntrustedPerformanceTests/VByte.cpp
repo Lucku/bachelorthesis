@@ -94,58 +94,56 @@ size_t vByteDecode(uint8_t *in, size_t length, uint8_t *out) {
 	return (out32 - initOut) * sizeof(uint32_t);
 }
 
+// compression and subqsequent encryption, this test may not make sense
 size_t vByteEncodeEncrypted(uint8_t *in, size_t length, uint8_t *out)
 {
-
-	size_t encodedLength = (length / sizeof(uint32_t)) * 5;
-
-	uint8_t *data = new uint8_t[length];
-	uint8_t *encoded = new uint8_t[encodedLength];
-
 	uint8_t key[AES_KEY_SIZE] = "123456789012345";
 	uint8_t iv[AES_BLOCK_SIZE] = "123456789012345";
 
-	//Crypto::printData("Original", (uint8_t*) in, length * 4);
+	size_t encodedLength = (length / sizeof(uint32_t)) * 5;
+	uint8_t *encoded = new uint8_t[encodedLength];
 
-	// we can't generate key and iv because it is not possible via openSSL in enclave, 
-	// and we want the same consitions on both sides
-	// aes->generateParams(key, AES_KEY_SIZE, iv);
-
-	Crypto::decryptBytes(in, length, data, key, AES_KEY_SIZE, iv);
-
-	//Crypto::printData("Decrypted", data, length * 4);
-
-	size_t resLength = vByteEncode(data, length, encoded);
+	size_t encLength = vByteEncode(in, length, encoded);
 	
-	//aes->encrypt(encoded, out, length * 5, key, AES_KEY_SIZE, iv);
-	Crypto::encryptBytes(encoded, resLength, out, key, AES_KEY_SIZE, iv);
+	Crypto::encryptBytes(encoded, encLength, out, key, AES_KEY_SIZE, iv);
 
-	//Crypto::printData("Encrypted", out, length * 5);
-
-	delete[] data;
 	delete[] encoded;
 
-	return resLength + AES_BLOCK_SIZE;
+	return encLength + AES_BLOCK_SIZE;
 }
 
+// decryption and subsequent decompression
 size_t vByteDecodeEncrypted(uint8_t *in, size_t length, uint8_t *out)
 {
 	size_t decodedLength = length * sizeof(uint32_t);
 
 	uint8_t *data = new uint8_t[length];
-	uint8_t *decoded = new uint8_t[decodedLength];
 
 	uint8_t key[AES_KEY_SIZE] = "123456789012345";
 	uint8_t iv[AES_BLOCK_SIZE] = "123456789012345";
 
 	Crypto::decryptBytes(in, length, data, key, AES_KEY_SIZE, iv);
 
-	size_t resLength = vByteDecode(data, length, decoded);
-
-	Crypto::encryptBytes(decoded, resLength, out, key, AES_KEY_SIZE, iv);
+	size_t resLength = vByteDecode(data, length, out);
 
 	delete[] data;
+
+	return resLength;
+}
+
+size_t vByte(uint8_t *in, size_t length, uint8_t *out) {
+
+	size_t decodedLength = length * sizeof(uint32_t);
+
+	uint8_t *decoded = new uint8_t[decodedLength];
+
+	size_t decSize = vByteDecode(in, length, decoded);
+
+	// * processing on the data *
+
+	size_t outSize = vByteEncode(decoded, decSize, out);
+
 	delete[] decoded;
 
-	return resLength + AES_BLOCK_SIZE;
+	return outSize;
 }

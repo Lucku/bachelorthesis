@@ -3,7 +3,7 @@
 size_t enclaveRunLengthEncode(uint8_t *in, size_t inLength, uint8_t *out, size_t outLength)
 {
 	const uint32_t* in32 = reinterpret_cast<const uint32_t*>(in);
-	const size_t countIn32 = length / sizeof(uint32_t);
+	const size_t countIn32 = inLength / sizeof(uint32_t);
 
 	if (countIn32 == 0) return 0;
 

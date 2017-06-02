@@ -138,6 +138,7 @@
     <ClInclude Include="Benchmark.h" />
     <ClInclude Include="BenchmarkSuite.h" />
     <ClInclude Include="BulkBenchmark.h" />
+    <ClInclude Include="Funs.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Timer.h" />
@@ -147,6 +148,7 @@
     <ClCompile Include="Benchmark.cpp" />
     <ClCompile Include="BenchmarkSuite.cpp" />
     <ClCompile Include="BulkBenchmark.cpp" />
+    <ClCompile Include="Funs.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
