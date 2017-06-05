@@ -2,20 +2,23 @@
 \BOOKMARK [0][-]{chapter*.6}{Inhaltsverzeichnis}{}% 2
 \BOOKMARK [0][-]{chapter.1}{Einleitung}{}% 3
 \BOOKMARK [0][-]{chapter.2}{Sicherheit in Datenbanken}{}% 4
-\BOOKMARK [1][-]{section.2.1}{Grundlagen}{chapter.2}% 5
-\BOOKMARK [1][-]{section.2.2}{Verwandte Arbeiten}{chapter.2}% 6
-\BOOKMARK [1][-]{section.2.3}{Intel SGX}{chapter.2}% 7
-\BOOKMARK [0][-]{chapter.3}{Kompression}{}% 8
-\BOOKMARK [1][-]{section.3.1}{Grundlagen}{chapter.3}% 9
-\BOOKMARK [1][-]{section.3.2}{Verwandte Arbeiten}{chapter.3}% 10
-\BOOKMARK [1][-]{section.3.3}{Algorithmen}{chapter.3}% 11
-\BOOKMARK [2][-]{subsection.3.3.1}{VByte}{section.3.3}% 12
-\BOOKMARK [2][-]{subsection.3.3.2}{Laufl\344ngenkodierung}{section.3.3}% 13
-\BOOKMARK [0][-]{chapter.4}{Implementierung}{}% 14
-\BOOKMARK [1][-]{section.4.1}{Benutzung von Intel SGX}{chapter.4}% 15
-\BOOKMARK [1][-]{section.4.2}{Systemtest}{chapter.4}% 16
-\BOOKMARK [1][-]{section.4.3}{Fazit}{chapter.4}% 17
-\BOOKMARK [0][-]{chapter.5}{Evaluierung}{}% 18
-\BOOKMARK [1][-]{section.5.1}{Konzept}{chapter.5}% 19
-\BOOKMARK [1][-]{section.5.2}{Fazit}{chapter.5}% 20
-\BOOKMARK [0][-]{chapter.6}{Fazit und Ausblick}{}% 21
+\BOOKMARK [1][-]{section.2.1}{Konventionelles L\366sungskonzept}{chapter.2}% 5
+\BOOKMARK [1][-]{section.2.2}{Datenbanksicherheit in nicht vertrauensw\374rdigen Umgebungen}{chapter.2}% 6
+\BOOKMARK [1][-]{section.2.3}{Bestehende L\366sungsans\344tze}{chapter.2}% 7
+\BOOKMARK [1][-]{section.2.4}{Intel SGX im Kontext sicherer Datenbanken}{chapter.2}% 8
+\BOOKMARK [0][-]{chapter.3}{Kompression}{}% 9
+\BOOKMARK [1][-]{section.3.1}{Grundlagen}{chapter.3}% 10
+\BOOKMARK [1][-]{section.3.2}{Verwandte Arbeiten}{chapter.3}% 11
+\BOOKMARK [1][-]{section.3.3}{Algorithmen}{chapter.3}% 12
+\BOOKMARK [2][-]{subsection.3.3.1}{VByte}{section.3.3}% 13
+\BOOKMARK [2][-]{subsection.3.3.2}{Laufl\344ngenkodierung}{section.3.3}% 14
+\BOOKMARK [0][-]{chapter.4}{Implementierung}{}% 15
+\BOOKMARK [1][-]{section.4.1}{Benutzung von Intel SGX}{chapter.4}% 16
+\BOOKMARK [1][-]{section.4.2}{Systemtest}{chapter.4}% 17
+\BOOKMARK [1][-]{section.4.3}{Fazit}{chapter.4}% 18
+\BOOKMARK [0][-]{chapter.5}{Evaluierung}{}% 19
+\BOOKMARK [1][-]{section.5.1}{Konzept}{chapter.5}% 20
+\BOOKMARK [2][-]{subsection.5.1.1}{Enclave interne Untersuchungen}{section.5.1}% 21
+\BOOKMARK [2][-]{subsection.5.1.2}{Datenverarbeitung in der Enclave}{section.5.1}% 22
+\BOOKMARK [1][-]{section.5.2}{Fazit}{chapter.5}% 23
+\BOOKMARK [0][-]{chapter.6}{Fazit und Ausblick}{}% 24

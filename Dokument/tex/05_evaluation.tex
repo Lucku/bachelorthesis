@@ -5,6 +5,40 @@
 \section{Konzept}
 %TODO notes
 
+\subsection{Enclave interne Untersuchungen}
+\subsubsection{Overhead beim Kopieren der Daten in und aus Enclave}
+\begin{itemize}
+	\item reines Kopieren vs. kein Kopieren \textbf{(9)/(10)}
+	\item Kopieren/Entschlüsselung/Verschlüsselung/Kopieren vs. ohne Kopieren \textbf{(13)/(14)} 
+\end{itemize}
+
+\subsection{Datenverarbeitung in der Enclave}
+\subsubsection{Allgemein}
+\begin{itemize}
+	\item Iteration über Datenmengen \textbf{(1)}
+\end{itemize}
+\subsubsection{Einfache Kompressionsverfahren}
+\begin{itemize}
+	\item VByte Kompression außerhalb vs. in Enclave \textbf{(2)}
+	\item VByte Dekompression außerhalb vs. in Enclave \textbf{(3)}
+	\item Lauflängenkodierung außerhalb vs. in Enclave \textbf{(6)}
+	\item Lauflängendekodierung außerhalb vs. in Enclave \textbf{(7)}
+	\item Lauflängensummenbildung außerhalb vs. in Enclave \textbf{(8)}
+	\item VByte Dekompression und Kompression außerhalb vs. in Enclave \textbf{(11)}
+\end{itemize}
+\subsubsection{Kryptographische Verarbeitung}
+\begin{itemize}
+	\item Entschlüsselung und Dekomprimierung außerhalb vs. in Enclave \textbf{(5)}
+	\item Komprimierung und Verschlüsselung außerhalb vs. in Enclave \textbf{(4)}
+	\item Verschlüsselung und Entschlüsselung außerhalb vs. in Enclave \textbf{(13)}
+\end{itemize}
+\subsubsection{Kombinierte Verarbeitungsschritte}
+\begin{itemize}
+	%\item (Daten schrittweise aus Enclave rausschreiben und wieder einlesen)
+	% Reine Benchmarks direkt in der Enclave sind leider nicht möglich, kein Zugang zu Systemzeit
+	\item Entschlüsseln/Dekomprimieren/Lauflängenkodierung/Komprimierung/Verschlüsseln \textbf{(12)}
+\end{itemize}
+
 \begin{figure}[h]
 	\includegraphics[width=\linewidth]{img/Iteration.pdf}
 	\centering
@@ -25,13 +59,6 @@
 	\caption{Vergleich Dekomprimierung und Verschlüsselung innerhalb und außerhalb einer Enclave}
 	\label{fig:decompresscrypto}
 \end{figure}
-
-\begin{itemize}
-	\item Lauflängendekodierung
-	\item Summenbildung über RLE kodierten Daten vs. Dekomprimieren und Summe
-	\item Vergleich Kopieren der Buffer in die Enclave vs. direktes Arbeiten auf Daten (Overhead durch Kopieren)
-	\item Nur Dekomprimierung und Entschlüsselung ohne Verschlüsselung am Ende
-\end{itemize}
 
 % \section{Punkt 1}
 % \section{Punkt 2}

@@ -10,5 +10,5 @@ typedef sgx_status_t(*ecallFunc)  (sgx_enclave_id_t eid, size_t *ret, uint8_t *i
 sgx_enclave_id_t initializeEnclave(LPCWSTR file, int debug, sgx_launch_token_t * token, int *updated);
 
 /* ECALL wrapper */
-bytefunc ecall(const sgx_enclave_id_t eid, ecallIOFunc func, float outBufferFactor);
+bytefunc ecall(const sgx_enclave_id_t eid, ecallIOFunc func, sizefunc outBufferSize);
 bytefunc ecall(const sgx_enclave_id_t eid, ecallFunc func);

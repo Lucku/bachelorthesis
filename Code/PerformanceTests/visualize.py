@@ -5,14 +5,14 @@ import seaborn
 from pandas import Series
 
 # -------------- Configuration -------------- #
-title = 'VByte Dekomprimierung und Kryptographie'
-file1 = 'x64/Simulation/no_copy_t_b.csv'
-file2 = 'x64/Simulation/just_copy_t_b.csv'
+title = 'Iteration'
+file1 = 'x64/Real Results/sicher/no_copy_t_b.csv'
+file2 = 'x64/Real Results/sicher/just_copy_t_b.csv'
 label1 = 'Normal'
 label2 = 'In SGX enclave'
 xAxis = 'Data'
 xLabel = '8 Bit Werte'
-yAxis = 'IOPS'
+yAxis = 'MIOPS'
 yLabel = 'Millionen Integer Operationen je Sekunde'
 windowSize = 50
 # ------------------------------------------- #

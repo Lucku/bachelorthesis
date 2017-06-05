@@ -22,6 +22,7 @@ int main()
 	b->registerFunction(runLengthEncodeAndSum, CONSTANT(8), "rlesum", 4);
 	b->registerFunction(vByte, DIVMULT(4, 5), "vbyte", 4);
 	b->registerFunction(completeProcess, MULTADD(8, AES_BLOCK_SIZE), "complete", 4);
+	b->registerFunction(crypto, MULTADD(1, AES_BLOCK_SIZE), "crypto", 1);
 
 	b->start();
 

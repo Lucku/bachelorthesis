@@ -53,6 +53,21 @@ typedef struct ms_enclaveVByte_t {
 	size_t ms_outLength;
 } ms_enclaveVByte_t;
 
+typedef struct ms_enclaveCrypto_t {
+	size_t ms_retval;
+	uint8_t* ms_in;
+	size_t ms_inLength;
+	uint8_t* ms_out;
+	size_t ms_outLength;
+} ms_enclaveCrypto_t;
+
+typedef struct ms_enclaveCryptoNoCopy_t {
+	size_t ms_retval;
+	uint8_t* ms_in;
+	size_t ms_length;
+	uint8_t* ms_out;
+} ms_enclaveCryptoNoCopy_t;
+
 typedef struct ms_enclaveVByteEncodeEncrypted_t {
 	size_t ms_retval;
 	uint8_t* ms_in;
@@ -279,6 +294,31 @@ sgx_status_t enclaveVByte(sgx_enclave_id_t eid, size_t* retval, uint8_t* in, siz
 	return status;
 }
 
+sgx_status_t enclaveCrypto(sgx_enclave_id_t eid, size_t* retval, uint8_t* in, size_t inLength, uint8_t* out, size_t outLength)
+{
+	sgx_status_t status;
+	ms_enclaveCrypto_t ms;
+	ms.ms_in = in;
+	ms.ms_inLength = inLength;
+	ms.ms_out = out;
+	ms.ms_outLength = outLength;
+	status = sgx_ecall(eid, 7, &ocall_table_PerformanceTests, &ms);
+	if (status == SGX_SUCCESS && retval) *retval = ms.ms_retval;
+	return status;
+}
+
+sgx_status_t enclaveCryptoNoCopy(sgx_enclave_id_t eid, size_t* retval, uint8_t* in, size_t length, uint8_t* out)
+{
+	sgx_status_t status;
+	ms_enclaveCryptoNoCopy_t ms;
+	ms.ms_in = in;
+	ms.ms_length = length;
+	ms.ms_out = out;
+	status = sgx_ecall(eid, 8, &ocall_table_PerformanceTests, &ms);
+	if (status == SGX_SUCCESS && retval) *retval = ms.ms_retval;
+	return status;
+}
+
 sgx_status_t enclaveVByteEncodeEncrypted(sgx_enclave_id_t eid, size_t* retval, uint8_t* in, size_t length, uint8_t* out)
 {
 	sgx_status_t status;
@@ -286,7 +326,7 @@ sgx_status_t enclaveVByteEncodeEncrypted(sgx_enclave_id_t eid, size_t* retval, u
 	ms.ms_in = in;
 	ms.ms_length = length;
 	ms.ms_out = out;
-	status = sgx_ecall(eid, 7, &ocall_table_PerformanceTests, &ms);
+	status = sgx_ecall(eid, 9, &ocall_table_PerformanceTests, &ms);
 	if (status == SGX_SUCCESS && retval) *retval = ms.ms_retval;
 	return status;
 }
@@ -298,7 +338,7 @@ sgx_status_t enclaveVByteDecodeEncrypted(sgx_enclave_id_t eid, size_t* retval, u
 	ms.ms_in = in;
 	ms.ms_length = length;
 	ms.ms_out = out;
-	status = sgx_ecall(eid, 8, &ocall_table_PerformanceTests, &ms);
+	status = sgx_ecall(eid, 10, &ocall_table_PerformanceTests, &ms);
 	if (status == SGX_SUCCESS && retval) *retval = ms.ms_retval;
 	return status;
 }
@@ -311,7 +351,7 @@ sgx_status_t enclaveRunLengthEncode(sgx_enclave_id_t eid, size_t* retval, uint8_
 	ms.ms_inLength = inLength;
 	ms.ms_out = out;
 	ms.ms_outLength = outLength;
-	status = sgx_ecall(eid, 9, &ocall_table_PerformanceTests, &ms);
+	status = sgx_ecall(eid, 11, &ocall_table_PerformanceTests, &ms);
 	if (status == SGX_SUCCESS && retval) *retval = ms.ms_retval;
 	return status;
 }
@@ -324,7 +364,7 @@ sgx_status_t enclaveRunLengthDecode(sgx_enclave_id_t eid, size_t* retval, uint8_
 	ms.ms_inLength = inLength;
 	ms.ms_out = out;
 	ms.ms_outLength = outLength;
-	status = sgx_ecall(eid, 10, &ocall_table_PerformanceTests, &ms);
+	status = sgx_ecall(eid, 12, &ocall_table_PerformanceTests, &ms);
 	if (status == SGX_SUCCESS && retval) *retval = ms.ms_retval;
 	return status;
 }
@@ -336,7 +376,7 @@ sgx_status_t enclaveRunLengthEncodeAndSum(sgx_enclave_id_t eid, size_t* retval, 
 	ms.ms_in = in;
 	ms.ms_length = length;
 	ms.ms_out = out;
-	status = sgx_ecall(eid, 11, &ocall_table_PerformanceTests, &ms);
+	status = sgx_ecall(eid, 13, &ocall_table_PerformanceTests, &ms);
 	if (status == SGX_SUCCESS && retval) *retval = ms.ms_retval;
 	return status;
 }
@@ -351,7 +391,7 @@ sgx_status_t encryptBytes(sgx_enclave_id_t eid, int* retval, uint8_t* input, siz
 	ms.ms_key = (uint8_t*)key;
 	ms.ms_keyLength = keyLength;
 	ms.ms_iv = iv;
-	status = sgx_ecall(eid, 12, &ocall_table_PerformanceTests, &ms);
+	status = sgx_ecall(eid, 14, &ocall_table_PerformanceTests, &ms);
 	if (status == SGX_SUCCESS && retval) *retval = ms.ms_retval;
 	return status;
 }
@@ -366,7 +406,7 @@ sgx_status_t decryptBytes(sgx_enclave_id_t eid, int* retval, uint8_t* input, siz
 	ms.ms_key = (uint8_t*)key;
 	ms.ms_keyLength = keyLength;
 	ms.ms_iv = iv;
-	status = sgx_ecall(eid, 13, &ocall_table_PerformanceTests, &ms);
+	status = sgx_ecall(eid, 15, &ocall_table_PerformanceTests, &ms);
 	if (status == SGX_SUCCESS && retval) *retval = ms.ms_retval;
 	return status;
 }

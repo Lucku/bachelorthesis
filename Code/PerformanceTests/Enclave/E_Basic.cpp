@@ -1,11 +1,8 @@
 #include "PerformanceTests_t.h"
+#include "Crypto.h"
 
 #include <cstdint>
-//#include <sgx_intrin.h>
 #include "sgx_trts.h"
-
-#define AES_BLOCK_SIZE 16
-#define AES_KEY_SIZE 16
 
 size_t enclaveIterate(uint8_t *in, size_t length, uint8_t *out) {
 
@@ -66,4 +63,40 @@ size_t enclaveCompleteProcess(uint8_t * in, size_t length, uint8_t *out) {
 	// ********
 
 	return encLength + AES_BLOCK_SIZE;
+}
+
+size_t enclaveCrypto(uint8_t *in, size_t inLength, uint8_t *out, size_t outLength) {
+
+	uint8_t *data = new uint8_t[inLength];
+
+	uint8_t key[AES_KEY_SIZE] = "123456789012345";
+	uint8_t iv[AES_BLOCK_SIZE] = "123456789012345";
+
+	decryptBytes(in, inLength, data, key, AES_KEY_SIZE, iv);
+
+	// * processing on the data *
+
+	encryptBytes(data, inLength, out, key, AES_KEY_SIZE, iv);
+
+	delete[] data;
+
+	return inLength + AES_BLOCK_SIZE;
+}
+
+size_t enclaveCryptoNoCopy(uint8_t* in, size_t length, uint8_t *out) {
+
+	uint8_t *data = new uint8_t[length];
+
+	uint8_t key[AES_KEY_SIZE] = "123456789012345";
+	uint8_t iv[AES_BLOCK_SIZE] = "123456789012345";
+
+	decryptBytes(in, length, data, key, AES_KEY_SIZE, iv);
+
+	// * processing on the data *
+
+	encryptBytes(data, length, out, key, AES_KEY_SIZE, iv);
+
+	delete[] data;
+
+	return length + AES_BLOCK_SIZE;
 }

@@ -1,4 +1,5 @@
 #include "PerformanceTests_t.h"
+#include "Crypto.h"
 #include <ipp\ippcp.h>
 
 int encryptBytes(uint8_t *input, size_t length, uint8_t *output, const uint8_t *key, size_t keyLength, uint8_t *iv) {

@@ -1,7 +1,5 @@
 #include "PerformanceTests_t.h"
-
-#define AES_BLOCK_SIZE 16
-#define AES_KEY_SIZE 16
+#include "Crypto.h"
 
 size_t enclaveVByteEncode(uint8_t *in, size_t inLength, uint8_t *out, size_t outLength) {
 

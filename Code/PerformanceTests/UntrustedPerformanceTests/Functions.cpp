@@ -53,3 +53,21 @@ size_t completeProcess(uint8_t * in, size_t length, uint8_t *out) {
 
 	return encLength + AES_BLOCK_SIZE;
 }
+
+size_t crypto(uint8_t *in, size_t length, uint8_t *out) {
+
+	uint8_t *data = new uint8_t[length];
+
+	uint8_t key[AES_KEY_SIZE] = "123456789012345";
+	uint8_t iv[AES_BLOCK_SIZE] = "123456789012345";
+
+	Crypto::decryptBytes(in, length, data, key, AES_KEY_SIZE, iv);
+
+	// * processing on the data *
+
+	Crypto::encryptBytes(data, length, out, key, AES_KEY_SIZE, iv);
+
+	delete[] data;
+
+	return length + AES_BLOCK_SIZE;
+}

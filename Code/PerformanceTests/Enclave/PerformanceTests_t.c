@@ -69,6 +69,21 @@ typedef struct ms_enclaveVByte_t {
 	size_t ms_outLength;
 } ms_enclaveVByte_t;
 
+typedef struct ms_enclaveCrypto_t {
+	size_t ms_retval;
+	uint8_t* ms_in;
+	size_t ms_inLength;
+	uint8_t* ms_out;
+	size_t ms_outLength;
+} ms_enclaveCrypto_t;
+
+typedef struct ms_enclaveCryptoNoCopy_t {
+	size_t ms_retval;
+	uint8_t* ms_in;
+	size_t ms_length;
+	uint8_t* ms_out;
+} ms_enclaveCryptoNoCopy_t;
+
 typedef struct ms_enclaveVByteEncodeEncrypted_t {
 	size_t ms_retval;
 	uint8_t* ms_in;
@@ -413,6 +428,66 @@ err:
 	return status;
 }
 
+static sgx_status_t SGX_CDECL sgx_enclaveCrypto(void* pms)
+{
+	ms_enclaveCrypto_t* ms = SGX_CAST(ms_enclaveCrypto_t*, pms);
+	sgx_status_t status = SGX_SUCCESS;
+	uint8_t* _tmp_in = ms->ms_in;
+	size_t _tmp_inLength = ms->ms_inLength;
+	size_t _len_in = _tmp_inLength;
+	uint8_t* _in_in = NULL;
+	uint8_t* _tmp_out = ms->ms_out;
+	size_t _tmp_outLength = ms->ms_outLength;
+	size_t _len_out = _tmp_outLength;
+	uint8_t* _in_out = NULL;
+
+	CHECK_REF_POINTER(pms, sizeof(ms_enclaveCrypto_t));
+	CHECK_UNIQUE_POINTER(_tmp_in, _len_in);
+	CHECK_UNIQUE_POINTER(_tmp_out, _len_out);
+
+	if (_tmp_in != NULL) {
+		_in_in = (uint8_t*)malloc(_len_in);
+		if (_in_in == NULL) {
+			status = SGX_ERROR_OUT_OF_MEMORY;
+			goto err;
+		}
+
+		memcpy(_in_in, _tmp_in, _len_in);
+	}
+	if (_tmp_out != NULL) {
+		if ((_in_out = (uint8_t*)malloc(_len_out)) == NULL) {
+			status = SGX_ERROR_OUT_OF_MEMORY;
+			goto err;
+		}
+
+		memset((void*)_in_out, 0, _len_out);
+	}
+	ms->ms_retval = enclaveCrypto(_in_in, _tmp_inLength, _in_out, _tmp_outLength);
+err:
+	if (_in_in) free(_in_in);
+	if (_in_out) {
+		memcpy(_tmp_out, _in_out, _len_out);
+		free(_in_out);
+	}
+
+	return status;
+}
+
+static sgx_status_t SGX_CDECL sgx_enclaveCryptoNoCopy(void* pms)
+{
+	ms_enclaveCryptoNoCopy_t* ms = SGX_CAST(ms_enclaveCryptoNoCopy_t*, pms);
+	sgx_status_t status = SGX_SUCCESS;
+	uint8_t* _tmp_in = ms->ms_in;
+	uint8_t* _tmp_out = ms->ms_out;
+
+	CHECK_REF_POINTER(pms, sizeof(ms_enclaveCryptoNoCopy_t));
+
+	ms->ms_retval = enclaveCryptoNoCopy(_tmp_in, ms->ms_length, _tmp_out);
+
+
+	return status;
+}
+
 static sgx_status_t SGX_CDECL sgx_enclaveVByteEncodeEncrypted(void* pms)
 {
 	ms_enclaveVByteEncodeEncrypted_t* ms = SGX_CAST(ms_enclaveVByteEncodeEncrypted_t*, pms);
@@ -695,9 +770,9 @@ err:
 
 SGX_EXTERNC const struct {
 	size_t nr_ecall;
-	struct {void* call_addr; uint8_t is_priv;} ecall_table[14];
+	struct {void* call_addr; uint8_t is_priv;} ecall_table[16];
 } g_ecall_table = {
-	14,
+	16,
 	{
 		{(void*)(uintptr_t)sgx_enclaveIterate, 0},
 		{(void*)(uintptr_t)sgx_enclaveJustCopy, 0},
@@ -706,6 +781,8 @@ SGX_EXTERNC const struct {
 		{(void*)(uintptr_t)sgx_enclaveVByteEncode, 0},
 		{(void*)(uintptr_t)sgx_enclaveVByteDecode, 0},
 		{(void*)(uintptr_t)sgx_enclaveVByte, 0},
+		{(void*)(uintptr_t)sgx_enclaveCrypto, 0},
+		{(void*)(uintptr_t)sgx_enclaveCryptoNoCopy, 0},
 		{(void*)(uintptr_t)sgx_enclaveVByteEncodeEncrypted, 0},
 		{(void*)(uintptr_t)sgx_enclaveVByteDecodeEncrypted, 0},
 		{(void*)(uintptr_t)sgx_enclaveRunLengthEncode, 0},
@@ -718,15 +795,15 @@ SGX_EXTERNC const struct {
 
 SGX_EXTERNC const struct {
 	size_t nr_ocall;
-	uint8_t entry_table[5][14];
+	uint8_t entry_table[5][16];
 } g_dyn_entry_table = {
 	5,
 	{
-		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
-		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
-		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
-		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
-		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
+		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
+		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
+		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
+		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
+		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
 	}
 };
 
