@@ -6,6 +6,7 @@ enclave {
 		/* Put function in here, that allocates a given amount of memory in the enclave */
 		public void enclaveAllocateHeapMemory(int numBytes);
 		public void enclaveAllocateStackMemory();
+		public void enclaveVectorization([in, count=n] float*  a, [in, count=n] float * b, [in, count=n] float* c, [in, count=n] float* d, [in, count=n] float *e, int n);
     };
 
     untrusted {

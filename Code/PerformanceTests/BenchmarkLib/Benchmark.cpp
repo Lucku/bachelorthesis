@@ -17,13 +17,12 @@ void Benchmark::benchmark(const char *file, bytefunc f, sizefunc s, int testRang
 
 	std::cout << "Starting benchmark " << name << " (-> " << file << ") (reps: " << numRepetitions << " range: " << testRange << " stepSize: " << stepSize << "): " << std::endl;
 
-	std::ofstream fileToWrite;
-	fileToWrite.open(file, std::ios::out);
+	std::stringstream data;
 
 	switch (mode) {
-	case TIME: 	fileToWrite << "Data,Time" << std::endl; break;
-	case MIOPS: fileToWrite << "Data,MIOPS" << std::endl; break;
-	default: 	fileToWrite << "Data,IOPS" << std::endl;
+	case TIME: 	data << "Data,Time" << std::endl; break;
+	case MIOPS: data << "Data,MIOPS" << std::endl; break;
+	default: 	data << "Data,IOPS" << std::endl;
 	}
 
 	for (int i = 0; i <= testRange; i += stepSize) {
@@ -49,9 +48,9 @@ void Benchmark::benchmark(const char *file, bytefunc f, sizefunc s, int testRang
 		uint64_t time = singleBenchmark(f, in, i, out);
 
 		switch (mode) {
-		case TIME:	fileToWrite	<< i / stepSize << "," << time << std::endl; break;
-		case MIOPS: fileToWrite << i / stepSize << "," << (((double)i) * 1000)			/ (time * stepSize) << std::endl; break;
-		default:	fileToWrite	<< i / stepSize << "," << (((double)i) * 1000000000)	/ (time * stepSize) << std::endl;
+		case TIME:	data	<< i / stepSize << "," << time << std::endl;												break;
+		case MIOPS: data	<< i / stepSize << "," << (((double)i) * 1000) / (time * stepSize) << std::endl;			break;
+		default:	data	<< i / stepSize << "," << (((double)i) * 1000000000)	/ (time * stepSize) << std::endl;
 		}
 
 		delete[] in;
@@ -60,6 +59,12 @@ void Benchmark::benchmark(const char *file, bytefunc f, sizefunc s, int testRang
 		std::cout << "\r" << (((float) i / testRange) * 100) << "%\t";
 	}
 	std::cout << std::endl;
+
+	std::ofstream fileToWrite;
+	fileToWrite.open(file, std::ios::out);
+
+	std::cout << "Writing results..." << std::endl;
+	fileToWrite << data.rdbuf();
 
 	fileToWrite.close();
 }

@@ -180,7 +180,6 @@ void BenchmarkSuite::start()
 			Function f = functions->at(i);
 
 			b->benchmark((f.name + "_" + fileSuffix + "_" + suffix + ".csv").c_str(), f.b, f.s, testRange * (((float) f.valueSize) / 8), f.valueSize, f.preFunc, f.preSize);
-			std::cout << "Results saved to " << f.name.c_str() << std::endl;
 		}
 
 		std::cout << "Done" << std::endl;
@@ -190,7 +189,6 @@ void BenchmarkSuite::start()
 		b->benchmark((f.name + "_" + fileSuffix + "_" + suffix + ".csv").c_str(), f.b, f.s, testRange * (((float) f.valueSize) / 8), f.valueSize, f.preFunc, f.preSize);
 
 		std::cout << "Done" << std::endl;
-		std::cout << "Results saved to " << f.name.c_str() << std::endl;
 	}
 
 	system("pause");
@@ -241,7 +239,6 @@ void BenchmarkSuite::startFromJSON(const char *file) {
 		Function f = functions->at(funs[i].GetInt() - 1);
 
 		b->benchmark((f.name + "_" + fileSuffix + "_" + suffix + ".csv").c_str(), f.b, f.s, testRange * (((float) f.valueSize) / 8), f.valueSize, f.preFunc, f.preSize);
-		std::cout << "Results saved to " << f.name.c_str() << std::endl;
 	}
 
 	std::cout << "Done" << std::endl;

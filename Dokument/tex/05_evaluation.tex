@@ -2,67 +2,158 @@
 \chapter{Evaluierung}
 %TODO intro
 
-\section{Konzept}
-%TODO notes
-
-\subsection{Enclave interne Untersuchungen}
-\subsubsection{Overhead beim Kopieren der Daten in und aus Enclave}
 \begin{itemize}
-	\item reines Kopieren vs. kein Kopieren \textbf{(9)/(10)}
-	\item Kopieren/Entschlüsselung/Verschlüsselung/Kopieren vs. ohne Kopieren \textbf{(13)/(14)} 
+	\item Einheit: MIOPS
 \end{itemize}
 
-\subsection{Datenverarbeitung in der Enclave}
-\subsubsection{Allgemein}
+\section{Konzept}
+%TODO Was ist in unserem Kontext sinnvoll zu untersuchen und warum?
+
 \begin{itemize}
-	\item Iteration über Datenmengen \textbf{(1)}
+	\item jeweils Bulkverarbeitung anstatt einzeln
+	\item jegliche Optimierungen wurden zu Zwecken der Gleichheit im Compiler deaktiviert
+\end{itemize}
+
+\subsection{Untersuchungen}
+\subsection{Testumgebung}
+\begin{itemize}
+	\item Intel Performance Library Cryptography eingesetzt
+	\item Anwendungen mit Intel Compiler erstellt
+\end{itemize}
+
+\section{Enclave interne Untersuchungen}
+\subsubsection{Overhead beim Kopieren der Daten in und aus Enclave}
+
+\begin{itemize}
+	\item \textbf{(1)} reines Kopieren vs. kein Kopieren
+	\begin{figure}[h]
+		\includegraphics[width=\linewidth]{img/Eval1.pdf}
+		\centering
+		\caption{Vergleich Kopieren der Daten in die Enclave und kein Kopieren mittels user\textunderscore check}
+		\label{fig:eval1}
+	\end{figure}
+	
+	\begin{itemize}
+		\item außerhalb der Enclave: konstante Steigung der Datenrate um 0,45MIOPS/Byte = 0,02ms/Byte
+		\item innerhalb der Enclave nimmt die Steigung der Funktion ständig ab, der Aufwand zum Kopieren der Daten wird ständig höher als die Ersparnis des häufigen Springens in die Enclave
+	\end{itemize}
+	
+	\item \textbf{(2)} Kopieren/Entschlüsselung/Verschlüsselung/Kopieren vs. ohne Kopieren \textbf{(13)/(14)} 
+	\begin{figure}[h]
+		\includegraphics[width=\linewidth]{img/Eval2.pdf}
+		\centering
+		\caption{Vergleich Ent- und Verschlüsselung mit und ohne Kopiervorgang}
+		\label{fig:eval2}
+	\end{figure}
+	
+\end{itemize}
+
+\section{Datenverarbeitung in der Enclave}
+\subsubsection{Allgemein}
+
+\begin{itemize}
+	\item \textbf{(3)} Iteration über Datenmengen 
+	\begin{figure}[h]
+		\includegraphics[width=\linewidth]{img/Eval3.pdf}
+		\centering
+		\caption{Vergleich Iteration über Datenmengen außerhalb und innerhalb der Enclave}
+		\label{fig:eval3}
+	\end{figure}
 \end{itemize}
 \subsubsection{Einfache Kompressionsverfahren}
 \begin{itemize}
-	\item VByte Kompression außerhalb vs. in Enclave \textbf{(2)}
-	\item VByte Dekompression außerhalb vs. in Enclave \textbf{(3)}
-	\item Lauflängenkodierung außerhalb vs. in Enclave \textbf{(6)}
-	\item Lauflängendekodierung außerhalb vs. in Enclave \textbf{(7)}
-	\item Lauflängensummenbildung außerhalb vs. in Enclave \textbf{(8)}
-	\item VByte Dekompression und Kompression außerhalb vs. in Enclave \textbf{(11)}
+	\item \textbf{(4)} VByte Kompression außerhalb vs. in Enclave
+	\begin{figure}[h]
+		\includegraphics[width=\linewidth]{img/Eval4.pdf}
+		\centering
+		\caption{Vergleich VByte Kompression außerhalb und innerhalb der Enclave}
+		\label{fig:eval4}
+	\end{figure}
+	
+	\item \textbf{(5)} VByte Dekompression außerhalb vs. in Enclave
+	\begin{figure}[h]
+		\includegraphics[width=\linewidth]{img/Eval5.pdf}
+		\centering
+		\caption{Vergleich VByte Dekompression außerhalb und innerhalb der Enclave}
+		\label{fig:eval5}
+	\end{figure}
+	
+	\item \textbf{(6)} VByte Dekompression und Kompression außerhalb vs. in Enclave
+	\begin{figure}[h]
+		\includegraphics[width=\linewidth]{img/Eval6.pdf}
+		\centering
+		\caption{Vergleich VByte Dekompression und Kompression außerhalb und innerhalb der Enclave}
+		\label{fig:eval6}
+	\end{figure}
+	
+	\item \textbf{(7)} Lauflängenkodierung außerhalb vs. in Enclave
+	\begin{figure}[h]
+		\includegraphics[width=\linewidth]{img/Eval7.pdf}
+		\centering
+		\caption{Vergleich Lauflängenkodierung außerhalb und innerhalb der Enclave}
+		\label{fig:eval7}
+	\end{figure}
+
+	\item \textbf{(8)} Lauflängendekodierung außerhalb vs. in Enclave
+	\begin{figure}[h]
+		\includegraphics[width=\linewidth]{img/Eval8.pdf}
+		\centering
+		\caption{Vergleich Lauflängendekodierung außerhalb und innerhalb der Enclave}
+		\label{fig:eval8}
+	\end{figure}
+
+	\begin{itemize}
+		\item großer Versatz dadurch, dass sehr große Buffer für die Dekodierung reserviert werden, haben 6-fache Größe, Herauskopieren nimmt viel Zeit in Anspruch
+	\end{itemize}
+
+	\item \textbf{(9)} Lauflängensummenbildung außerhalb vs. in Enclave
+	\begin{figure}[h]
+		\includegraphics[width=\linewidth]{img/Eval9.pdf}
+		\centering
+		\caption{Vergleich Lauflängenkodierung und Summenbildung außerhalb und innerhalb der Enclave}
+		\label{fig:eval9}
+	\end{figure}
+
 \end{itemize}
-\subsubsection{Kryptographische Verarbeitung}
+\section{Kryptographische Verarbeitung}
 \begin{itemize}
-	\item Entschlüsselung und Dekomprimierung außerhalb vs. in Enclave \textbf{(5)}
-	\item Komprimierung und Verschlüsselung außerhalb vs. in Enclave \textbf{(4)}
-	\item Verschlüsselung und Entschlüsselung außerhalb vs. in Enclave \textbf{(13)}
+	
+	\item \textbf{(10)} Entschlüsselung und Dekomprimierung außerhalb vs. in Enclave
+	\begin{figure}[h]
+		\includegraphics[width=\linewidth]{img/Eval10.pdf}
+		\centering
+		\caption{Vergleich Entschlüsselung und Dekomprimierung außerhalb und innerhalb der Enclave}
+		\label{fig:eval10}
+	\end{figure}
+	
+	\item \textbf{(11)} Komprimierung und Verschlüsselung außerhalb vs. in Enclave
+	\begin{figure}[h]
+		\includegraphics[width=\linewidth]{img/Eval11.pdf}
+		\centering
+		\caption{Vergleich Komprimierung und Verschlüsselung außerhalb und innerhalb der Enclave}
+		\label{fig:eval11}
+	\end{figure}
+	
+	\item \textbf{(12)} Entschlüsselung und Verschlüsselung außerhalb vs. in Enclave
+	\begin{figure}[h]
+		\includegraphics[width=\linewidth]{img/Eval12.pdf}
+		\centering
+		\caption{Vergleich Entschlüsselung und Verschlüsselung außerhalb und innerhalb der Enclave (mit und ohne Kopieren)}
+		\label{fig:eval12}
+	\end{figure}
 \end{itemize}
-\subsubsection{Kombinierte Verarbeitungsschritte}
+\section{Kombinierte Verarbeitungsschritte}
+
 \begin{itemize}
-	%\item (Daten schrittweise aus Enclave rausschreiben und wieder einlesen)
-	% Reine Benchmarks direkt in der Enclave sind leider nicht möglich, kein Zugang zu Systemzeit
-	\item Entschlüsseln/Dekomprimieren/Lauflängenkodierung/Komprimierung/Verschlüsseln \textbf{(12)}
+	\item \textbf{(13)} Entschlüsseln/Dekomprimieren/Lauflängenkodierung/Komprimierung/Verschlüsseln
+	\begin{figure}[h]
+		\includegraphics[width=\linewidth]{img/Eval13.pdf}
+		\centering
+		\caption{Vergleich Verarbeitungsabfolge außerhalb und innerhalb der Enclave}
+		\label{fig:eval13}
+	\end{figure}
+
 \end{itemize}
-
-\begin{figure}[h]
-	\includegraphics[width=\linewidth]{img/Iteration.pdf}
-	\centering
-	\caption{Vergleich Iteration innerhalb und außerhalb einer Enclave}
-	\label{fig:iteration}
-\end{figure}
-
-\begin{figure}[h]
-	\includegraphics[width=\linewidth]{img/VByteDekomprimierung.pdf}
-	\centering
-	\caption{Vergleich Dekomprimierung innerhalb und außerhalb einer Enclave}
-	\label{fig:decompress}
-\end{figure}
-
-\begin{figure}[h]
-	\includegraphics[width=\linewidth]{img/VByteDekomprimierungKrypto.pdf}
-	\centering
-	\caption{Vergleich Dekomprimierung und Verschlüsselung innerhalb und außerhalb einer Enclave}
-	\label{fig:decompresscrypto}
-\end{figure}
-
-% \section{Punkt 1}
-% \section{Punkt 2}
-% \section{Punkt 3} ...
 
 \section{Fazit}
 %TODO notes

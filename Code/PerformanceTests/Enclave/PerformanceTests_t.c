@@ -17,13 +17,6 @@
 } while (0)
 
 
-typedef struct ms_enclaveIterate_t {
-	size_t ms_retval;
-	uint8_t* ms_in;
-	size_t ms_length;
-	uint8_t* ms_out;
-} ms_enclaveIterate_t;
-
 typedef struct ms_enclaveJustCopy_t {
 	size_t ms_retval;
 	uint8_t* ms_in;
@@ -38,12 +31,19 @@ typedef struct ms_enclaveNoCopy_t {
 	uint8_t* ms_out;
 } ms_enclaveNoCopy_t;
 
-typedef struct ms_enclaveCompleteProcess_t {
+typedef struct ms_enclaveCryptoNoCopy_t {
 	size_t ms_retval;
 	uint8_t* ms_in;
 	size_t ms_length;
 	uint8_t* ms_out;
-} ms_enclaveCompleteProcess_t;
+} ms_enclaveCryptoNoCopy_t;
+
+typedef struct ms_enclaveIterate_t {
+	size_t ms_retval;
+	uint8_t* ms_in;
+	size_t ms_length;
+	uint8_t* ms_out;
+} ms_enclaveIterate_t;
 
 typedef struct ms_enclaveVByteEncode_t {
 	size_t ms_retval;
@@ -60,43 +60,6 @@ typedef struct ms_enclaveVByteDecode_t {
 	uint8_t* ms_out;
 	size_t ms_outLength;
 } ms_enclaveVByteDecode_t;
-
-typedef struct ms_enclaveVByte_t {
-	size_t ms_retval;
-	uint8_t* ms_in;
-	size_t ms_inLength;
-	uint8_t* ms_out;
-	size_t ms_outLength;
-} ms_enclaveVByte_t;
-
-typedef struct ms_enclaveCrypto_t {
-	size_t ms_retval;
-	uint8_t* ms_in;
-	size_t ms_inLength;
-	uint8_t* ms_out;
-	size_t ms_outLength;
-} ms_enclaveCrypto_t;
-
-typedef struct ms_enclaveCryptoNoCopy_t {
-	size_t ms_retval;
-	uint8_t* ms_in;
-	size_t ms_length;
-	uint8_t* ms_out;
-} ms_enclaveCryptoNoCopy_t;
-
-typedef struct ms_enclaveVByteEncodeEncrypted_t {
-	size_t ms_retval;
-	uint8_t* ms_in;
-	size_t ms_length;
-	uint8_t* ms_out;
-} ms_enclaveVByteEncodeEncrypted_t;
-
-typedef struct ms_enclaveVByteDecodeEncrypted_t {
-	size_t ms_retval;
-	uint8_t* ms_in;
-	size_t ms_length;
-	uint8_t* ms_out;
-} ms_enclaveVByteDecodeEncrypted_t;
 
 typedef struct ms_enclaveRunLengthEncode_t {
 	size_t ms_retval;
@@ -120,6 +83,43 @@ typedef struct ms_enclaveRunLengthEncodeAndSum_t {
 	size_t ms_length;
 	uint8_t* ms_out;
 } ms_enclaveRunLengthEncodeAndSum_t;
+
+typedef struct ms_enclaveVByte_t {
+	size_t ms_retval;
+	uint8_t* ms_in;
+	size_t ms_inLength;
+	uint8_t* ms_out;
+	size_t ms_outLength;
+} ms_enclaveVByte_t;
+
+typedef struct ms_enclaveVByteDecodeEncrypted_t {
+	size_t ms_retval;
+	uint8_t* ms_in;
+	size_t ms_length;
+	uint8_t* ms_out;
+} ms_enclaveVByteDecodeEncrypted_t;
+
+typedef struct ms_enclaveVByteEncodeEncrypted_t {
+	size_t ms_retval;
+	uint8_t* ms_in;
+	size_t ms_length;
+	uint8_t* ms_out;
+} ms_enclaveVByteEncodeEncrypted_t;
+
+typedef struct ms_enclaveCrypto_t {
+	size_t ms_retval;
+	uint8_t* ms_in;
+	size_t ms_inLength;
+	uint8_t* ms_out;
+	size_t ms_outLength;
+} ms_enclaveCrypto_t;
+
+typedef struct ms_enclaveCompleteProcess_t {
+	size_t ms_retval;
+	uint8_t* ms_in;
+	size_t ms_length;
+	uint8_t* ms_out;
+} ms_enclaveCompleteProcess_t;
 
 typedef struct ms_encryptBytes_t {
 	int ms_retval;
@@ -174,50 +174,6 @@ typedef struct ms_sgx_thread_set_multiple_untrusted_events_ocall_t {
 #pragma warning(disable: 4127)
 #pragma warning(disable: 4200)
 #endif
-
-static sgx_status_t SGX_CDECL sgx_enclaveIterate(void* pms)
-{
-	ms_enclaveIterate_t* ms = SGX_CAST(ms_enclaveIterate_t*, pms);
-	sgx_status_t status = SGX_SUCCESS;
-	uint8_t* _tmp_in = ms->ms_in;
-	size_t _tmp_length = ms->ms_length;
-	size_t _len_in = _tmp_length;
-	uint8_t* _in_in = NULL;
-	uint8_t* _tmp_out = ms->ms_out;
-	size_t _len_out = _tmp_length;
-	uint8_t* _in_out = NULL;
-
-	CHECK_REF_POINTER(pms, sizeof(ms_enclaveIterate_t));
-	CHECK_UNIQUE_POINTER(_tmp_in, _len_in);
-	CHECK_UNIQUE_POINTER(_tmp_out, _len_out);
-
-	if (_tmp_in != NULL) {
-		_in_in = (uint8_t*)malloc(_len_in);
-		if (_in_in == NULL) {
-			status = SGX_ERROR_OUT_OF_MEMORY;
-			goto err;
-		}
-
-		memcpy(_in_in, _tmp_in, _len_in);
-	}
-	if (_tmp_out != NULL) {
-		if ((_in_out = (uint8_t*)malloc(_len_out)) == NULL) {
-			status = SGX_ERROR_OUT_OF_MEMORY;
-			goto err;
-		}
-
-		memset((void*)_in_out, 0, _len_out);
-	}
-	ms->ms_retval = enclaveIterate(_in_in, _tmp_length, _in_out);
-err:
-	if (_in_in) free(_in_in);
-	if (_in_out) {
-		memcpy(_tmp_out, _in_out, _len_out);
-		free(_in_out);
-	}
-
-	return status;
-}
 
 static sgx_status_t SGX_CDECL sgx_enclaveJustCopy(void* pms)
 {
@@ -278,17 +234,61 @@ static sgx_status_t SGX_CDECL sgx_enclaveNoCopy(void* pms)
 	return status;
 }
 
-static sgx_status_t SGX_CDECL sgx_enclaveCompleteProcess(void* pms)
+static sgx_status_t SGX_CDECL sgx_enclaveCryptoNoCopy(void* pms)
 {
-	ms_enclaveCompleteProcess_t* ms = SGX_CAST(ms_enclaveCompleteProcess_t*, pms);
+	ms_enclaveCryptoNoCopy_t* ms = SGX_CAST(ms_enclaveCryptoNoCopy_t*, pms);
 	sgx_status_t status = SGX_SUCCESS;
 	uint8_t* _tmp_in = ms->ms_in;
 	uint8_t* _tmp_out = ms->ms_out;
 
-	CHECK_REF_POINTER(pms, sizeof(ms_enclaveCompleteProcess_t));
+	CHECK_REF_POINTER(pms, sizeof(ms_enclaveCryptoNoCopy_t));
 
-	ms->ms_retval = enclaveCompleteProcess(_tmp_in, ms->ms_length, _tmp_out);
+	ms->ms_retval = enclaveCryptoNoCopy(_tmp_in, ms->ms_length, _tmp_out);
 
+
+	return status;
+}
+
+static sgx_status_t SGX_CDECL sgx_enclaveIterate(void* pms)
+{
+	ms_enclaveIterate_t* ms = SGX_CAST(ms_enclaveIterate_t*, pms);
+	sgx_status_t status = SGX_SUCCESS;
+	uint8_t* _tmp_in = ms->ms_in;
+	size_t _tmp_length = ms->ms_length;
+	size_t _len_in = _tmp_length;
+	uint8_t* _in_in = NULL;
+	uint8_t* _tmp_out = ms->ms_out;
+	size_t _len_out = _tmp_length;
+	uint8_t* _in_out = NULL;
+
+	CHECK_REF_POINTER(pms, sizeof(ms_enclaveIterate_t));
+	CHECK_UNIQUE_POINTER(_tmp_in, _len_in);
+	CHECK_UNIQUE_POINTER(_tmp_out, _len_out);
+
+	if (_tmp_in != NULL) {
+		_in_in = (uint8_t*)malloc(_len_in);
+		if (_in_in == NULL) {
+			status = SGX_ERROR_OUT_OF_MEMORY;
+			goto err;
+		}
+
+		memcpy(_in_in, _tmp_in, _len_in);
+	}
+	if (_tmp_out != NULL) {
+		if ((_in_out = (uint8_t*)malloc(_len_out)) == NULL) {
+			status = SGX_ERROR_OUT_OF_MEMORY;
+			goto err;
+		}
+
+		memset((void*)_in_out, 0, _len_out);
+	}
+	ms->ms_retval = enclaveIterate(_in_in, _tmp_length, _in_out);
+err:
+	if (_in_in) free(_in_in);
+	if (_in_out) {
+		memcpy(_tmp_out, _in_out, _len_out);
+		free(_in_out);
+	}
 
 	return status;
 }
@@ -379,141 +379,6 @@ err:
 		memcpy(_tmp_out, _in_out, _len_out);
 		free(_in_out);
 	}
-
-	return status;
-}
-
-static sgx_status_t SGX_CDECL sgx_enclaveVByte(void* pms)
-{
-	ms_enclaveVByte_t* ms = SGX_CAST(ms_enclaveVByte_t*, pms);
-	sgx_status_t status = SGX_SUCCESS;
-	uint8_t* _tmp_in = ms->ms_in;
-	size_t _tmp_inLength = ms->ms_inLength;
-	size_t _len_in = _tmp_inLength;
-	uint8_t* _in_in = NULL;
-	uint8_t* _tmp_out = ms->ms_out;
-	size_t _tmp_outLength = ms->ms_outLength;
-	size_t _len_out = _tmp_outLength;
-	uint8_t* _in_out = NULL;
-
-	CHECK_REF_POINTER(pms, sizeof(ms_enclaveVByte_t));
-	CHECK_UNIQUE_POINTER(_tmp_in, _len_in);
-	CHECK_UNIQUE_POINTER(_tmp_out, _len_out);
-
-	if (_tmp_in != NULL) {
-		_in_in = (uint8_t*)malloc(_len_in);
-		if (_in_in == NULL) {
-			status = SGX_ERROR_OUT_OF_MEMORY;
-			goto err;
-		}
-
-		memcpy(_in_in, _tmp_in, _len_in);
-	}
-	if (_tmp_out != NULL) {
-		if ((_in_out = (uint8_t*)malloc(_len_out)) == NULL) {
-			status = SGX_ERROR_OUT_OF_MEMORY;
-			goto err;
-		}
-
-		memset((void*)_in_out, 0, _len_out);
-	}
-	ms->ms_retval = enclaveVByte(_in_in, _tmp_inLength, _in_out, _tmp_outLength);
-err:
-	if (_in_in) free(_in_in);
-	if (_in_out) {
-		memcpy(_tmp_out, _in_out, _len_out);
-		free(_in_out);
-	}
-
-	return status;
-}
-
-static sgx_status_t SGX_CDECL sgx_enclaveCrypto(void* pms)
-{
-	ms_enclaveCrypto_t* ms = SGX_CAST(ms_enclaveCrypto_t*, pms);
-	sgx_status_t status = SGX_SUCCESS;
-	uint8_t* _tmp_in = ms->ms_in;
-	size_t _tmp_inLength = ms->ms_inLength;
-	size_t _len_in = _tmp_inLength;
-	uint8_t* _in_in = NULL;
-	uint8_t* _tmp_out = ms->ms_out;
-	size_t _tmp_outLength = ms->ms_outLength;
-	size_t _len_out = _tmp_outLength;
-	uint8_t* _in_out = NULL;
-
-	CHECK_REF_POINTER(pms, sizeof(ms_enclaveCrypto_t));
-	CHECK_UNIQUE_POINTER(_tmp_in, _len_in);
-	CHECK_UNIQUE_POINTER(_tmp_out, _len_out);
-
-	if (_tmp_in != NULL) {
-		_in_in = (uint8_t*)malloc(_len_in);
-		if (_in_in == NULL) {
-			status = SGX_ERROR_OUT_OF_MEMORY;
-			goto err;
-		}
-
-		memcpy(_in_in, _tmp_in, _len_in);
-	}
-	if (_tmp_out != NULL) {
-		if ((_in_out = (uint8_t*)malloc(_len_out)) == NULL) {
-			status = SGX_ERROR_OUT_OF_MEMORY;
-			goto err;
-		}
-
-		memset((void*)_in_out, 0, _len_out);
-	}
-	ms->ms_retval = enclaveCrypto(_in_in, _tmp_inLength, _in_out, _tmp_outLength);
-err:
-	if (_in_in) free(_in_in);
-	if (_in_out) {
-		memcpy(_tmp_out, _in_out, _len_out);
-		free(_in_out);
-	}
-
-	return status;
-}
-
-static sgx_status_t SGX_CDECL sgx_enclaveCryptoNoCopy(void* pms)
-{
-	ms_enclaveCryptoNoCopy_t* ms = SGX_CAST(ms_enclaveCryptoNoCopy_t*, pms);
-	sgx_status_t status = SGX_SUCCESS;
-	uint8_t* _tmp_in = ms->ms_in;
-	uint8_t* _tmp_out = ms->ms_out;
-
-	CHECK_REF_POINTER(pms, sizeof(ms_enclaveCryptoNoCopy_t));
-
-	ms->ms_retval = enclaveCryptoNoCopy(_tmp_in, ms->ms_length, _tmp_out);
-
-
-	return status;
-}
-
-static sgx_status_t SGX_CDECL sgx_enclaveVByteEncodeEncrypted(void* pms)
-{
-	ms_enclaveVByteEncodeEncrypted_t* ms = SGX_CAST(ms_enclaveVByteEncodeEncrypted_t*, pms);
-	sgx_status_t status = SGX_SUCCESS;
-	uint8_t* _tmp_in = ms->ms_in;
-	uint8_t* _tmp_out = ms->ms_out;
-
-	CHECK_REF_POINTER(pms, sizeof(ms_enclaveVByteEncodeEncrypted_t));
-
-	ms->ms_retval = enclaveVByteEncodeEncrypted(_tmp_in, ms->ms_length, _tmp_out);
-
-
-	return status;
-}
-
-static sgx_status_t SGX_CDECL sgx_enclaveVByteDecodeEncrypted(void* pms)
-{
-	ms_enclaveVByteDecodeEncrypted_t* ms = SGX_CAST(ms_enclaveVByteDecodeEncrypted_t*, pms);
-	sgx_status_t status = SGX_SUCCESS;
-	uint8_t* _tmp_in = ms->ms_in;
-	uint8_t* _tmp_out = ms->ms_out;
-
-	CHECK_REF_POINTER(pms, sizeof(ms_enclaveVByteDecodeEncrypted_t));
-
-	ms->ms_retval = enclaveVByteDecodeEncrypted(_tmp_in, ms->ms_length, _tmp_out);
-
 
 	return status;
 }
@@ -652,6 +517,141 @@ err:
 	return status;
 }
 
+static sgx_status_t SGX_CDECL sgx_enclaveVByte(void* pms)
+{
+	ms_enclaveVByte_t* ms = SGX_CAST(ms_enclaveVByte_t*, pms);
+	sgx_status_t status = SGX_SUCCESS;
+	uint8_t* _tmp_in = ms->ms_in;
+	size_t _tmp_inLength = ms->ms_inLength;
+	size_t _len_in = _tmp_inLength;
+	uint8_t* _in_in = NULL;
+	uint8_t* _tmp_out = ms->ms_out;
+	size_t _tmp_outLength = ms->ms_outLength;
+	size_t _len_out = _tmp_outLength;
+	uint8_t* _in_out = NULL;
+
+	CHECK_REF_POINTER(pms, sizeof(ms_enclaveVByte_t));
+	CHECK_UNIQUE_POINTER(_tmp_in, _len_in);
+	CHECK_UNIQUE_POINTER(_tmp_out, _len_out);
+
+	if (_tmp_in != NULL) {
+		_in_in = (uint8_t*)malloc(_len_in);
+		if (_in_in == NULL) {
+			status = SGX_ERROR_OUT_OF_MEMORY;
+			goto err;
+		}
+
+		memcpy(_in_in, _tmp_in, _len_in);
+	}
+	if (_tmp_out != NULL) {
+		if ((_in_out = (uint8_t*)malloc(_len_out)) == NULL) {
+			status = SGX_ERROR_OUT_OF_MEMORY;
+			goto err;
+		}
+
+		memset((void*)_in_out, 0, _len_out);
+	}
+	ms->ms_retval = enclaveVByte(_in_in, _tmp_inLength, _in_out, _tmp_outLength);
+err:
+	if (_in_in) free(_in_in);
+	if (_in_out) {
+		memcpy(_tmp_out, _in_out, _len_out);
+		free(_in_out);
+	}
+
+	return status;
+}
+
+static sgx_status_t SGX_CDECL sgx_enclaveVByteDecodeEncrypted(void* pms)
+{
+	ms_enclaveVByteDecodeEncrypted_t* ms = SGX_CAST(ms_enclaveVByteDecodeEncrypted_t*, pms);
+	sgx_status_t status = SGX_SUCCESS;
+	uint8_t* _tmp_in = ms->ms_in;
+	uint8_t* _tmp_out = ms->ms_out;
+
+	CHECK_REF_POINTER(pms, sizeof(ms_enclaveVByteDecodeEncrypted_t));
+
+	ms->ms_retval = enclaveVByteDecodeEncrypted(_tmp_in, ms->ms_length, _tmp_out);
+
+
+	return status;
+}
+
+static sgx_status_t SGX_CDECL sgx_enclaveVByteEncodeEncrypted(void* pms)
+{
+	ms_enclaveVByteEncodeEncrypted_t* ms = SGX_CAST(ms_enclaveVByteEncodeEncrypted_t*, pms);
+	sgx_status_t status = SGX_SUCCESS;
+	uint8_t* _tmp_in = ms->ms_in;
+	uint8_t* _tmp_out = ms->ms_out;
+
+	CHECK_REF_POINTER(pms, sizeof(ms_enclaveVByteEncodeEncrypted_t));
+
+	ms->ms_retval = enclaveVByteEncodeEncrypted(_tmp_in, ms->ms_length, _tmp_out);
+
+
+	return status;
+}
+
+static sgx_status_t SGX_CDECL sgx_enclaveCrypto(void* pms)
+{
+	ms_enclaveCrypto_t* ms = SGX_CAST(ms_enclaveCrypto_t*, pms);
+	sgx_status_t status = SGX_SUCCESS;
+	uint8_t* _tmp_in = ms->ms_in;
+	size_t _tmp_inLength = ms->ms_inLength;
+	size_t _len_in = _tmp_inLength;
+	uint8_t* _in_in = NULL;
+	uint8_t* _tmp_out = ms->ms_out;
+	size_t _tmp_outLength = ms->ms_outLength;
+	size_t _len_out = _tmp_outLength;
+	uint8_t* _in_out = NULL;
+
+	CHECK_REF_POINTER(pms, sizeof(ms_enclaveCrypto_t));
+	CHECK_UNIQUE_POINTER(_tmp_in, _len_in);
+	CHECK_UNIQUE_POINTER(_tmp_out, _len_out);
+
+	if (_tmp_in != NULL) {
+		_in_in = (uint8_t*)malloc(_len_in);
+		if (_in_in == NULL) {
+			status = SGX_ERROR_OUT_OF_MEMORY;
+			goto err;
+		}
+
+		memcpy(_in_in, _tmp_in, _len_in);
+	}
+	if (_tmp_out != NULL) {
+		if ((_in_out = (uint8_t*)malloc(_len_out)) == NULL) {
+			status = SGX_ERROR_OUT_OF_MEMORY;
+			goto err;
+		}
+
+		memset((void*)_in_out, 0, _len_out);
+	}
+	ms->ms_retval = enclaveCrypto(_in_in, _tmp_inLength, _in_out, _tmp_outLength);
+err:
+	if (_in_in) free(_in_in);
+	if (_in_out) {
+		memcpy(_tmp_out, _in_out, _len_out);
+		free(_in_out);
+	}
+
+	return status;
+}
+
+static sgx_status_t SGX_CDECL sgx_enclaveCompleteProcess(void* pms)
+{
+	ms_enclaveCompleteProcess_t* ms = SGX_CAST(ms_enclaveCompleteProcess_t*, pms);
+	sgx_status_t status = SGX_SUCCESS;
+	uint8_t* _tmp_in = ms->ms_in;
+	uint8_t* _tmp_out = ms->ms_out;
+
+	CHECK_REF_POINTER(pms, sizeof(ms_enclaveCompleteProcess_t));
+
+	ms->ms_retval = enclaveCompleteProcess(_tmp_in, ms->ms_length, _tmp_out);
+
+
+	return status;
+}
+
 static sgx_status_t SGX_CDECL sgx_encryptBytes(void* pms)
 {
 	ms_encryptBytes_t* ms = SGX_CAST(ms_encryptBytes_t*, pms);
@@ -774,20 +774,20 @@ SGX_EXTERNC const struct {
 } g_ecall_table = {
 	16,
 	{
-		{(void*)(uintptr_t)sgx_enclaveIterate, 0},
 		{(void*)(uintptr_t)sgx_enclaveJustCopy, 0},
 		{(void*)(uintptr_t)sgx_enclaveNoCopy, 0},
-		{(void*)(uintptr_t)sgx_enclaveCompleteProcess, 0},
+		{(void*)(uintptr_t)sgx_enclaveCryptoNoCopy, 0},
+		{(void*)(uintptr_t)sgx_enclaveIterate, 0},
 		{(void*)(uintptr_t)sgx_enclaveVByteEncode, 0},
 		{(void*)(uintptr_t)sgx_enclaveVByteDecode, 0},
-		{(void*)(uintptr_t)sgx_enclaveVByte, 0},
-		{(void*)(uintptr_t)sgx_enclaveCrypto, 0},
-		{(void*)(uintptr_t)sgx_enclaveCryptoNoCopy, 0},
-		{(void*)(uintptr_t)sgx_enclaveVByteEncodeEncrypted, 0},
-		{(void*)(uintptr_t)sgx_enclaveVByteDecodeEncrypted, 0},
 		{(void*)(uintptr_t)sgx_enclaveRunLengthEncode, 0},
 		{(void*)(uintptr_t)sgx_enclaveRunLengthDecode, 0},
 		{(void*)(uintptr_t)sgx_enclaveRunLengthEncodeAndSum, 0},
+		{(void*)(uintptr_t)sgx_enclaveVByte, 0},
+		{(void*)(uintptr_t)sgx_enclaveVByteDecodeEncrypted, 0},
+		{(void*)(uintptr_t)sgx_enclaveVByteEncodeEncrypted, 0},
+		{(void*)(uintptr_t)sgx_enclaveCrypto, 0},
+		{(void*)(uintptr_t)sgx_enclaveCompleteProcess, 0},
 		{(void*)(uintptr_t)sgx_encryptBytes, 1},
 		{(void*)(uintptr_t)sgx_decryptBytes, 1},
 	}

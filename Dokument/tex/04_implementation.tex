@@ -1,12 +1,74 @@
 
 \chapter{Implementierung}
 %TODO intro
+\begin{itemize}
+	\item Enclave = DLL Bibliothek (dynamisch gelinkt) \textit(Trusted Runtime System -tRTS), reduziert die Trusted Computing Base der Anwendung
+	\item eingebunden durch entsprechende Anwendung \textit{Untrusted Runtime System - uRTS}
+	\item Link zwischen Anwendung und Enclave -> Edge Routines
+	\item die uRTS ruft Funktionen durch das Interface der Enclave auf
+	\item Bild zu Edge Routines
+	\item ausgeführt in Windows, aber allgemeine Vorgehensweise finden
+	\item ECALLs und OCALLs erklären
+	
+	\begin{figure}[h]
+		\includegraphics[width=0.8\linewidth]{img/SGXControlFlow.pdf}
+		\centering
+		\caption{Kontrollfluss zwischen Anwendung und Enclave}
+		\label{fig:sgxcontrolflow}
+	\end{figure}
+	
+\end{itemize}
 
 \section{Benutzung von Intel SGX}
+\subsection{Voraussetzungen}
 %TODO notes
+\begin{itemize}
+	\item Prozessorerweiterungen SGX wurden mit der 6. Generation von Intel Core Prozessoren (Skylake) eingeführt und setzen folglich einen Prozessor ab dieser Generation vor raus
+	\item Intel stellt einen Simulator in Software bereit, um die Technologie auch auf älteren Systemen zu testen, aber nicht für den produktiven Einsatz geeignet ist (nur kurz erwähnen)
+	\item SGX Features müssen im Betriebssystem aktiviert sein -> im BIOS muss die entsprechende Option zur Nutzung von SGX aktiviert oder auf software-enabled gestellt sein
+	\item Letzteres erlaubt die Aktivierung des Features durch Software, welche es nutzt, auf diese Weise wird nicht dauerhaft Speicherplatz für den Prozessor reserviert (PRM), sondern nur bei Bedarf
+	\item zuletzt muss die Plattform Software installiert sein, beinhaltet u.a. Treiber und verschiedene Dienste, etwa für die Attestierung oder das Einbinden von Enclaves (Launch Enclave, diese startet dann die eigenen Enclaves)
+	\item dies sind die Voraussetzungen, um eine SGX Anwendung auf dem eigenen System laufen zu lassen, für die Programmierung sind weitere Vorkehrungen nötig
+	\item Intel SGX SDK muss installiert sein, sie beinhaltet die benötigten statischen Bibliotheken zum Einbinden in entsprechende Anwendungen, sichere Version der C++ STL, als auch Dokumentation, Tools zur Entwicklung, Beispielprojekte
+	\item verfügbar für Windows und Linux
+	\item unter Windows wird Visual Studio mit dem entsprechenden C++ Compiler benötigt, oder Intels C++ Compiler
+	\item (neuste Version, SDK 1.7 benötigt Visual Studio 2015 Professional)
+	\item für Linux existiert unter Anderem ein Plugin für die Entwicklungsumgebung Eclipse, Intels C++ Compiler sowie GCC können genutzt werden
+	\item Intels Compiler ist für die Entwicklung empfohlen \cite{WinDev}
+	
+\end{itemize}
+\subsection{Definition einer Enclave}
+%TODO notes
+\begin{itemize}
+	\item Enclave Definition File (EDL)
+	\item Liste der Attribute zu Funktionsparametern (möglicherweise nicht alle, aber alles mal nennen)
+	\item Edge Routines generiert durch Edger8r Tool
+\end{itemize}
+
+\subsection{Konfigurationsmöglichkeiten}
+\begin{itemize}
+	\item Konfigurationsdatei
+	\item maximale Heapgröße definieren
+	\item maximale Stackgröße definieren
+	\item Codeausschnitt von XML Datei
+\end{itemize}
 
 \section{Systemtest}
+\begin{itemize}
+	\item kurze Infos zu Grenzen, z.B. Speicherplatz von Enclave
+\end{itemize}
 %TODO notes
+\begin{itemize}
+	\item siehe Word Datei bzw. andere Notizen
+	\item \cite{WinDev}
+	1. I/O related functions and classes, like<iostream> 
+	2. Functions depending on a locale library
+	3. Anyother functions that require system calls
+	\item C++ Objekte können Grenzen der Enclave nicht passieren, müssen in Structs (de)serialisiert werden
+\end{itemize}
 
 \section{Fazit}
 %TODO notes
+\begin{itemize}
+	\item auf Limitierungen eingehen und wie man sich entsprechend der Möglichkeiten verhalten sollte beim Programmieren
+\end{itemize}

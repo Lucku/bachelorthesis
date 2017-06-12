@@ -1,13 +1,6 @@
 #include "PerformanceTests_u.h"
 #include <errno.h>
 
-typedef struct ms_enclaveIterate_t {
-	size_t ms_retval;
-	uint8_t* ms_in;
-	size_t ms_length;
-	uint8_t* ms_out;
-} ms_enclaveIterate_t;
-
 typedef struct ms_enclaveJustCopy_t {
 	size_t ms_retval;
 	uint8_t* ms_in;
@@ -22,12 +15,19 @@ typedef struct ms_enclaveNoCopy_t {
 	uint8_t* ms_out;
 } ms_enclaveNoCopy_t;
 
-typedef struct ms_enclaveCompleteProcess_t {
+typedef struct ms_enclaveCryptoNoCopy_t {
 	size_t ms_retval;
 	uint8_t* ms_in;
 	size_t ms_length;
 	uint8_t* ms_out;
-} ms_enclaveCompleteProcess_t;
+} ms_enclaveCryptoNoCopy_t;
+
+typedef struct ms_enclaveIterate_t {
+	size_t ms_retval;
+	uint8_t* ms_in;
+	size_t ms_length;
+	uint8_t* ms_out;
+} ms_enclaveIterate_t;
 
 typedef struct ms_enclaveVByteEncode_t {
 	size_t ms_retval;
@@ -44,43 +44,6 @@ typedef struct ms_enclaveVByteDecode_t {
 	uint8_t* ms_out;
 	size_t ms_outLength;
 } ms_enclaveVByteDecode_t;
-
-typedef struct ms_enclaveVByte_t {
-	size_t ms_retval;
-	uint8_t* ms_in;
-	size_t ms_inLength;
-	uint8_t* ms_out;
-	size_t ms_outLength;
-} ms_enclaveVByte_t;
-
-typedef struct ms_enclaveCrypto_t {
-	size_t ms_retval;
-	uint8_t* ms_in;
-	size_t ms_inLength;
-	uint8_t* ms_out;
-	size_t ms_outLength;
-} ms_enclaveCrypto_t;
-
-typedef struct ms_enclaveCryptoNoCopy_t {
-	size_t ms_retval;
-	uint8_t* ms_in;
-	size_t ms_length;
-	uint8_t* ms_out;
-} ms_enclaveCryptoNoCopy_t;
-
-typedef struct ms_enclaveVByteEncodeEncrypted_t {
-	size_t ms_retval;
-	uint8_t* ms_in;
-	size_t ms_length;
-	uint8_t* ms_out;
-} ms_enclaveVByteEncodeEncrypted_t;
-
-typedef struct ms_enclaveVByteDecodeEncrypted_t {
-	size_t ms_retval;
-	uint8_t* ms_in;
-	size_t ms_length;
-	uint8_t* ms_out;
-} ms_enclaveVByteDecodeEncrypted_t;
 
 typedef struct ms_enclaveRunLengthEncode_t {
 	size_t ms_retval;
@@ -104,6 +67,43 @@ typedef struct ms_enclaveRunLengthEncodeAndSum_t {
 	size_t ms_length;
 	uint8_t* ms_out;
 } ms_enclaveRunLengthEncodeAndSum_t;
+
+typedef struct ms_enclaveVByte_t {
+	size_t ms_retval;
+	uint8_t* ms_in;
+	size_t ms_inLength;
+	uint8_t* ms_out;
+	size_t ms_outLength;
+} ms_enclaveVByte_t;
+
+typedef struct ms_enclaveVByteDecodeEncrypted_t {
+	size_t ms_retval;
+	uint8_t* ms_in;
+	size_t ms_length;
+	uint8_t* ms_out;
+} ms_enclaveVByteDecodeEncrypted_t;
+
+typedef struct ms_enclaveVByteEncodeEncrypted_t {
+	size_t ms_retval;
+	uint8_t* ms_in;
+	size_t ms_length;
+	uint8_t* ms_out;
+} ms_enclaveVByteEncodeEncrypted_t;
+
+typedef struct ms_enclaveCrypto_t {
+	size_t ms_retval;
+	uint8_t* ms_in;
+	size_t ms_inLength;
+	uint8_t* ms_out;
+	size_t ms_outLength;
+} ms_enclaveCrypto_t;
+
+typedef struct ms_enclaveCompleteProcess_t {
+	size_t ms_retval;
+	uint8_t* ms_in;
+	size_t ms_length;
+	uint8_t* ms_out;
+} ms_enclaveCompleteProcess_t;
 
 typedef struct ms_encryptBytes_t {
 	int ms_retval;
@@ -207,18 +207,6 @@ static const struct {
 	}
 };
 
-sgx_status_t enclaveIterate(sgx_enclave_id_t eid, size_t* retval, uint8_t* in, size_t length, uint8_t* out)
-{
-	sgx_status_t status;
-	ms_enclaveIterate_t ms;
-	ms.ms_in = in;
-	ms.ms_length = length;
-	ms.ms_out = out;
-	status = sgx_ecall(eid, 0, &ocall_table_PerformanceTests, &ms);
-	if (status == SGX_SUCCESS && retval) *retval = ms.ms_retval;
-	return status;
-}
-
 sgx_status_t enclaveJustCopy(sgx_enclave_id_t eid, size_t* retval, uint8_t* in, size_t length, uint8_t* out)
 {
 	sgx_status_t status;
@@ -226,7 +214,7 @@ sgx_status_t enclaveJustCopy(sgx_enclave_id_t eid, size_t* retval, uint8_t* in, 
 	ms.ms_in = in;
 	ms.ms_length = length;
 	ms.ms_out = out;
-	status = sgx_ecall(eid, 1, &ocall_table_PerformanceTests, &ms);
+	status = sgx_ecall(eid, 0, &ocall_table_PerformanceTests, &ms);
 	if (status == SGX_SUCCESS && retval) *retval = ms.ms_retval;
 	return status;
 }
@@ -238,15 +226,27 @@ sgx_status_t enclaveNoCopy(sgx_enclave_id_t eid, size_t* retval, uint8_t* in, si
 	ms.ms_in = in;
 	ms.ms_length = length;
 	ms.ms_out = out;
+	status = sgx_ecall(eid, 1, &ocall_table_PerformanceTests, &ms);
+	if (status == SGX_SUCCESS && retval) *retval = ms.ms_retval;
+	return status;
+}
+
+sgx_status_t enclaveCryptoNoCopy(sgx_enclave_id_t eid, size_t* retval, uint8_t* in, size_t length, uint8_t* out)
+{
+	sgx_status_t status;
+	ms_enclaveCryptoNoCopy_t ms;
+	ms.ms_in = in;
+	ms.ms_length = length;
+	ms.ms_out = out;
 	status = sgx_ecall(eid, 2, &ocall_table_PerformanceTests, &ms);
 	if (status == SGX_SUCCESS && retval) *retval = ms.ms_retval;
 	return status;
 }
 
-sgx_status_t enclaveCompleteProcess(sgx_enclave_id_t eid, size_t* retval, uint8_t* in, size_t length, uint8_t* out)
+sgx_status_t enclaveIterate(sgx_enclave_id_t eid, size_t* retval, uint8_t* in, size_t length, uint8_t* out)
 {
 	sgx_status_t status;
-	ms_enclaveCompleteProcess_t ms;
+	ms_enclaveIterate_t ms;
 	ms.ms_in = in;
 	ms.ms_length = length;
 	ms.ms_out = out;
@@ -281,10 +281,10 @@ sgx_status_t enclaveVByteDecode(sgx_enclave_id_t eid, size_t* retval, uint8_t* i
 	return status;
 }
 
-sgx_status_t enclaveVByte(sgx_enclave_id_t eid, size_t* retval, uint8_t* in, size_t inLength, uint8_t* out, size_t outLength)
+sgx_status_t enclaveRunLengthEncode(sgx_enclave_id_t eid, size_t* retval, uint8_t* in, size_t inLength, uint8_t* out, size_t outLength)
 {
 	sgx_status_t status;
-	ms_enclaveVByte_t ms;
+	ms_enclaveRunLengthEncode_t ms;
 	ms.ms_in = in;
 	ms.ms_inLength = inLength;
 	ms.ms_out = out;
@@ -294,10 +294,10 @@ sgx_status_t enclaveVByte(sgx_enclave_id_t eid, size_t* retval, uint8_t* in, siz
 	return status;
 }
 
-sgx_status_t enclaveCrypto(sgx_enclave_id_t eid, size_t* retval, uint8_t* in, size_t inLength, uint8_t* out, size_t outLength)
+sgx_status_t enclaveRunLengthDecode(sgx_enclave_id_t eid, size_t* retval, uint8_t* in, size_t inLength, uint8_t* out, size_t outLength)
 {
 	sgx_status_t status;
-	ms_enclaveCrypto_t ms;
+	ms_enclaveRunLengthDecode_t ms;
 	ms.ms_in = in;
 	ms.ms_inLength = inLength;
 	ms.ms_out = out;
@@ -307,10 +307,10 @@ sgx_status_t enclaveCrypto(sgx_enclave_id_t eid, size_t* retval, uint8_t* in, si
 	return status;
 }
 
-sgx_status_t enclaveCryptoNoCopy(sgx_enclave_id_t eid, size_t* retval, uint8_t* in, size_t length, uint8_t* out)
+sgx_status_t enclaveRunLengthEncodeAndSum(sgx_enclave_id_t eid, size_t* retval, uint8_t* in, size_t length, uint8_t* out)
 {
 	sgx_status_t status;
-	ms_enclaveCryptoNoCopy_t ms;
+	ms_enclaveRunLengthEncodeAndSum_t ms;
 	ms.ms_in = in;
 	ms.ms_length = length;
 	ms.ms_out = out;
@@ -319,13 +319,14 @@ sgx_status_t enclaveCryptoNoCopy(sgx_enclave_id_t eid, size_t* retval, uint8_t* 
 	return status;
 }
 
-sgx_status_t enclaveVByteEncodeEncrypted(sgx_enclave_id_t eid, size_t* retval, uint8_t* in, size_t length, uint8_t* out)
+sgx_status_t enclaveVByte(sgx_enclave_id_t eid, size_t* retval, uint8_t* in, size_t inLength, uint8_t* out, size_t outLength)
 {
 	sgx_status_t status;
-	ms_enclaveVByteEncodeEncrypted_t ms;
+	ms_enclaveVByte_t ms;
 	ms.ms_in = in;
-	ms.ms_length = length;
+	ms.ms_inLength = inLength;
 	ms.ms_out = out;
+	ms.ms_outLength = outLength;
 	status = sgx_ecall(eid, 9, &ocall_table_PerformanceTests, &ms);
 	if (status == SGX_SUCCESS && retval) *retval = ms.ms_retval;
 	return status;
@@ -343,23 +344,22 @@ sgx_status_t enclaveVByteDecodeEncrypted(sgx_enclave_id_t eid, size_t* retval, u
 	return status;
 }
 
-sgx_status_t enclaveRunLengthEncode(sgx_enclave_id_t eid, size_t* retval, uint8_t* in, size_t inLength, uint8_t* out, size_t outLength)
+sgx_status_t enclaveVByteEncodeEncrypted(sgx_enclave_id_t eid, size_t* retval, uint8_t* in, size_t length, uint8_t* out)
 {
 	sgx_status_t status;
-	ms_enclaveRunLengthEncode_t ms;
+	ms_enclaveVByteEncodeEncrypted_t ms;
 	ms.ms_in = in;
-	ms.ms_inLength = inLength;
+	ms.ms_length = length;
 	ms.ms_out = out;
-	ms.ms_outLength = outLength;
 	status = sgx_ecall(eid, 11, &ocall_table_PerformanceTests, &ms);
 	if (status == SGX_SUCCESS && retval) *retval = ms.ms_retval;
 	return status;
 }
 
-sgx_status_t enclaveRunLengthDecode(sgx_enclave_id_t eid, size_t* retval, uint8_t* in, size_t inLength, uint8_t* out, size_t outLength)
+sgx_status_t enclaveCrypto(sgx_enclave_id_t eid, size_t* retval, uint8_t* in, size_t inLength, uint8_t* out, size_t outLength)
 {
 	sgx_status_t status;
-	ms_enclaveRunLengthDecode_t ms;
+	ms_enclaveCrypto_t ms;
 	ms.ms_in = in;
 	ms.ms_inLength = inLength;
 	ms.ms_out = out;
@@ -369,10 +369,10 @@ sgx_status_t enclaveRunLengthDecode(sgx_enclave_id_t eid, size_t* retval, uint8_
 	return status;
 }
 
-sgx_status_t enclaveRunLengthEncodeAndSum(sgx_enclave_id_t eid, size_t* retval, uint8_t* in, size_t length, uint8_t* out)
+sgx_status_t enclaveCompleteProcess(sgx_enclave_id_t eid, size_t* retval, uint8_t* in, size_t length, uint8_t* out)
 {
 	sgx_status_t status;
-	ms_enclaveRunLengthEncodeAndSum_t ms;
+	ms_enclaveCompleteProcess_t ms;
 	ms.ms_in = in;
 	ms.ms_length = length;
 	ms.ms_out = out;

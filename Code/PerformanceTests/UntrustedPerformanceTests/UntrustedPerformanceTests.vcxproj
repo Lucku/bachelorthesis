@@ -147,7 +147,7 @@
       <AdditionalIncludeDirectories>$(SolutionDir)BenchmarkLib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <UseMSVC>false</UseMSVC>
       <InterproceduralOptimization>NoIPO</InterproceduralOptimization>
-      <AssemblerOutput>AssemblyAndSourceCode</AssemblerOutput>
+      <AssemblerOutput>All</AssemblerOutput>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

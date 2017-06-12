@@ -32,3 +32,12 @@ void enclaveAllocateStackMemory() {
 
 	ocallLogProgress(log, sizeof(log));
 }
+
+void enclaveVectorization(float * __restrict a, float * __restrict b, float * __restrict c, float * __restrict d, float* __restrict e, int n) {
+	int i;
+#pragma simd
+#pragma vector aligned
+	for (int i = 0; i<n; i++) {
+		a[i] = b[i] + c[i] + d[i] + e[i];
+	}
+}
