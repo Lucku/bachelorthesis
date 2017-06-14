@@ -1,6 +1,7 @@
 *.aux
 *.pdf
 *.log
+*.asm
 Dokument/document.toc
 Dokument/document.bbl
 Dokument/document.blg
