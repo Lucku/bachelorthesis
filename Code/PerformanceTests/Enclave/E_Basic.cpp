@@ -6,9 +6,11 @@
 
 size_t enclaveIterate(uint8_t *in, size_t length, uint8_t *out) {
 
+	uint8_t current;
+
 	for (unsigned int i = 0; i < length; i++) {
 
-		out[i] = in[i];
+		current = in[i];6
 	}
 
 	return 0;

@@ -6,18 +6,22 @@ import pandas as pd
 import seaborn
 from pandas import Series
 
+pp.rc('text', usetex=True)
+pp.rcParams['font.sans-serif'] = "Univers"
+pp.rcParams['text.latex.unicode'] = True
+
 # -------------- Configuration -------------- #
-title = u'Eval10'
-file1 = 'decompression_enc_u_b.csv'
-file2 = 'decompression_enc_t_b.csv'
-label1 = u'Normal'
+title = u'Eval3'
+file1 = 'iterate_u_b.csv'
+file2 = 'iterate_t_b.csv'
+label1 = u'Regulär'
 label2 = u'SGX Enclave'
 xAxis = 'Data'
-xLabel = 'Bytes'
+xLabel = r'\textbf{Bytes}'
 yAxis = 'MIOPS'
-yLabel = 'Millionen Integer Operationen je Sekunde'
+yLabel = r'\textbf{Millionen Integer Operationen je Sekunde}'
 windowSize = 50
-fontsize = '20'
+fontsize = 20
 # ------------------------------------------- #
 
 spy1 = pd.read_csv('x64/Real Results/' + file1)
@@ -41,12 +45,9 @@ diff[yAxis].rolling(window=windowSize * 5).mean().plot(figsize=(16,8), label='Di
 #spy3[yAxis].rolling(window=windowSize).mean().plot(figsize=(16,12), label="Innerhalb von SGX Enclave (Ohne Kopieren)", color='orange')
 #spy4[yAxis].rolling(window=windowSize).mean().plot(figsize=(16,12), label="sgx single processing")
 
-pp.rc('text', usetex=True)
-pp.rcParams['font.sans-serif'] = "Univers"
-
 #pp.title(title)
 pp.xlabel(xLabel, fontsize=fontsize)
 pp.ylabel(yLabel, fontsize=fontsize)
-#pp.legend(loc='upper left', fontsize=fontsize)
-pp.savefig('x64/Real Results/graphs/' + title + '.pdf')
+lgd = pp.legend(loc='upper left', fontsize=fontsize, bbox_to_anchor=(1, 0.5))
+pp.savefig('x64/Real Results/graphs/' + title + '.pdf', bbox_extra_artists=(lgd,), bbox_inches='tight')
 pp.show();

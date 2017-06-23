@@ -7,7 +7,9 @@ bytefunc ecall(const sgx_enclave_id_t eid, ecallIOFunc func, sizefunc outBufferF
 
 		size_t ret;
 		
-		return func(eid, &ret, in, length, out, outBufferFunc(length));
+		func(eid, &ret, in, length, out, outBufferFunc(length));
+
+		return ret;
 	};
 
 	return f;
@@ -19,7 +21,9 @@ bytefunc ecall(const sgx_enclave_id_t eid, ecallFunc func)
 
 		size_t ret;
 
-		return func(eid, &ret, in, length, out);
+		func(eid, &ret, in, length, out);
+
+		return ret;
 	};
 
 	return f;

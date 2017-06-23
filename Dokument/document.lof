@@ -1,0 +1,29 @@
+\select@language {ngerman}
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {2.1}{\ignorespaces Einflussbereich in der Systemhierarchie}}{5}{figure.2.1}
+\contentsline {figure}{\numberline {2.2}{\ignorespaces Zeitliche Einordnung verwandter Arbeiten nach Kategorie}}{7}{figure.2.2}
+\contentsline {figure}{\numberline {2.3}{\ignorespaces Architektur von CryptDB}}{8}{figure.2.3}
+\contentsline {figure}{\numberline {2.4}{\ignorespaces Ablauf einer Datenbankanfrage unter TrustedDB}}{9}{figure.2.4}
+\contentsline {figure}{\numberline {2.5}{\ignorespaces Zusammenhang von PRM, EPC und EPCM}}{11}{figure.2.5}
+\contentsline {figure}{\numberline {2.6}{\ignorespaces Adressraumschema nach Einbindung sicherer Enclaves}}{12}{figure.2.6}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Beispiel zur VByte Kompression}}{15}{figure.3.1}
+\contentsline {figure}{\numberline {3.2}{\ignorespaces Beispiel zur RLE Kompression}}{16}{figure.3.2}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Kontrollfluss zwischen Anwendung und Enclave}}{18}{figure.4.1}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {5.1}{\ignorespaces Vergleich Kopieren der Daten in die Enclave und kein Kopieren mittels user\textunderscore check}}{26}{figure.5.1}
+\contentsline {figure}{\numberline {5.2}{\ignorespaces Vergleich Ent- und Verschl\IeC {\"u}sselung mit und ohne Kopiervorgang}}{27}{figure.5.2}
+\contentsline {figure}{\numberline {5.3}{\ignorespaces Vergleich Iteration \IeC {\"u}ber Datenmengen au\IeC {\ss }erhalb und innerhalb der Enclave}}{27}{figure.5.3}
+\contentsline {figure}{\numberline {5.4}{\ignorespaces Vergleich VByte Kompression au\IeC {\ss }erhalb und innerhalb der Enclave}}{28}{figure.5.4}
+\contentsline {figure}{\numberline {5.5}{\ignorespaces Vergleich VByte Dekompression au\IeC {\ss }erhalb und innerhalb der Enclave}}{28}{figure.5.5}
+\contentsline {figure}{\numberline {5.6}{\ignorespaces Vergleich VByte Dekompression und Kompression au\IeC {\ss }erhalb und innerhalb der Enclave}}{29}{figure.5.6}
+\contentsline {figure}{\numberline {5.7}{\ignorespaces Vergleich Laufl\IeC {\"a}ngenkodierung au\IeC {\ss }erhalb und innerhalb der Enclave}}{29}{figure.5.7}
+\contentsline {figure}{\numberline {5.8}{\ignorespaces Vergleich Laufl\IeC {\"a}ngendekodierung au\IeC {\ss }erhalb und innerhalb der Enclave}}{30}{figure.5.8}
+\contentsline {figure}{\numberline {5.9}{\ignorespaces Vergleich Laufl\IeC {\"a}ngenkodierung und Summenbildung au\IeC {\ss }erhalb und innerhalb der Enclave}}{30}{figure.5.9}
+\contentsline {figure}{\numberline {5.10}{\ignorespaces Vergleich Entschl\IeC {\"u}sselung und Dekomprimierung au\IeC {\ss }erhalb und innerhalb der Enclave}}{31}{figure.5.10}
+\contentsline {figure}{\numberline {5.11}{\ignorespaces Vergleich Komprimierung und Verschl\IeC {\"u}sselung au\IeC {\ss }erhalb und innerhalb der Enclave}}{31}{figure.5.11}
+\contentsline {figure}{\numberline {5.12}{\ignorespaces Vergleich Entschl\IeC {\"u}sselung und Verschl\IeC {\"u}sselung au\IeC {\ss }erhalb und innerhalb der Enclave (ohne Kopieren)}}{32}{figure.5.12}
+\contentsline {figure}{\numberline {5.13}{\ignorespaces Vergleich Verarbeitungsabfolge au\IeC {\ss }erhalb und innerhalb der Enclave}}{32}{figure.5.13}
+\addvspace {10\p@ }

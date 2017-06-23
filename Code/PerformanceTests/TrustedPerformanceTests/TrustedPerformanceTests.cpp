@@ -35,7 +35,7 @@ int main()
 	b->registerFunctionWithPreprocessing(ecall(eid, enclaveCompleteProcess), MULTADD(8, AES_BLOCK_SIZE), ecall(eid, enclaveVByteEncodeEncrypted), MULTADD(5, AES_BLOCK_SIZE), "complete", 4);
 	b->registerFunction(ecall(eid, enclaveCrypto, MULTADD(1, AES_BLOCK_SIZE)), MULTADD(1, AES_BLOCK_SIZE), "crypto", 1);
 	b->registerFunction(ecall(eid, enclaveCryptoNoCopy), MULTADD(1, AES_BLOCK_SIZE), "crypto_no_copy", 1);
-
+	
 	b->start();
 
 	return 0;
