@@ -121,7 +121,7 @@ Neben den oben aufgeführten Möglichkeiten zur Umsetzung einer Enclave besteht 
 	\caption{Konfigurationsmöglichkeiten einer Enclave}
 	\label{tab:sgxconfig}
 \end{table}
-
+%TODO TCS Nummer ist auch am Anfang anzugeben
 Relevant ist die Konfigurationsdatei erst nach Ausführung der Erstellung (Builds) der Enclave. Diese muss zusätzlich durch das in der SDK mitgelieferte SGX Sign Tool (sgx\textunderscore sign) mithilfe eines Schlüssels signiert werden um diese in eine andere Anwendung einbinden zu können. Unter optionaler Angabe der Konfiguration wird die Bibliothek, in diesem Fall auch als \textit{Enclave Image} bezeichnet, um entsprechende Metadaten erweitert und vollständig signiert. Gleichzeitig findet auch eine Überprüfung der angegebenen Optionen statt, welches im Falle fehlerhafter Angaben zum Abbruch führt. Sobald die Enclave später geladen wird, erfolgt eine Validierung der Signatur und ein Einlesen der Metadaten. Letzteres ist nötig, um unter anderem genug Speicher für die Enclave zu reservieren. Die erste Version von SGX erfordert, dass alle Seiten zum Zeitpunkt der Enclave Initialisierung im EPC hinzugefügt wurden. Daher ergibt sich auch die Notwendigkeit, maximale Größen für den Heap- und Stackspeicher im Vorhinein anzugeben. Mit Version 2 von SGX plant Intel die Unterstützung dynamischer Allokation von EPC Seiten, wodurch diese Notwendigkeit entfallen könnte \cite{McKeen2016}. Das ebenfalls von Intel zur Verfügung gestellte SGX Measurement Tool (sgx\textunderscore emmt) genutzt werden, um den zur Laufzeit benötigten Speicher der Enclave zu messen \cite{WinDev}.
 
 %\begin{minipage}{\textwidth}
