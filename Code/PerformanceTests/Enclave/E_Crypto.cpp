@@ -9,10 +9,12 @@ int encryptBytes(uint8_t *input, size_t length, uint8_t *output, const uint8_t *
 	IppsAESSpec* pAES = (IppsAESSpec*)(new Ipp8u[ctxSize]);
 
 	ippsAESInit(key, keyLength, pAES, ctxSize);
-	
-	IppStatus status = ippsAESEncryptCTR(input, output, length, pAES, iv, 64);
-	
-	delete[] (Ipp8u*) pAES;
+
+	IppStatus status = ippsAESEncryptCBC(input, output, length, pAES, iv);
+
+	//IppStatus status = ippsAESEncryptCTR(input, output, length, pAES, iv, 64);
+
+	delete[](Ipp8u*) pAES;
 
 	return status;
 }
@@ -25,7 +27,9 @@ int decryptBytes(uint8_t *input, size_t length, uint8_t *output, const uint8_t *
 
 	ippsAESInit(key, keyLength, pAES, ctxSize);
 
-	IppStatus status = ippsAESDecryptCTR(input, output, length, pAES, iv, 64);
+	IppStatus status = ippsAESDecryptCBC(input, output, length, pAES, iv);
+
+	//IppStatus status = ippsAESDecryptCTR(input, output, length, pAES, iv, 64);
 
 	delete[](Ipp8u*) pAES;
 

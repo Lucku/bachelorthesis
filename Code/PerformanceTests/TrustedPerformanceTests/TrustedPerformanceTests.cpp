@@ -25,16 +25,16 @@ int main()
 	b->registerFunction(ecall(eid, enclaveVByteEncode, DIVMULT(4, 5)), DIVMULT(4, 5), "compression", 4);
 	b->registerFunctionWithPreprocessing(ecall(eid, enclaveVByteDecode, MULT(4)), MULT(4), ecall(eid, enclaveVByteEncode, MULT(5)), MULT(5), "decompression", 1);
 	b->registerFunction(ecall(eid, enclaveVByteEncodeEncrypted), DIVMULTADD(4, 5, AES_BLOCK_SIZE), "compression_enc", 4);
-	b->registerFunctionWithPreprocessing(ecall(eid, enclaveVByteDecodeEncrypted), MULT(4), ecall(eid, enclaveVByteEncodeEncrypted), MULTADD(5, AES_BLOCK_SIZE), "decompression_enc", 1);
+	b->registerFunctionWithPreprocessing(ecall(eid, enclaveVByteDecodeEncrypted), MULT(4), ecall(eid, enclaveVByteEncodeEncryptedPreproc), MULTADD(5, AES_BLOCK_SIZE), "decompression_enc", 1);
 	b->registerFunction(ecall(eid, enclaveRunLengthEncode, MULT(2)), MULT(2), "runlengthencode", 4);
 	b->registerFunctionWithPreprocessing(ecall(eid, enclaveRunLengthDecode, MULT(6)), MULT(6), ecall(eid, enclaveRunLengthEncode, MULT(2)), MULT(2), "runlengthdecode", 8);
 	b->registerFunction(ecall(eid, enclaveRunLengthEncodeAndSum), CONSTANT(8), "rlesum", 4);
 	b->registerFunction(ecall(eid, enclaveJustCopy), IDENT, "just_copy", 1);
 	b->registerFunction(ecall(eid, enclaveNoCopy), IDENT, "no_copy", 1);
 	b->registerFunctionWithPreprocessing(ecall(eid, enclaveVByte, DIVMULT(4, 5)), DIVMULT(4, 5), ecall(eid, enclaveVByteEncode, MULT(5)), MULT(5), "vbyte", 4);
-	b->registerFunctionWithPreprocessing(ecall(eid, enclaveCompleteProcess), MULTADD(8, AES_BLOCK_SIZE), ecall(eid, enclaveVByteEncodeEncrypted), MULTADD(5, AES_BLOCK_SIZE), "complete", 4);
-	b->registerFunction(ecall(eid, enclaveCrypto, MULTADD(1, AES_BLOCK_SIZE)), MULTADD(1, AES_BLOCK_SIZE), "crypto", 1);
-	b->registerFunction(ecall(eid, enclaveCryptoNoCopy), MULTADD(1, AES_BLOCK_SIZE), "crypto_no_copy", 1);
+	b->registerFunctionWithPreprocessing(ecall(eid, enclaveCompleteProcess), MULTADD(8, AES_BLOCK_SIZE), ecall(eid, enclaveVByteEncodeEncryptedPreproc), MULTADD(5, AES_BLOCK_SIZE), "complete", 16);
+	b->registerFunction(ecall(eid, enclaveCrypto, MULTADD(1, AES_BLOCK_SIZE)), MULTADD(1, AES_BLOCK_SIZE), "crypto", 16);
+	b->registerFunction(ecall(eid, enclaveCryptoNoCopy), MULTADD(1, AES_BLOCK_SIZE), "crypto_no_copy", 16);
 	
 	b->start();
 

@@ -9,7 +9,9 @@ int Crypto::encryptBytes(uint8_t *input, size_t length, uint8_t *output, const u
 	
 	ippsAESInit(key, keyLength, pAES, ctxSize);
 
-	IppStatus status = ippsAESEncryptCTR(input, output, length, pAES, iv, 64);
+	IppStatus status = ippsAESEncryptCBC(input, output, length, pAES, iv);
+
+	//IppStatus status = ippsAESEncryptCTR(input, output, length, pAES, iv, 64);
 
 	delete[](Ipp8u*) pAES;
 
@@ -24,7 +26,9 @@ int Crypto::decryptBytes(uint8_t *input, size_t length, uint8_t *output, const u
 
 	ippsAESInit(key, keyLength, pAES, ctxSize);
 
-	IppStatus status = ippsAESDecryptCTR(input, output, length, pAES, iv, 64);
+	IppStatus status = ippsAESDecryptCBC(input, output, length, pAES, iv);
+
+	//IppStatus status = ippsAESDecryptCTR(input, output, length, pAES, iv, 64);
 
 	delete[](Ipp8u*) pAES;
 

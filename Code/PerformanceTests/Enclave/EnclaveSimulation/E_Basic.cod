@@ -1,0 +1,1525 @@
+; mark_description "Intel(R) C++ Intel(R) 64 Compiler for applications running on Intel(R) 64, Version 17.0.4.210 Build 20170411";
+; mark_description "";
+; mark_description "-c -Qm64 -IC:\\Program Files (x86)\\Intel\\IntelSGXSDK\\include -IC:\\Program Files (x86)\\Intel\\IntelSGXSD";
+; mark_description "K\\include\\tlibc -IC:\\Program Files (x86)\\Intel\\IntelSGXSDK\\include\\libc++ -IC:\\Program Files (x86)\\";
+; mark_description "Intel\\IntelSGXSDK\\include\\ipp -IC:\\Program Files (x86)\\IntelSWTools\\compilers_and_libraries_2017.2.187";
+; mark_description "\\windows\\compiler\\include -Zi -nologo -W3 -Od -Oi -D __INTEL_COMPILER=1700 -D _WINDLL -EHs -EHc -MTd -GS ";
+; mark_description "-arch:AVX -QaxSSE3 -QxSSE3 -Zc:wchar_t -Zc:forScope -FAcs -FaEnclaveSimulation\\ -FoEnclaveSimulation\\ -FdE";
+; mark_description "nclaveSimulation\\vc140.pdb -TP -S";
+	OPTION DOTNAME
+_TEXT	SEGMENT      'CODE'
+TXTST0:
+_2__routine_start_enclaveIterate_11:
+; -- Begin  enclaveIterate
+_TEXT	ENDS
+_TEXT	SEGMENT      'CODE'
+; mark_begin;
+
+	PUBLIC enclaveIterate
+; --- enclaveIterate(uint8_t *, size_t, uint8_t *)
+enclaveIterate	PROC 
+; parameter 1(in): rcx
+; parameter 2(length): rdx
+; parameter 3(out): r8
+.B1.1::                         ; Preds .B1.0
+                                ; Execution count [0.00e+000]
+
+;;; size_t enclaveIterate(uint8_t *in, size_t length, uint8_t *out) {
+
+L2::
+                                                           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:7.65
+$LN0:
+  00000 55               push rbp                               ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:7.65
+$LN1:
+  00001 48 83 ec 30      sub rsp, 48                            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:7.65
+$LN2:
+  00005 48 8d 6c 24 20   lea rbp, QWORD PTR [32+rsp]            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:7.65
+$LN3:
+  0000a 48 89 4d 20      mov QWORD PTR [32+rbp], rcx            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:7.65
+$LN4:
+  0000e 48 89 55 28      mov QWORD PTR [40+rbp], rdx            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:7.65
+$LN5:
+  00012 4c 89 45 30      mov QWORD PTR [48+rbp], r8             ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:7.65
+$LN6:
+
+;;; 
+;;; 	uint8_t current;
+;;; 
+;;; 	for (unsigned int i = 0; i < length; i++) {
+
+  00016 c7 45 04 00 00 
+        00 00            mov DWORD PTR [4+rbp], 0               ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:11.22
+$LN7:
+                                ; LOE rbx rbp rsi rdi rsp r12 r13 r14 r15 rip zmm6 zmm7 zmm8 zmm9 zmm10 zmm11 zmm12 zmm13 zmm14 zmm15
+.B1.2::                         ; Preds .B1.3 .B1.1
+                                ; Execution count [0.00e+000]
+$LN8:
+  0001d 8b 45 04         mov eax, DWORD PTR [4+rbp]             ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:11.2
+$LN9:
+  00020 48 8b 55 28      mov rdx, QWORD PTR [40+rbp]            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:11.2
+$LN10:
+  00024 48 3b c2         cmp rax, rdx                           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:11.2
+$LN11:
+  00027 73 1a            jae .B1.4 ; Prob 50%                   ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:11.2
+$LN12:
+                                ; LOE rbx rbp rsi rdi rsp r12 r13 r14 r15 rip zmm6 zmm7 zmm8 zmm9 zmm10 zmm11 zmm12 zmm13 zmm14 zmm15
+.B1.3::                         ; Preds .B1.2
+                                ; Execution count [0.00e+000]
+$LN13:
+
+;;; 
+;;; 		current = in[i];
+
+  00029 8b 45 04         mov eax, DWORD PTR [4+rbp]             ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:13.3
+$LN14:
+  0002c 48 03 45 20      add rax, QWORD PTR [32+rbp]            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:13.3
+$LN15:
+  00030 0f b6 00         movzx eax, BYTE PTR [rax]              ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:13.3
+$LN16:
+  00033 88 45 00         mov BYTE PTR [rbp], al                 ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:13.3
+$LN17:
+  00036 b8 01 00 00 00   mov eax, 1                             ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:11.39
+$LN18:
+  0003b 03 45 04         add eax, DWORD PTR [4+rbp]             ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:11.39
+$LN19:
+  0003e 89 45 04         mov DWORD PTR [4+rbp], eax             ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:11.39
+$LN20:
+  00041 eb da            jmp .B1.2 ; Prob 100%                  ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:11.39
+$LN21:
+                                ; LOE rbx rbp rsi rdi rsp r12 r13 r14 r15 rip zmm6 zmm7 zmm8 zmm9 zmm10 zmm11 zmm12 zmm13 zmm14 zmm15
+.B1.4::                         ; Preds .B1.2
+                                ; Execution count [0.00e+000]
+$LN22:
+
+;;; 	}
+;;; 
+;;; 	return 0;
+
+  00043 b8 00 00 00 00   mov eax, 0                             ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:16.2
+$LN23:
+  00048 48 8d 65 10      lea rsp, QWORD PTR [16+rbp]            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:16.2
+$LN24:
+  0004c 5d               pop rbp                                ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:16.2
+$LN25:
+  0004d c3               ret                                    ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:16.2
+$LN26:
+                                ; LOE
+.B1.5::
+$LN27:
+; mark_end;
+enclaveIterate ENDP
+$LNenclaveIterate$28:
+$LNenclaveIterate$29:
+_TEXT	ENDS
+.xdata	SEGMENT  DWORD   READ  ''
+	ALIGN 004H
+.unwind.enclaveIterate.B1_B4	DD	620956161
+	DD	1376060170
+	DD	20481
+.xdata	ENDS
+.pdata	SEGMENT  DWORD   READ  ''
+	ALIGN 004H
+.pdata.enclaveIterate.B1_B4	DD	imagerel .B1.1
+	DD	imagerel .B1.5
+	DD	imagerel .unwind.enclaveIterate.B1_B4
+.pdata	ENDS
+_DATA	SEGMENT      'DATA'
+_DATA	ENDS
+; -- End  enclaveIterate
+_TEXT	SEGMENT      'CODE'
+_2__routine_start_enclaveJustCopy_12:
+; -- Begin  enclaveJustCopy
+_TEXT	ENDS
+_TEXT	SEGMENT      'CODE'
+; mark_begin;
+
+	PUBLIC enclaveJustCopy
+; --- enclaveJustCopy(uint8_t *, size_t, uint8_t *)
+enclaveJustCopy	PROC 
+; parameter 1(in): rcx
+; parameter 2(length): rdx
+; parameter 3(out): r8
+.B2.1::                         ; Preds .B2.0
+                                ; Execution count [0.00e+000]
+
+;;; size_t enclaveJustCopy(uint8_t *in, size_t length, uint8_t *out) {
+
+L8::
+                                                           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:19.66
+$LN30:
+  0004e 55               push rbp                               ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:19.66
+$LN31:
+  0004f 48 83 ec 20      sub rsp, 32                            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:19.66
+$LN32:
+  00053 48 8d 6c 24 20   lea rbp, QWORD PTR [32+rsp]            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:19.66
+$LN33:
+  00058 48 89 4d 10      mov QWORD PTR [16+rbp], rcx            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:19.66
+$LN34:
+  0005c 48 89 55 18      mov QWORD PTR [24+rbp], rdx            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:19.66
+$LN35:
+  00060 4c 89 45 20      mov QWORD PTR [32+rbp], r8             ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:19.66
+$LN36:
+
+;;; 
+;;; 	return 0;
+
+  00064 b8 00 00 00 00   mov eax, 0                             ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:21.2
+$LN37:
+  00069 48 8d 65 00      lea rsp, QWORD PTR [rbp]               ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:21.2
+$LN38:
+  0006d 5d               pop rbp                                ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:21.2
+$LN39:
+  0006e c3               ret                                    ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:21.2
+$LN40:
+                                ; LOE
+.B2.2::
+$LN41:
+; mark_end;
+enclaveJustCopy ENDP
+$LNenclaveJustCopy$42:
+$LNenclaveJustCopy$43:
+_TEXT	ENDS
+.xdata	SEGMENT  DWORD   READ  ''
+	ALIGN 004H
+.unwind.enclaveJustCopy.B1_B1	DD	620956161
+	DD	839189258
+	DD	20481
+.xdata	ENDS
+.pdata	SEGMENT  DWORD   READ  ''
+	ALIGN 004H
+.pdata.enclaveJustCopy.B1_B1	DD	imagerel .B2.1
+	DD	imagerel .B2.2
+	DD	imagerel .unwind.enclaveJustCopy.B1_B1
+.pdata	ENDS
+_DATA	SEGMENT      'DATA'
+_DATA	ENDS
+; -- End  enclaveJustCopy
+_TEXT	SEGMENT      'CODE'
+_2__routine_start_enclaveNoCopy_13:
+; -- Begin  enclaveNoCopy
+_TEXT	ENDS
+_TEXT	SEGMENT      'CODE'
+; mark_begin;
+
+	PUBLIC enclaveNoCopy
+; --- enclaveNoCopy(uint8_t *, size_t, uint8_t *)
+enclaveNoCopy	PROC 
+; parameter 1(in): rcx
+; parameter 2(length): rdx
+; parameter 3(out): r8
+.B3.1::                         ; Preds .B3.0
+                                ; Execution count [0.00e+000]
+
+;;; size_t enclaveNoCopy(uint8_t *in, size_t length, uint8_t *out) {
+
+L14::
+                                                          ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:24.64
+$LN44:
+  0006f 55               push rbp                               ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:24.64
+$LN45:
+  00070 48 83 ec 20      sub rsp, 32                            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:24.64
+$LN46:
+  00074 48 8d 6c 24 20   lea rbp, QWORD PTR [32+rsp]            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:24.64
+$LN47:
+  00079 48 89 4d 10      mov QWORD PTR [16+rbp], rcx            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:24.64
+$LN48:
+  0007d 48 89 55 18      mov QWORD PTR [24+rbp], rdx            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:24.64
+$LN49:
+  00081 4c 89 45 20      mov QWORD PTR [32+rbp], r8             ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:24.64
+$LN50:
+
+;;; 
+;;; 	return 0;
+
+  00085 b8 00 00 00 00   mov eax, 0                             ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:26.2
+$LN51:
+  0008a 48 8d 65 00      lea rsp, QWORD PTR [rbp]               ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:26.2
+$LN52:
+  0008e 5d               pop rbp                                ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:26.2
+$LN53:
+  0008f c3               ret                                    ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:26.2
+$LN54:
+                                ; LOE
+.B3.2::
+$LN55:
+; mark_end;
+enclaveNoCopy ENDP
+$LNenclaveNoCopy$56:
+$LNenclaveNoCopy$57:
+_TEXT	ENDS
+.xdata	SEGMENT  DWORD   READ  ''
+	ALIGN 004H
+.unwind.enclaveNoCopy.B1_B1	DD	620956161
+	DD	839189258
+	DD	20481
+.xdata	ENDS
+.pdata	SEGMENT  DWORD   READ  ''
+	ALIGN 004H
+.pdata.enclaveNoCopy.B1_B1	DD	imagerel .B3.1
+	DD	imagerel .B3.2
+	DD	imagerel .unwind.enclaveNoCopy.B1_B1
+.pdata	ENDS
+_DATA	SEGMENT      'DATA'
+_DATA	ENDS
+; -- End  enclaveNoCopy
+_TEXT	SEGMENT      'CODE'
+_2__routine_start_enclaveCompleteProcess_14:
+; -- Begin  enclaveCompleteProcess
+_TEXT	ENDS
+_TEXT	SEGMENT      'CODE'
+; mark_begin;
+
+	PUBLIC enclaveCompleteProcess
+; --- enclaveCompleteProcess(uint8_t *, size_t, uint8_t *)
+enclaveCompleteProcess	PROC 
+; parameter 1(in): rcx
+; parameter 2(length): rdx
+; parameter 3(out): r8
+.B4.1::                         ; Preds .B4.0
+                                ; Execution count [0.00e+000]
+
+;;; size_t enclaveCompleteProcess(uint8_t * in, size_t length, uint8_t *out) {
+
+L20::
+                                                          ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:29.74
+$LN58:
+  00090 55               push rbp                               ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:29.74
+$LN59:
+  00091 48 81 ec 30 01 
+        00 00            sub rsp, 304                           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:29.74
+$LN60:
+  00098 48 8d 6c 24 30   lea rbp, QWORD PTR [48+rsp]            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:29.74
+$LN61:
+  0009d 48 89 b5 d0 00 
+        00 00            mov QWORD PTR [208+rbp], rsi           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:29.74[spill]
+$LN62:
+  000a4 48 89 9d c8 00 
+        00 00            mov QWORD PTR [200+rbp], rbx           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:29.74[spill]
+$LN63:
+  000ab 48 89 8d 10 01 
+        00 00            mov QWORD PTR [272+rbp], rcx           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:29.74
+$LN64:
+  000b2 48 89 95 18 01 
+        00 00            mov QWORD PTR [280+rbp], rdx           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:29.74
+$LN65:
+  000b9 4c 89 85 20 01 
+        00 00            mov QWORD PTR [288+rbp], r8            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:29.74
+$LN66:
+  000c0 48 8b 05 00 00 
+        00 00            mov rax, QWORD PTR [__security_cookie] ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:29.74
+$LN67:
+  000c7 48 33 c5         xor rax, rbp                           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:29.74
+$LN68:
+  000ca 48 89 85 f8 00 
+        00 00            mov QWORD PTR [248+rbp], rax           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:29.74
+$LN69:
+
+;;; 
+;;; 	// prepare key and iv
+;;; 	uint8_t key[AES_KEY_SIZE] = "123456789012345";
+
+  000d1 48 8d 85 d8 00 
+        00 00            lea rax, QWORD PTR [216+rbp]           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:32.28
+$LN70:
+  000d8 48 ba 31 32 33 
+        34 35 36 37 38   mov rdx, 03837363534333231H            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:32.28
+$LN71:
+  000e2 48 89 10         mov QWORD PTR [rax], rdx               ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:32.28
+$LN72:
+  000e5 48 8d 85 d8 00 
+        00 00            lea rax, QWORD PTR [216+rbp]           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:32.28
+$LN73:
+  000ec 48 83 c0 08      add rax, 8                             ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:32.28
+$LN74:
+  000f0 48 ba 39 30 31 
+        32 33 34 35 00   mov rdx, 035343332313039H              ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:32.28
+$LN75:
+  000fa 48 89 10         mov QWORD PTR [rax], rdx               ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:32.28
+$LN76:
+
+;;; 	uint8_t iv[AES_BLOCK_SIZE] = "123456789012345";
+
+  000fd 48 8d 85 e8 00 
+        00 00            lea rax, QWORD PTR [232+rbp]           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:33.29
+$LN77:
+  00104 48 ba 31 32 33 
+        34 35 36 37 38   mov rdx, 03837363534333231H            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:33.29
+$LN78:
+  0010e 48 89 10         mov QWORD PTR [rax], rdx               ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:33.29
+$LN79:
+  00111 48 8d 85 e8 00 
+        00 00            lea rax, QWORD PTR [232+rbp]           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:33.29
+$LN80:
+  00118 48 83 c0 08      add rax, 8                             ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:33.29
+$LN81:
+  0011c 48 ba 39 30 31 
+        32 33 34 35 00   mov rdx, 035343332313039H              ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:33.29
+$LN82:
+  00126 48 89 10         mov QWORD PTR [rax], rdx               ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:33.29
+$LN83:
+
+;;; 	// ********
+;;; 
+;;; 	// decrypt (length -> length)
+;;; 	uint8_t *data = new uint8_t[length];
+
+  00129 48 8b 85 18 01 
+        00 00            mov rax, QWORD PTR [280+rbp]           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:37.16
+$LN84:
+  00130 48 89 c1         mov rcx, rax                           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:37.16
+$LN85:
+  00133 e8 fc ff ff ff  ;       operator new(unsigned __int64)
+        call      ??2@YAPEAX_K@Z                                ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:37.16
+$LN86:
+                                ; LOE rax rbp rdi rsp r12 r13 r14 r15 rip zmm6 zmm7 zmm8 zmm9 zmm10 zmm11 zmm12 zmm13 zmm14 zmm15
+.B4.20::                        ; Preds .B4.1
+                                ; Execution count [0.00e+000]
+$LN87:
+  00138 48 89 45 08      mov QWORD PTR [8+rbp], rax             ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:37.16
+$LN88:
+                                ; LOE rbp rdi rsp r12 r13 r14 r15 rip zmm6 zmm7 zmm8 zmm9 zmm10 zmm11 zmm12 zmm13 zmm14 zmm15
+.B4.2::                         ; Preds .B4.20
+                                ; Execution count [0.00e+000]
+$LN89:
+  0013c 48 8b 45 08      mov rax, QWORD PTR [8+rbp]             ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:37.16
+$LN90:
+  00140 48 89 45 10      mov QWORD PTR [16+rbp], rax            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:37.16
+$LN91:
+
+;;; 	decryptBytes(in, length, data, key, AES_KEY_SIZE, iv);
+
+  00144 48 8b 85 10 01 
+        00 00            mov rax, QWORD PTR [272+rbp]           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:38.2
+$LN92:
+  0014b 48 8b 95 18 01 
+        00 00            mov rdx, QWORD PTR [280+rbp]           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:38.2
+$LN93:
+  00152 48 8b 4d 10      mov rcx, QWORD PTR [16+rbp]            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:38.2
+$LN94:
+  00156 48 8d 9d d8 00 
+        00 00            lea rbx, QWORD PTR [216+rbp]           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:38.2
+$LN95:
+  0015d 48 c7 44 24 20 
+        10 00 00 00      mov QWORD PTR [32+rsp], 16             ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:38.2
+$LN96:
+  00166 48 8d b5 e8 00 
+        00 00            lea rsi, QWORD PTR [232+rbp]           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:38.2
+$LN97:
+  0016d 48 89 74 24 28   mov QWORD PTR [40+rsp], rsi            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:38.2
+$LN98:
+  00172 48 89 8d a0 00 
+        00 00            mov QWORD PTR [160+rbp], rcx           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:38.2[spill]
+$LN99:
+  00179 48 89 c1         mov rcx, rax                           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:38.2
+$LN100:
+  0017c 48 8b 85 a0 00 
+        00 00            mov rax, QWORD PTR [160+rbp]           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:38.2[spill]
+$LN101:
+  00183 49 89 c0         mov r8, rax                            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:38.2
+$LN102:
+  00186 49 89 d9         mov r9, rbx                            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:38.2
+$LN103:
+  00189 e8 fc ff ff ff  ;       decryptBytes(uint8_t *, size_t, uint8_t *, const uint8_t *, size_t, uint8_t *)
+        call      decryptBytes                                  ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:38.2
+$LN104:
+                                ; LOE rbp rdi rsp r12 r13 r14 r15 rip eax zmm6 zmm7 zmm8 zmm9 zmm10 zmm11 zmm12 zmm13 zmm14 zmm15
+.B4.21::                        ; Preds .B4.2
+                                ; Execution count [0.00e+000]
+$LN105:
+  0018e 89 45 00         mov DWORD PTR [rbp], eax               ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:38.2
+$LN106:
+                                ; LOE rbp rdi rsp r12 r13 r14 r15 rip zmm6 zmm7 zmm8 zmm9 zmm10 zmm11 zmm12 zmm13 zmm14 zmm15
+.B4.3::                         ; Preds .B4.21
+                                ; Execution count [0.00e+000]
+$LN107:
+
+;;; 	// ********
+;;; 
+;;; 	// decompress (length -> 4 * length)
+;;; 	size_t decodedLength = length * sizeof(uint32_t);
+
+  00191 48 8b 85 18 01 
+        00 00            mov rax, QWORD PTR [280+rbp]           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:42.23
+$LN108:
+  00198 48 6b c0 04      imul rax, rax, 4                       ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:42.23
+$LN109:
+  0019c 48 89 45 18      mov QWORD PTR [24+rbp], rax            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:42.23
+$LN110:
+
+;;; 	uint8_t *decoded = new uint8_t[decodedLength];
+
+  001a0 48 8b 45 18      mov rax, QWORD PTR [24+rbp]            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:43.19
+$LN111:
+  001a4 48 89 c1         mov rcx, rax                           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:43.19
+$LN112:
+  001a7 e8 fc ff ff ff  ;       operator new(unsigned __int64)
+        call      ??2@YAPEAX_K@Z                                ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:43.19
+$LN113:
+                                ; LOE rax rbp rdi rsp r12 r13 r14 r15 rip zmm6 zmm7 zmm8 zmm9 zmm10 zmm11 zmm12 zmm13 zmm14 zmm15
+.B4.22::                        ; Preds .B4.3
+                                ; Execution count [0.00e+000]
+$LN114:
+  001ac 48 89 45 20      mov QWORD PTR [32+rbp], rax            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:43.19
+$LN115:
+                                ; LOE rbp rdi rsp r12 r13 r14 r15 rip zmm6 zmm7 zmm8 zmm9 zmm10 zmm11 zmm12 zmm13 zmm14 zmm15
+.B4.4::                         ; Preds .B4.22
+                                ; Execution count [0.00e+000]
+$LN116:
+  001b0 48 8b 45 20      mov rax, QWORD PTR [32+rbp]            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:43.19
+$LN117:
+  001b4 48 89 45 28      mov QWORD PTR [40+rbp], rax            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:43.19
+$LN118:
+
+;;; 	size_t decLength = enclaveVByteDecode(data, length, decoded, decodedLength);
+
+  001b8 48 8b 45 10      mov rax, QWORD PTR [16+rbp]            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:44.19
+$LN119:
+  001bc 48 8b 95 18 01 
+        00 00            mov rdx, QWORD PTR [280+rbp]           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:44.19
+$LN120:
+  001c3 48 8b 4d 28      mov rcx, QWORD PTR [40+rbp]            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:44.19
+$LN121:
+  001c7 48 8b 5d 18      mov rbx, QWORD PTR [24+rbp]            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:44.19
+$LN122:
+  001cb 48 89 8d a8 00 
+        00 00            mov QWORD PTR [168+rbp], rcx           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:44.19[spill]
+$LN123:
+  001d2 48 89 c1         mov rcx, rax                           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:44.19
+$LN124:
+  001d5 48 8b 85 a8 00 
+        00 00            mov rax, QWORD PTR [168+rbp]           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:44.19[spill]
+$LN125:
+  001dc 49 89 c0         mov r8, rax                            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:44.19
+$LN126:
+  001df 49 89 d9         mov r9, rbx                            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:44.19
+$LN127:
+  001e2 e8 fc ff ff ff  ;       enclaveVByteDecode(uint8_t *, size_t, uint8_t *, size_t)
+        call      enclaveVByteDecode                            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:44.19
+$LN128:
+                                ; LOE rax rbp rdi rsp r12 r13 r14 r15 rip zmm6 zmm7 zmm8 zmm9 zmm10 zmm11 zmm12 zmm13 zmm14 zmm15
+.B4.23::                        ; Preds .B4.4
+                                ; Execution count [0.00e+000]
+$LN129:
+  001e7 48 89 45 30      mov QWORD PTR [48+rbp], rax            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:44.19
+$LN130:
+                                ; LOE rbp rdi rsp r12 r13 r14 r15 rip zmm6 zmm7 zmm8 zmm9 zmm10 zmm11 zmm12 zmm13 zmm14 zmm15
+.B4.5::                         ; Preds .B4.23
+                                ; Execution count [0.00e+000]
+$LN131:
+  001eb 48 8b 45 30      mov rax, QWORD PTR [48+rbp]            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:44.19
+$LN132:
+  001ef 48 89 45 38      mov QWORD PTR [56+rbp], rax            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:44.19
+$LN133:
+
+;;; 	delete[] data;
+
+  001f3 48 8b 45 10      mov rax, QWORD PTR [16+rbp]            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:45.2
+$LN134:
+  001f7 48 89 c1         mov rcx, rax                           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:45.2
+$LN135:
+  001fa e8 fc ff ff ff  ;       operator delete(void *)
+        call      ??3@YAXPEAX@Z                                 ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:45.2
+$LN136:
+                                ; LOE rbp rdi rsp r12 r13 r14 r15 rip zmm6 zmm7 zmm8 zmm9 zmm10 zmm11 zmm12 zmm13 zmm14 zmm15
+.B4.24::                        ; Preds .B4.5
+                                ; Execution count [0.00e+000]
+$LN137:
+                                ; LOE rbp rdi rsp r12 r13 r14 r15 rip zmm6 zmm7 zmm8 zmm9 zmm10 zmm11 zmm12 zmm13 zmm14 zmm15
+.B4.6::                         ; Preds .B4.24
+                                ; Execution count [0.00e+000]
+$LN138:
+
+;;; 	// ********
+;;; 
+;;; 	// operate (4 * length -> 8 * length)
+;;; 	size_t processLength = decLength * 2;
+
+  001ff 48 8b 45 38      mov rax, QWORD PTR [56+rbp]            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:49.23
+$LN139:
+  00203 48 6b c0 02      imul rax, rax, 2                       ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:49.23
+$LN140:
+  00207 48 89 45 40      mov QWORD PTR [64+rbp], rax            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:49.23
+$LN141:
+
+;;; 	uint8_t *processed = new uint8_t[processLength];
+
+  0020b 48 8b 45 40      mov rax, QWORD PTR [64+rbp]            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:50.21
+$LN142:
+  0020f 48 89 c1         mov rcx, rax                           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:50.21
+$LN143:
+  00212 e8 fc ff ff ff  ;       operator new(unsigned __int64)
+        call      ??2@YAPEAX_K@Z                                ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:50.21
+$LN144:
+                                ; LOE rax rbp rdi rsp r12 r13 r14 r15 rip zmm6 zmm7 zmm8 zmm9 zmm10 zmm11 zmm12 zmm13 zmm14 zmm15
+.B4.25::                        ; Preds .B4.6
+                                ; Execution count [0.00e+000]
+$LN145:
+  00217 48 89 45 48      mov QWORD PTR [72+rbp], rax            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:50.21
+$LN146:
+                                ; LOE rbp rdi rsp r12 r13 r14 r15 rip zmm6 zmm7 zmm8 zmm9 zmm10 zmm11 zmm12 zmm13 zmm14 zmm15
+.B4.7::                         ; Preds .B4.25
+                                ; Execution count [0.00e+000]
+$LN147:
+  0021b 48 8b 45 48      mov rax, QWORD PTR [72+rbp]            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:50.21
+$LN148:
+  0021f 48 89 45 50      mov QWORD PTR [80+rbp], rax            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:50.21
+$LN149:
+
+;;; 	size_t rleLength = enclaveRunLengthEncode(decoded, decLength, processed, processLength);
+
+  00223 48 8b 45 28      mov rax, QWORD PTR [40+rbp]            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:51.19
+$LN150:
+  00227 48 8b 55 38      mov rdx, QWORD PTR [56+rbp]            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:51.19
+$LN151:
+  0022b 48 8b 4d 50      mov rcx, QWORD PTR [80+rbp]            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:51.19
+$LN152:
+  0022f 48 8b 5d 40      mov rbx, QWORD PTR [64+rbp]            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:51.19
+$LN153:
+  00233 48 89 8d b0 00 
+        00 00            mov QWORD PTR [176+rbp], rcx           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:51.19[spill]
+$LN154:
+  0023a 48 89 c1         mov rcx, rax                           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:51.19
+$LN155:
+  0023d 48 8b 85 b0 00 
+        00 00            mov rax, QWORD PTR [176+rbp]           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:51.19[spill]
+$LN156:
+  00244 49 89 c0         mov r8, rax                            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:51.19
+$LN157:
+  00247 49 89 d9         mov r9, rbx                            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:51.19
+$LN158:
+  0024a e8 fc ff ff ff  ;       enclaveRunLengthEncode(uint8_t *, size_t, uint8_t *, size_t)
+        call      enclaveRunLengthEncode                        ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:51.19
+$LN159:
+                                ; LOE rax rbp rdi rsp r12 r13 r14 r15 rip zmm6 zmm7 zmm8 zmm9 zmm10 zmm11 zmm12 zmm13 zmm14 zmm15
+.B4.26::                        ; Preds .B4.7
+                                ; Execution count [0.00e+000]
+$LN160:
+  0024f 48 89 45 58      mov QWORD PTR [88+rbp], rax            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:51.19
+$LN161:
+                                ; LOE rbp rdi rsp r12 r13 r14 r15 rip zmm6 zmm7 zmm8 zmm9 zmm10 zmm11 zmm12 zmm13 zmm14 zmm15
+.B4.8::                         ; Preds .B4.26
+                                ; Execution count [0.00e+000]
+$LN162:
+  00253 48 8b 45 58      mov rax, QWORD PTR [88+rbp]            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:51.19
+$LN163:
+  00257 48 89 45 60      mov QWORD PTR [96+rbp], rax            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:51.19
+$LN164:
+
+;;; 	delete[] decoded;
+
+  0025b 48 8b 45 28      mov rax, QWORD PTR [40+rbp]            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:52.2
+$LN165:
+  0025f 48 89 c1         mov rcx, rax                           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:52.2
+$LN166:
+  00262 e8 fc ff ff ff  ;       operator delete(void *)
+        call      ??3@YAXPEAX@Z                                 ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:52.2
+$LN167:
+                                ; LOE rbp rdi rsp r12 r13 r14 r15 rip zmm6 zmm7 zmm8 zmm9 zmm10 zmm11 zmm12 zmm13 zmm14 zmm15
+.B4.27::                        ; Preds .B4.8
+                                ; Execution count [0.00e+000]
+$LN168:
+                                ; LOE rbp rdi rsp r12 r13 r14 r15 rip zmm6 zmm7 zmm8 zmm9 zmm10 zmm11 zmm12 zmm13 zmm14 zmm15
+.B4.9::                         ; Preds .B4.27
+                                ; Execution count [0.00e+000]
+$LN169:
+
+;;; 	// ********
+;;; 
+;;; 	// compress (8 * length -> 10 * length)
+;;; 	size_t encodedLength = (rleLength / sizeof(uint32_t)) * 5;
+
+  00267 48 8b 45 60      mov rax, QWORD PTR [96+rbp]            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:56.23
+$LN170:
+  0026b 48 c1 e8 02      shr rax, 2                             ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:56.23
+$LN171:
+  0026f 48 6b c0 05      imul rax, rax, 5                       ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:56.23
+$LN172:
+  00273 48 89 45 68      mov QWORD PTR [104+rbp], rax           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:56.23
+$LN173:
+
+;;; 	uint8_t *encoded = new uint8_t[encodedLength];
+
+  00277 48 8b 45 68      mov rax, QWORD PTR [104+rbp]           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:57.19
+$LN174:
+  0027b 48 89 c1         mov rcx, rax                           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:57.19
+$LN175:
+  0027e e8 fc ff ff ff  ;       operator new(unsigned __int64)
+        call      ??2@YAPEAX_K@Z                                ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:57.19
+$LN176:
+                                ; LOE rax rbp rdi rsp r12 r13 r14 r15 rip zmm6 zmm7 zmm8 zmm9 zmm10 zmm11 zmm12 zmm13 zmm14 zmm15
+.B4.28::                        ; Preds .B4.9
+                                ; Execution count [0.00e+000]
+$LN177:
+  00283 48 89 45 70      mov QWORD PTR [112+rbp], rax           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:57.19
+$LN178:
+                                ; LOE rbp rdi rsp r12 r13 r14 r15 rip zmm6 zmm7 zmm8 zmm9 zmm10 zmm11 zmm12 zmm13 zmm14 zmm15
+.B4.10::                        ; Preds .B4.28
+                                ; Execution count [0.00e+000]
+$LN179:
+  00287 48 8b 45 70      mov rax, QWORD PTR [112+rbp]           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:57.19
+$LN180:
+  0028b 48 89 45 78      mov QWORD PTR [120+rbp], rax           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:57.19
+$LN181:
+
+;;; 	size_t encLength = enclaveVByteEncode(processed, rleLength, encoded, encodedLength);
+
+  0028f 48 8b 45 50      mov rax, QWORD PTR [80+rbp]            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:58.19
+$LN182:
+  00293 48 8b 55 60      mov rdx, QWORD PTR [96+rbp]            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:58.19
+$LN183:
+  00297 48 8b 4d 78      mov rcx, QWORD PTR [120+rbp]           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:58.19
+$LN184:
+  0029b 48 8b 5d 68      mov rbx, QWORD PTR [104+rbp]           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:58.19
+$LN185:
+  0029f 48 89 8d b8 00 
+        00 00            mov QWORD PTR [184+rbp], rcx           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:58.19[spill]
+$LN186:
+  002a6 48 89 c1         mov rcx, rax                           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:58.19
+$LN187:
+  002a9 48 8b 85 b8 00 
+        00 00            mov rax, QWORD PTR [184+rbp]           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:58.19[spill]
+$LN188:
+  002b0 49 89 c0         mov r8, rax                            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:58.19
+$LN189:
+  002b3 49 89 d9         mov r9, rbx                            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:58.19
+$LN190:
+  002b6 e8 fc ff ff ff  ;       enclaveVByteEncode(uint8_t *, size_t, uint8_t *, size_t)
+        call      enclaveVByteEncode                            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:58.19
+$LN191:
+                                ; LOE rax rbp rdi rsp r12 r13 r14 r15 rip zmm6 zmm7 zmm8 zmm9 zmm10 zmm11 zmm12 zmm13 zmm14 zmm15
+.B4.29::                        ; Preds .B4.10
+                                ; Execution count [0.00e+000]
+$LN192:
+  002bb 48 89 85 80 00 
+        00 00            mov QWORD PTR [128+rbp], rax           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:58.19
+$LN193:
+                                ; LOE rbp rdi rsp r12 r13 r14 r15 rip zmm6 zmm7 zmm8 zmm9 zmm10 zmm11 zmm12 zmm13 zmm14 zmm15
+.B4.11::                        ; Preds .B4.29
+                                ; Execution count [0.00e+000]
+$LN194:
+  002c2 48 8b 85 80 00 
+        00 00            mov rax, QWORD PTR [128+rbp]           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:58.19
+$LN195:
+  002c9 48 89 85 88 00 
+        00 00            mov QWORD PTR [136+rbp], rax           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:58.19
+$LN196:
+
+;;; 	delete[] processed;
+
+  002d0 48 8b 45 50      mov rax, QWORD PTR [80+rbp]            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:59.2
+$LN197:
+  002d4 48 89 c1         mov rcx, rax                           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:59.2
+$LN198:
+  002d7 e8 fc ff ff ff  ;       operator delete(void *)
+        call      ??3@YAXPEAX@Z                                 ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:59.2
+$LN199:
+                                ; LOE rbp rdi rsp r12 r13 r14 r15 rip zmm6 zmm7 zmm8 zmm9 zmm10 zmm11 zmm12 zmm13 zmm14 zmm15
+.B4.30::                        ; Preds .B4.11
+                                ; Execution count [0.00e+000]
+$LN200:
+                                ; LOE rbp rdi rsp r12 r13 r14 r15 rip zmm6 zmm7 zmm8 zmm9 zmm10 zmm11 zmm12 zmm13 zmm14 zmm15
+.B4.12::                        ; Preds .B4.30
+                                ; Execution count [0.00e+000]
+$LN201:
+
+;;; 	// ********
+;;; 
+;;; 	// encrypt (8 * length -> 8 * length + AES_BLOCK_SIZE)
+;;; 	encLength += encLength % AES_BLOCK_SIZE == 0 ? 0 : AES_BLOCK_SIZE - (encLength % AES_BLOCK_SIZE);
+
+  002dc 8b 85 88 00 00 
+        00               mov eax, DWORD PTR [136+rbp]           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:63.2
+$LN202:
+  002e2 a8 0f            test al, 15                            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:63.2
+$LN203:
+  002e4 74 1b            je .B4.14 ; Prob 50%                   ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:63.2
+$LN204:
+                                ; LOE rbp rdi rsp r12 r13 r14 r15 rip zmm6 zmm7 zmm8 zmm9 zmm10 zmm11 zmm12 zmm13 zmm14 zmm15
+.B4.13::                        ; Preds .B4.12
+                                ; Execution count [0.00e+000]
+$LN205:
+  002e6 48 8b 85 88 00 
+        00 00            mov rax, QWORD PTR [136+rbp]           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:63.2
+$LN206:
+  002ed 48 83 e0 0f      and rax, 15                            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:63.2
+$LN207:
+  002f1 48 f7 d8         neg rax                                ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:63.2
+$LN208:
+  002f4 48 83 c0 10      add rax, 16                            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:63.2
+$LN209:
+  002f8 48 89 85 90 00 
+        00 00            mov QWORD PTR [144+rbp], rax           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:63.2
+$LN210:
+  002ff eb 0b            jmp .B4.15 ; Prob 100%                 ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:63.2
+$LN211:
+                                ; LOE rbp rdi rsp r12 r13 r14 r15 rip zmm6 zmm7 zmm8 zmm9 zmm10 zmm11 zmm12 zmm13 zmm14 zmm15
+.B4.14::                        ; Preds .B4.12
+                                ; Execution count [0.00e+000]
+$LN212:
+  00301 48 c7 85 90 00 
+        00 00 00 00 00 
+        00               mov QWORD PTR [144+rbp], 0             ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:63.2
+$LN213:
+                                ; LOE rbp rdi rsp r12 r13 r14 r15 rip zmm6 zmm7 zmm8 zmm9 zmm10 zmm11 zmm12 zmm13 zmm14 zmm15
+.B4.15::                        ; Preds .B4.14 .B4.13
+                                ; Execution count [0.00e+000]
+$LN214:
+  0030c 48 8b 85 90 00 
+        00 00            mov rax, QWORD PTR [144+rbp]           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:63.2
+$LN215:
+  00313 48 03 85 88 00 
+        00 00            add rax, QWORD PTR [136+rbp]           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:63.2
+$LN216:
+  0031a 48 89 85 88 00 
+        00 00            mov QWORD PTR [136+rbp], rax           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:63.2
+$LN217:
+
+;;; 	encryptBytes(encoded, encLength, out, key, AES_KEY_SIZE, iv);
+
+  00321 48 8b 45 78      mov rax, QWORD PTR [120+rbp]           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:64.2
+$LN218:
+  00325 48 8b 95 88 00 
+        00 00            mov rdx, QWORD PTR [136+rbp]           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:64.2
+$LN219:
+  0032c 48 8b 8d 20 01 
+        00 00            mov rcx, QWORD PTR [288+rbp]           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:64.2
+$LN220:
+  00333 48 8d 9d d8 00 
+        00 00            lea rbx, QWORD PTR [216+rbp]           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:64.2
+$LN221:
+  0033a 48 c7 44 24 20 
+        10 00 00 00      mov QWORD PTR [32+rsp], 16             ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:64.2
+$LN222:
+  00343 48 8d b5 e8 00 
+        00 00            lea rsi, QWORD PTR [232+rbp]           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:64.2
+$LN223:
+  0034a 48 89 74 24 28   mov QWORD PTR [40+rsp], rsi            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:64.2
+$LN224:
+  0034f 48 89 8d c0 00 
+        00 00            mov QWORD PTR [192+rbp], rcx           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:64.2[spill]
+$LN225:
+  00356 48 89 c1         mov rcx, rax                           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:64.2
+$LN226:
+  00359 48 8b 85 c0 00 
+        00 00            mov rax, QWORD PTR [192+rbp]           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:64.2[spill]
+$LN227:
+  00360 49 89 c0         mov r8, rax                            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:64.2
+$LN228:
+  00363 49 89 d9         mov r9, rbx                            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:64.2
+$LN229:
+  00366 e8 fc ff ff ff  ;       encryptBytes(uint8_t *, size_t, uint8_t *, const uint8_t *, size_t, uint8_t *)
+        call      encryptBytes                                  ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:64.2
+$LN230:
+                                ; LOE rbp rdi rsp r12 r13 r14 r15 rip eax zmm6 zmm7 zmm8 zmm9 zmm10 zmm11 zmm12 zmm13 zmm14 zmm15
+.B4.31::                        ; Preds .B4.15
+                                ; Execution count [0.00e+000]
+$LN231:
+  0036b 89 45 04         mov DWORD PTR [4+rbp], eax             ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:64.2
+$LN232:
+                                ; LOE rbp rdi rsp r12 r13 r14 r15 rip zmm6 zmm7 zmm8 zmm9 zmm10 zmm11 zmm12 zmm13 zmm14 zmm15
+.B4.16::                        ; Preds .B4.31
+                                ; Execution count [0.00e+000]
+$LN233:
+
+;;; 	delete[] encoded;
+
+  0036e 48 8b 45 78      mov rax, QWORD PTR [120+rbp]           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:65.2
+$LN234:
+  00372 48 89 c1         mov rcx, rax                           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:65.2
+$LN235:
+  00375 e8 fc ff ff ff  ;       operator delete(void *)
+        call      ??3@YAXPEAX@Z                                 ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:65.2
+$LN236:
+                                ; LOE rbp rdi rsp r12 r13 r14 r15 rip zmm6 zmm7 zmm8 zmm9 zmm10 zmm11 zmm12 zmm13 zmm14 zmm15
+.B4.32::                        ; Preds .B4.16
+                                ; Execution count [0.00e+000]
+$LN237:
+                                ; LOE rbp rdi rsp r12 r13 r14 r15 rip zmm6 zmm7 zmm8 zmm9 zmm10 zmm11 zmm12 zmm13 zmm14 zmm15
+.B4.17::                        ; Preds .B4.32
+                                ; Execution count [0.00e+000]
+$LN238:
+
+;;; 	// ********
+;;; 
+;;; 	return encLength + AES_BLOCK_SIZE;
+
+  0037a b8 10 00 00 00   mov eax, 16                            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:68.2
+$LN239:
+  0037f 48 03 85 88 00 
+        00 00            add rax, QWORD PTR [136+rbp]           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:68.2
+$LN240:
+  00386 48 89 85 98 00 
+        00 00            mov QWORD PTR [152+rbp], rax           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:68.2[spill]
+$LN241:
+  0038d 48 8b 85 f8 00 
+        00 00            mov rax, QWORD PTR [248+rbp]           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:68.2
+$LN242:
+  00394 48 33 c5         xor rax, rbp                           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:68.2
+$LN243:
+  00397 48 89 c1         mov rcx, rax                           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:68.2
+$LN244:
+  0039a e8 fc ff ff ff   call __security_check_cookie           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:68.2
+$LN245:
+                                ; LOE rbp rdi rsp r12 r13 r14 r15 rip zmm6 zmm7 zmm8 zmm9 zmm10 zmm11 zmm12 zmm13 zmm14 zmm15
+.B4.33::                        ; Preds .B4.17
+                                ; Execution count [0.00e+000]
+$LN246:
+  0039f 48 8b 85 98 00 
+        00 00            mov rax, QWORD PTR [152+rbp]           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:68.2[spill]
+$LN247:
+  003a6 48 8b 9d c8 00 
+        00 00            mov rbx, QWORD PTR [200+rbp]           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:68.2[spill]
+$LN248:
+  003ad 48 8b b5 d0 00 
+        00 00            mov rsi, QWORD PTR [208+rbp]           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:68.2[spill]
+$LN249:
+  003b4 48 8d a5 00 01 
+        00 00            lea rsp, QWORD PTR [256+rbp]           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:68.2
+$LN250:
+  003bb 5d               pop rbp                                ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:68.2
+$LN251:
+  003bc c3               ret                                    ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:68.2
+$LN252:
+                                ; LOE
+.B4.18::
+$LN253:
+; mark_end;
+enclaveCompleteProcess ENDP
+$LNenclaveCompleteProcess$254:
+$LNenclaveCompleteProcess$255:
+_TEXT	ENDS
+.xdata	SEGMENT  DWORD   READ  ''
+	ALIGN 004H
+.unwind.enclaveCompleteProcess.B1_B33	DD	889723649
+	DD	2044955
+	DD	2122772
+	DD	17302285
+	DD	1342242854
+.xdata	ENDS
+.pdata	SEGMENT  DWORD   READ  ''
+	ALIGN 004H
+.pdata.enclaveCompleteProcess.B1_B33	DD	imagerel .B4.1
+	DD	imagerel .B4.18
+	DD	imagerel .unwind.enclaveCompleteProcess.B1_B33
+.pdata	ENDS
+_RDATA	SEGMENT     READ  'DATA'
+	ALIGN 004H
+key.70.0	DD	875770417
+	DD	943142453
+	DD	842084409
+	DD	3486771
+iv.70.0	DD	875770417
+	DD	943142453
+	DD	842084409
+	DD	3486771
+_RDATA	ENDS
+_DATA	SEGMENT      'DATA'
+_DATA	ENDS
+; -- End  enclaveCompleteProcess
+_TEXT	SEGMENT      'CODE'
+_2__routine_start_enclaveCrypto_15:
+; -- Begin  enclaveCrypto
+_TEXT	ENDS
+_TEXT	SEGMENT      'CODE'
+; mark_begin;
+
+	PUBLIC enclaveCrypto
+; --- enclaveCrypto(uint8_t *, size_t, uint8_t *, size_t)
+enclaveCrypto	PROC 
+; parameter 1(in): rcx
+; parameter 2(inLength): rdx
+; parameter 3(out): r8
+; parameter 4(outLength): r9
+.B5.1::                         ; Preds .B5.0
+                                ; Execution count [0.00e+000]
+
+;;; size_t enclaveCrypto(uint8_t *in, size_t inLength, uint8_t *out, size_t outLength) {
+
+L26::
+                                                          ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:71.84
+$LN256:
+  003bd 55               push rbp                               ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:71.84
+$LN257:
+  003be 48 81 ec a0 00 
+        00 00            sub rsp, 160                           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:71.84
+$LN258:
+  003c5 48 8d 6c 24 30   lea rbp, QWORD PTR [48+rsp]            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:71.84
+$LN259:
+  003ca 48 89 75 38      mov QWORD PTR [56+rbp], rsi            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:71.84[spill]
+$LN260:
+  003ce 48 89 5d 30      mov QWORD PTR [48+rbp], rbx            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:71.84[spill]
+$LN261:
+  003d2 48 89 8d 80 00 
+        00 00            mov QWORD PTR [128+rbp], rcx           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:71.84
+$LN262:
+  003d9 48 89 95 88 00 
+        00 00            mov QWORD PTR [136+rbp], rdx           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:71.84
+$LN263:
+  003e0 4c 89 85 90 00 
+        00 00            mov QWORD PTR [144+rbp], r8            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:71.84
+$LN264:
+  003e7 4c 89 8d 98 00 
+        00 00            mov QWORD PTR [152+rbp], r9            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:71.84
+$LN265:
+  003ee 48 8b 05 00 00 
+        00 00            mov rax, QWORD PTR [__security_cookie] ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:71.84
+$LN266:
+  003f5 48 33 c5         xor rax, rbp                           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:71.84
+$LN267:
+  003f8 48 89 45 60      mov QWORD PTR [96+rbp], rax            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:71.84
+$LN268:
+
+;;; 
+;;; 	uint8_t *data = new uint8_t[inLength];
+
+  003fc 48 8b 85 88 00 
+        00 00            mov rax, QWORD PTR [136+rbp]           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:73.16
+$LN269:
+  00403 48 89 c1         mov rcx, rax                           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:73.16
+$LN270:
+  00406 e8 fc ff ff ff  ;       operator new(unsigned __int64)
+        call      ??2@YAPEAX_K@Z                                ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:73.16
+$LN271:
+                                ; LOE rax rbp rdi rsp r12 r13 r14 r15 rip zmm6 zmm7 zmm8 zmm9 zmm10 zmm11 zmm12 zmm13 zmm14 zmm15
+.B5.8::                         ; Preds .B5.1
+                                ; Execution count [0.00e+000]
+$LN272:
+  0040b 48 89 45 08      mov QWORD PTR [8+rbp], rax             ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:73.16
+$LN273:
+                                ; LOE rbp rdi rsp r12 r13 r14 r15 rip zmm6 zmm7 zmm8 zmm9 zmm10 zmm11 zmm12 zmm13 zmm14 zmm15
+.B5.2::                         ; Preds .B5.8
+                                ; Execution count [0.00e+000]
+$LN274:
+  0040f 48 8b 45 08      mov rax, QWORD PTR [8+rbp]             ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:73.16
+$LN275:
+  00413 48 89 45 10      mov QWORD PTR [16+rbp], rax            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:73.16
+$LN276:
+
+;;; 
+;;; 	uint8_t key[AES_KEY_SIZE] = "123456789012345";
+
+  00417 48 8d 45 40      lea rax, QWORD PTR [64+rbp]            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:75.28
+$LN277:
+  0041b 48 ba 31 32 33 
+        34 35 36 37 38   mov rdx, 03837363534333231H            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:75.28
+$LN278:
+  00425 48 89 10         mov QWORD PTR [rax], rdx               ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:75.28
+$LN279:
+  00428 48 8d 45 40      lea rax, QWORD PTR [64+rbp]            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:75.28
+$LN280:
+  0042c 48 83 c0 08      add rax, 8                             ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:75.28
+$LN281:
+  00430 48 ba 39 30 31 
+        32 33 34 35 00   mov rdx, 035343332313039H              ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:75.28
+$LN282:
+  0043a 48 89 10         mov QWORD PTR [rax], rdx               ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:75.28
+$LN283:
+
+;;; 	uint8_t iv[AES_BLOCK_SIZE] = "123456789012345";
+
+  0043d 48 8d 45 50      lea rax, QWORD PTR [80+rbp]            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:76.29
+$LN284:
+  00441 48 ba 31 32 33 
+        34 35 36 37 38   mov rdx, 03837363534333231H            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:76.29
+$LN285:
+  0044b 48 89 10         mov QWORD PTR [rax], rdx               ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:76.29
+$LN286:
+  0044e 48 8d 45 50      lea rax, QWORD PTR [80+rbp]            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:76.29
+$LN287:
+  00452 48 83 c0 08      add rax, 8                             ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:76.29
+$LN288:
+  00456 48 ba 39 30 31 
+        32 33 34 35 00   mov rdx, 035343332313039H              ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:76.29
+$LN289:
+  00460 48 89 10         mov QWORD PTR [rax], rdx               ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:76.29
+$LN290:
+
+;;; 
+;;; 	decryptBytes(in, inLength, data, key, AES_KEY_SIZE, iv);
+
+  00463 48 8b 85 80 00 
+        00 00            mov rax, QWORD PTR [128+rbp]           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:78.2
+$LN291:
+  0046a 48 8b 95 88 00 
+        00 00            mov rdx, QWORD PTR [136+rbp]           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:78.2
+$LN292:
+  00471 48 8b 4d 10      mov rcx, QWORD PTR [16+rbp]            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:78.2
+$LN293:
+  00475 48 8d 5d 40      lea rbx, QWORD PTR [64+rbp]            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:78.2
+$LN294:
+  00479 48 c7 44 24 20 
+        10 00 00 00      mov QWORD PTR [32+rsp], 16             ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:78.2
+$LN295:
+  00482 48 8d 75 50      lea rsi, QWORD PTR [80+rbp]            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:78.2
+$LN296:
+  00486 48 89 74 24 28   mov QWORD PTR [40+rsp], rsi            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:78.2
+$LN297:
+  0048b 48 89 4d 20      mov QWORD PTR [32+rbp], rcx            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:78.2[spill]
+$LN298:
+  0048f 48 89 c1         mov rcx, rax                           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:78.2
+$LN299:
+  00492 48 8b 45 20      mov rax, QWORD PTR [32+rbp]            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:78.2[spill]
+$LN300:
+  00496 49 89 c0         mov r8, rax                            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:78.2
+$LN301:
+  00499 49 89 d9         mov r9, rbx                            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:78.2
+$LN302:
+  0049c e8 fc ff ff ff  ;       decryptBytes(uint8_t *, size_t, uint8_t *, const uint8_t *, size_t, uint8_t *)
+        call      decryptBytes                                  ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:78.2
+$LN303:
+                                ; LOE rbp rdi rsp r12 r13 r14 r15 rip eax zmm6 zmm7 zmm8 zmm9 zmm10 zmm11 zmm12 zmm13 zmm14 zmm15
+.B5.9::                         ; Preds .B5.2
+                                ; Execution count [0.00e+000]
+$LN304:
+  004a1 89 45 00         mov DWORD PTR [rbp], eax               ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:78.2
+$LN305:
+                                ; LOE rbp rdi rsp r12 r13 r14 r15 rip zmm6 zmm7 zmm8 zmm9 zmm10 zmm11 zmm12 zmm13 zmm14 zmm15
+.B5.3::                         ; Preds .B5.9
+                                ; Execution count [0.00e+000]
+$LN306:
+
+;;; 
+;;; 	// * processing on the data *
+;;; 
+;;; 	encryptBytes(data, inLength, out, key, AES_KEY_SIZE, iv);
+
+  004a4 48 8b 45 10      mov rax, QWORD PTR [16+rbp]            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:82.2
+$LN307:
+  004a8 48 8b 95 88 00 
+        00 00            mov rdx, QWORD PTR [136+rbp]           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:82.2
+$LN308:
+  004af 48 8b 8d 90 00 
+        00 00            mov rcx, QWORD PTR [144+rbp]           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:82.2
+$LN309:
+  004b6 48 8d 5d 40      lea rbx, QWORD PTR [64+rbp]            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:82.2
+$LN310:
+  004ba 48 c7 44 24 20 
+        10 00 00 00      mov QWORD PTR [32+rsp], 16             ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:82.2
+$LN311:
+  004c3 48 8d 75 50      lea rsi, QWORD PTR [80+rbp]            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:82.2
+$LN312:
+  004c7 48 89 74 24 28   mov QWORD PTR [40+rsp], rsi            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:82.2
+$LN313:
+  004cc 48 89 4d 28      mov QWORD PTR [40+rbp], rcx            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:82.2[spill]
+$LN314:
+  004d0 48 89 c1         mov rcx, rax                           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:82.2
+$LN315:
+  004d3 48 8b 45 28      mov rax, QWORD PTR [40+rbp]            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:82.2[spill]
+$LN316:
+  004d7 49 89 c0         mov r8, rax                            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:82.2
+$LN317:
+  004da 49 89 d9         mov r9, rbx                            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:82.2
+$LN318:
+  004dd e8 fc ff ff ff  ;       encryptBytes(uint8_t *, size_t, uint8_t *, const uint8_t *, size_t, uint8_t *)
+        call      encryptBytes                                  ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:82.2
+$LN319:
+                                ; LOE rbp rdi rsp r12 r13 r14 r15 rip eax zmm6 zmm7 zmm8 zmm9 zmm10 zmm11 zmm12 zmm13 zmm14 zmm15
+.B5.10::                        ; Preds .B5.3
+                                ; Execution count [0.00e+000]
+$LN320:
+  004e2 89 45 04         mov DWORD PTR [4+rbp], eax             ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:82.2
+$LN321:
+                                ; LOE rbp rdi rsp r12 r13 r14 r15 rip zmm6 zmm7 zmm8 zmm9 zmm10 zmm11 zmm12 zmm13 zmm14 zmm15
+.B5.4::                         ; Preds .B5.10
+                                ; Execution count [0.00e+000]
+$LN322:
+
+;;; 
+;;; 	delete[] data;
+
+  004e5 48 8b 45 10      mov rax, QWORD PTR [16+rbp]            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:84.2
+$LN323:
+  004e9 48 89 c1         mov rcx, rax                           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:84.2
+$LN324:
+  004ec e8 fc ff ff ff  ;       operator delete(void *)
+        call      ??3@YAXPEAX@Z                                 ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:84.2
+$LN325:
+                                ; LOE rbp rdi rsp r12 r13 r14 r15 rip zmm6 zmm7 zmm8 zmm9 zmm10 zmm11 zmm12 zmm13 zmm14 zmm15
+.B5.11::                        ; Preds .B5.4
+                                ; Execution count [0.00e+000]
+$LN326:
+                                ; LOE rbp rdi rsp r12 r13 r14 r15 rip zmm6 zmm7 zmm8 zmm9 zmm10 zmm11 zmm12 zmm13 zmm14 zmm15
+.B5.5::                         ; Preds .B5.11
+                                ; Execution count [0.00e+000]
+$LN327:
+
+;;; 
+;;; 	return inLength + AES_BLOCK_SIZE;
+
+  004f1 b8 10 00 00 00   mov eax, 16                            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:86.2
+$LN328:
+  004f6 48 03 85 88 00 
+        00 00            add rax, QWORD PTR [136+rbp]           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:86.2
+$LN329:
+  004fd 48 89 45 18      mov QWORD PTR [24+rbp], rax            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:86.2[spill]
+$LN330:
+  00501 48 8b 45 60      mov rax, QWORD PTR [96+rbp]            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:86.2
+$LN331:
+  00505 48 33 c5         xor rax, rbp                           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:86.2
+$LN332:
+  00508 48 89 c1         mov rcx, rax                           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:86.2
+$LN333:
+  0050b e8 fc ff ff ff   call __security_check_cookie           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:86.2
+$LN334:
+                                ; LOE rbp rdi rsp r12 r13 r14 r15 rip zmm6 zmm7 zmm8 zmm9 zmm10 zmm11 zmm12 zmm13 zmm14 zmm15
+.B5.12::                        ; Preds .B5.5
+                                ; Execution count [0.00e+000]
+$LN335:
+  00510 48 8b 45 18      mov rax, QWORD PTR [24+rbp]            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:86.2[spill]
+$LN336:
+  00514 48 8b 5d 30      mov rbx, QWORD PTR [48+rbp]            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:86.2[spill]
+$LN337:
+  00518 48 8b 75 38      mov rsi, QWORD PTR [56+rbp]            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:86.2[spill]
+$LN338:
+  0051c 48 8d 65 70      lea rsp, QWORD PTR [112+rbp]           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:86.2
+$LN339:
+  00520 5d               pop rbp                                ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:86.2
+$LN340:
+  00521 c3               ret                                    ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:86.2
+$LN341:
+                                ; LOE
+.B5.6::
+$LN342:
+; mark_end;
+enclaveCrypto ENDP
+$LNenclaveCrypto$343:
+$LNenclaveCrypto$344:
+_TEXT	ENDS
+.xdata	SEGMENT  DWORD   READ  ''
+	ALIGN 004H
+.unwind.enclaveCrypto.B1_B12	DD	889722113
+	DD	799765
+	DD	877585
+	DD	17302285
+	DD	1342242836
+.xdata	ENDS
+.pdata	SEGMENT  DWORD   READ  ''
+	ALIGN 004H
+.pdata.enclaveCrypto.B1_B12	DD	imagerel .B5.1
+	DD	imagerel .B5.6
+	DD	imagerel .unwind.enclaveCrypto.B1_B12
+.pdata	ENDS
+_RDATA	SEGMENT     READ  'DATA'
+key.71.0	DD	875770417
+	DD	943142453
+	DD	842084409
+	DD	3486771
+iv.71.0	DD	875770417
+	DD	943142453
+	DD	842084409
+	DD	3486771
+_RDATA	ENDS
+_DATA	SEGMENT      'DATA'
+_DATA	ENDS
+; -- End  enclaveCrypto
+_TEXT	SEGMENT      'CODE'
+_2__routine_start_enclaveCryptoNoCopy_16:
+; -- Begin  enclaveCryptoNoCopy
+_TEXT	ENDS
+_TEXT	SEGMENT      'CODE'
+; mark_begin;
+
+	PUBLIC enclaveCryptoNoCopy
+; --- enclaveCryptoNoCopy(uint8_t *, size_t, uint8_t *)
+enclaveCryptoNoCopy	PROC 
+; parameter 1(in): rcx
+; parameter 2(length): rdx
+; parameter 3(out): r8
+.B6.1::                         ; Preds .B6.0
+                                ; Execution count [0.00e+000]
+
+;;; size_t enclaveCryptoNoCopy(uint8_t* in, size_t length, uint8_t *out) {
+
+L32::
+                                                          ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:89.70
+$LN345:
+  00522 55               push rbp                               ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:89.70
+$LN346:
+  00523 48 81 ec a0 00 
+        00 00            sub rsp, 160                           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:89.70
+$LN347:
+  0052a 48 8d 6c 24 30   lea rbp, QWORD PTR [48+rsp]            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:89.70
+$LN348:
+  0052f 48 89 75 38      mov QWORD PTR [56+rbp], rsi            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:89.70[spill]
+$LN349:
+  00533 48 89 5d 30      mov QWORD PTR [48+rbp], rbx            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:89.70[spill]
+$LN350:
+  00537 48 89 8d 80 00 
+        00 00            mov QWORD PTR [128+rbp], rcx           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:89.70
+$LN351:
+  0053e 48 89 95 88 00 
+        00 00            mov QWORD PTR [136+rbp], rdx           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:89.70
+$LN352:
+  00545 4c 89 85 90 00 
+        00 00            mov QWORD PTR [144+rbp], r8            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:89.70
+$LN353:
+  0054c 48 8b 05 00 00 
+        00 00            mov rax, QWORD PTR [__security_cookie] ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:89.70
+$LN354:
+  00553 48 33 c5         xor rax, rbp                           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:89.70
+$LN355:
+  00556 48 89 45 60      mov QWORD PTR [96+rbp], rax            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:89.70
+$LN356:
+
+;;; 
+;;; 	uint8_t *data = new uint8_t[length];
+
+  0055a 48 8b 85 88 00 
+        00 00            mov rax, QWORD PTR [136+rbp]           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:91.16
+$LN357:
+  00561 48 89 c1         mov rcx, rax                           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:91.16
+$LN358:
+  00564 e8 fc ff ff ff  ;       operator new(unsigned __int64)
+        call      ??2@YAPEAX_K@Z                                ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:91.16
+$LN359:
+                                ; LOE rax rbp rdi rsp r12 r13 r14 r15 rip zmm6 zmm7 zmm8 zmm9 zmm10 zmm11 zmm12 zmm13 zmm14 zmm15
+.B6.8::                         ; Preds .B6.1
+                                ; Execution count [0.00e+000]
+$LN360:
+  00569 48 89 45 08      mov QWORD PTR [8+rbp], rax             ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:91.16
+$LN361:
+                                ; LOE rbp rdi rsp r12 r13 r14 r15 rip zmm6 zmm7 zmm8 zmm9 zmm10 zmm11 zmm12 zmm13 zmm14 zmm15
+.B6.2::                         ; Preds .B6.8
+                                ; Execution count [0.00e+000]
+$LN362:
+  0056d 48 8b 45 08      mov rax, QWORD PTR [8+rbp]             ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:91.16
+$LN363:
+  00571 48 89 45 10      mov QWORD PTR [16+rbp], rax            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:91.16
+$LN364:
+
+;;; 
+;;; 	uint8_t key[AES_KEY_SIZE] = "123456789012345";
+
+  00575 48 8d 45 40      lea rax, QWORD PTR [64+rbp]            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:93.28
+$LN365:
+  00579 48 ba 31 32 33 
+        34 35 36 37 38   mov rdx, 03837363534333231H            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:93.28
+$LN366:
+  00583 48 89 10         mov QWORD PTR [rax], rdx               ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:93.28
+$LN367:
+  00586 48 8d 45 40      lea rax, QWORD PTR [64+rbp]            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:93.28
+$LN368:
+  0058a 48 83 c0 08      add rax, 8                             ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:93.28
+$LN369:
+  0058e 48 ba 39 30 31 
+        32 33 34 35 00   mov rdx, 035343332313039H              ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:93.28
+$LN370:
+  00598 48 89 10         mov QWORD PTR [rax], rdx               ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:93.28
+$LN371:
+
+;;; 	uint8_t iv[AES_BLOCK_SIZE] = "123456789012345";
+
+  0059b 48 8d 45 50      lea rax, QWORD PTR [80+rbp]            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:94.29
+$LN372:
+  0059f 48 ba 31 32 33 
+        34 35 36 37 38   mov rdx, 03837363534333231H            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:94.29
+$LN373:
+  005a9 48 89 10         mov QWORD PTR [rax], rdx               ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:94.29
+$LN374:
+  005ac 48 8d 45 50      lea rax, QWORD PTR [80+rbp]            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:94.29
+$LN375:
+  005b0 48 83 c0 08      add rax, 8                             ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:94.29
+$LN376:
+  005b4 48 ba 39 30 31 
+        32 33 34 35 00   mov rdx, 035343332313039H              ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:94.29
+$LN377:
+  005be 48 89 10         mov QWORD PTR [rax], rdx               ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:94.29
+$LN378:
+
+;;; 
+;;; 	decryptBytes(in, length, data, key, AES_KEY_SIZE, iv);
+
+  005c1 48 8b 85 80 00 
+        00 00            mov rax, QWORD PTR [128+rbp]           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:96.2
+$LN379:
+  005c8 48 8b 95 88 00 
+        00 00            mov rdx, QWORD PTR [136+rbp]           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:96.2
+$LN380:
+  005cf 48 8b 4d 10      mov rcx, QWORD PTR [16+rbp]            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:96.2
+$LN381:
+  005d3 48 8d 5d 40      lea rbx, QWORD PTR [64+rbp]            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:96.2
+$LN382:
+  005d7 48 c7 44 24 20 
+        10 00 00 00      mov QWORD PTR [32+rsp], 16             ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:96.2
+$LN383:
+  005e0 48 8d 75 50      lea rsi, QWORD PTR [80+rbp]            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:96.2
+$LN384:
+  005e4 48 89 74 24 28   mov QWORD PTR [40+rsp], rsi            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:96.2
+$LN385:
+  005e9 48 89 4d 20      mov QWORD PTR [32+rbp], rcx            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:96.2[spill]
+$LN386:
+  005ed 48 89 c1         mov rcx, rax                           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:96.2
+$LN387:
+  005f0 48 8b 45 20      mov rax, QWORD PTR [32+rbp]            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:96.2[spill]
+$LN388:
+  005f4 49 89 c0         mov r8, rax                            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:96.2
+$LN389:
+  005f7 49 89 d9         mov r9, rbx                            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:96.2
+$LN390:
+  005fa e8 fc ff ff ff  ;       decryptBytes(uint8_t *, size_t, uint8_t *, const uint8_t *, size_t, uint8_t *)
+        call      decryptBytes                                  ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:96.2
+$LN391:
+                                ; LOE rbp rdi rsp r12 r13 r14 r15 rip eax zmm6 zmm7 zmm8 zmm9 zmm10 zmm11 zmm12 zmm13 zmm14 zmm15
+.B6.9::                         ; Preds .B6.2
+                                ; Execution count [0.00e+000]
+$LN392:
+  005ff 89 45 00         mov DWORD PTR [rbp], eax               ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:96.2
+$LN393:
+                                ; LOE rbp rdi rsp r12 r13 r14 r15 rip zmm6 zmm7 zmm8 zmm9 zmm10 zmm11 zmm12 zmm13 zmm14 zmm15
+.B6.3::                         ; Preds .B6.9
+                                ; Execution count [0.00e+000]
+$LN394:
+
+;;; 
+;;; 	// * processing on the data *
+;;; 
+;;; 	encryptBytes(data, length, out, key, AES_KEY_SIZE, iv);
+
+  00602 48 8b 45 10      mov rax, QWORD PTR [16+rbp]            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:100.2
+$LN395:
+  00606 48 8b 95 88 00 
+        00 00            mov rdx, QWORD PTR [136+rbp]           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:100.2
+$LN396:
+  0060d 48 8b 8d 90 00 
+        00 00            mov rcx, QWORD PTR [144+rbp]           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:100.2
+$LN397:
+  00614 48 8d 5d 40      lea rbx, QWORD PTR [64+rbp]            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:100.2
+$LN398:
+  00618 48 c7 44 24 20 
+        10 00 00 00      mov QWORD PTR [32+rsp], 16             ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:100.2
+$LN399:
+  00621 48 8d 75 50      lea rsi, QWORD PTR [80+rbp]            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:100.2
+$LN400:
+  00625 48 89 74 24 28   mov QWORD PTR [40+rsp], rsi            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:100.2
+$LN401:
+  0062a 48 89 4d 28      mov QWORD PTR [40+rbp], rcx            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:100.2[spill]
+$LN402:
+  0062e 48 89 c1         mov rcx, rax                           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:100.2
+$LN403:
+  00631 48 8b 45 28      mov rax, QWORD PTR [40+rbp]            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:100.2[spill]
+$LN404:
+  00635 49 89 c0         mov r8, rax                            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:100.2
+$LN405:
+  00638 49 89 d9         mov r9, rbx                            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:100.2
+$LN406:
+  0063b e8 fc ff ff ff  ;       encryptBytes(uint8_t *, size_t, uint8_t *, const uint8_t *, size_t, uint8_t *)
+        call      encryptBytes                                  ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:100.2
+$LN407:
+                                ; LOE rbp rdi rsp r12 r13 r14 r15 rip eax zmm6 zmm7 zmm8 zmm9 zmm10 zmm11 zmm12 zmm13 zmm14 zmm15
+.B6.10::                        ; Preds .B6.3
+                                ; Execution count [0.00e+000]
+$LN408:
+  00640 89 45 04         mov DWORD PTR [4+rbp], eax             ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:100.2
+$LN409:
+                                ; LOE rbp rdi rsp r12 r13 r14 r15 rip zmm6 zmm7 zmm8 zmm9 zmm10 zmm11 zmm12 zmm13 zmm14 zmm15
+.B6.4::                         ; Preds .B6.10
+                                ; Execution count [0.00e+000]
+$LN410:
+
+;;; 
+;;; 	delete[] data;
+
+  00643 48 8b 45 10      mov rax, QWORD PTR [16+rbp]            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:102.2
+$LN411:
+  00647 48 89 c1         mov rcx, rax                           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:102.2
+$LN412:
+  0064a e8 fc ff ff ff  ;       operator delete(void *)
+        call      ??3@YAXPEAX@Z                                 ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:102.2
+$LN413:
+                                ; LOE rbp rdi rsp r12 r13 r14 r15 rip zmm6 zmm7 zmm8 zmm9 zmm10 zmm11 zmm12 zmm13 zmm14 zmm15
+.B6.11::                        ; Preds .B6.4
+                                ; Execution count [0.00e+000]
+$LN414:
+                                ; LOE rbp rdi rsp r12 r13 r14 r15 rip zmm6 zmm7 zmm8 zmm9 zmm10 zmm11 zmm12 zmm13 zmm14 zmm15
+.B6.5::                         ; Preds .B6.11
+                                ; Execution count [0.00e+000]
+$LN415:
+
+;;; 
+;;; 	return length + AES_BLOCK_SIZE;
+
+  0064f b8 10 00 00 00   mov eax, 16                            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:104.2
+$LN416:
+  00654 48 03 85 88 00 
+        00 00            add rax, QWORD PTR [136+rbp]           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:104.2
+$LN417:
+  0065b 48 89 45 18      mov QWORD PTR [24+rbp], rax            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:104.2[spill]
+$LN418:
+  0065f 48 8b 45 60      mov rax, QWORD PTR [96+rbp]            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:104.2
+$LN419:
+  00663 48 33 c5         xor rax, rbp                           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:104.2
+$LN420:
+  00666 48 89 c1         mov rcx, rax                           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:104.2
+$LN421:
+  00669 e8 fc ff ff ff   call __security_check_cookie           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:104.2
+$LN422:
+                                ; LOE rbp rdi rsp r12 r13 r14 r15 rip zmm6 zmm7 zmm8 zmm9 zmm10 zmm11 zmm12 zmm13 zmm14 zmm15
+.B6.12::                        ; Preds .B6.5
+                                ; Execution count [0.00e+000]
+$LN423:
+  0066e 48 8b 45 18      mov rax, QWORD PTR [24+rbp]            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:104.2[spill]
+$LN424:
+  00672 48 8b 5d 30      mov rbx, QWORD PTR [48+rbp]            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:104.2[spill]
+$LN425:
+  00676 48 8b 75 38      mov rsi, QWORD PTR [56+rbp]            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:104.2[spill]
+$LN426:
+  0067a 48 8d 65 70      lea rsp, QWORD PTR [112+rbp]           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:104.2
+$LN427:
+  0067e 5d               pop rbp                                ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:104.2
+$LN428:
+  0067f c3               ret                                    ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Basic.cpp:104.2
+$LN429:
+                                ; LOE
+.B6.6::
+$LN430:
+; mark_end;
+enclaveCryptoNoCopy ENDP
+$LNenclaveCryptoNoCopy$431:
+$LNenclaveCryptoNoCopy$432:
+_TEXT	ENDS
+.xdata	SEGMENT  DWORD   READ  ''
+	ALIGN 004H
+.unwind.enclaveCryptoNoCopy.B1_B12	DD	889722113
+	DD	799765
+	DD	877585
+	DD	17302285
+	DD	1342242836
+.xdata	ENDS
+.pdata	SEGMENT  DWORD   READ  ''
+	ALIGN 004H
+.pdata.enclaveCryptoNoCopy.B1_B12	DD	imagerel .B6.1
+	DD	imagerel .B6.6
+	DD	imagerel .unwind.enclaveCryptoNoCopy.B1_B12
+.pdata	ENDS
+_RDATA	SEGMENT     READ  'DATA'
+key.72.0	DD	875770417
+	DD	943142453
+	DD	842084409
+	DD	3486771
+iv.72.0	DD	875770417
+	DD	943142453
+	DD	842084409
+	DD	3486771
+_RDATA	ENDS
+_DATA	SEGMENT      'DATA'
+_DATA	ENDS
+; -- End  enclaveCryptoNoCopy
+_DATA	SEGMENT      'DATA'
+EXTRN	__security_cookie:BYTE
+_DATA	ENDS
+EXTRN	decryptBytes:PROC
+EXTRN	encryptBytes:PROC
+EXTRN	enclaveRunLengthEncode:PROC
+EXTRN	enclaveVByteDecode:PROC
+EXTRN	enclaveVByteEncode:PROC
+EXTRN	??3@YAXPEAX@Z:PROC
+EXTRN	??2@YAPEAX_K@Z:PROC
+EXTRN	__security_check_cookie:PROC
+EXTRN	__ImageBase:PROC
+	INCLUDELIB <libmmt>
+	INCLUDELIB <LIBCMTD>
+	INCLUDELIB <libirc>
+	INCLUDELIB <svml_dispmt>
+	INCLUDELIB <OLDNAMES>
+	INCLUDELIB <libdecimal>
+	END

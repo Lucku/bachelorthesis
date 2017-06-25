@@ -94,7 +94,6 @@ size_t vByteDecode(uint8_t *in, size_t length, uint8_t *out) {
 	return (out32 - initOut) * sizeof(uint32_t);
 }
 
-// compression and subqsequent encryption, this test may not make sense
 size_t vByteEncodeEncrypted(uint8_t *in, size_t length, uint8_t *out)
 {
 	uint8_t key[AES_KEY_SIZE] = "123456789012345";
@@ -112,7 +111,24 @@ size_t vByteEncodeEncrypted(uint8_t *in, size_t length, uint8_t *out)
 	return encLength + AES_BLOCK_SIZE;
 }
 
-// decryption and subsequent decompression
+size_t vByteEncodeEncryptedPreproc(uint8_t *in, size_t length, uint8_t *out)
+{
+	uint8_t key[AES_KEY_SIZE] = "123456789012345";
+	uint8_t iv[AES_BLOCK_SIZE] = "123456789012345";
+
+	size_t encodedLength = (length / sizeof(uint32_t)) * 5;
+	encodedLength += encodedLength % 16 == 0 ? 0 : 16 - (encodedLength % 16);
+	uint8_t *encoded = new uint8_t[encodedLength];
+
+	size_t encLength = vByteEncode(in, length, encoded);
+
+	Crypto::encryptBytes(encoded, encodedLength, out, key, AES_KEY_SIZE, iv);
+
+	delete[] encoded;
+
+	return encLength + AES_BLOCK_SIZE;
+}
+
 size_t vByteDecodeEncrypted(uint8_t *in, size_t length, uint8_t *out)
 {
 	size_t decodedLength = length * sizeof(uint32_t);

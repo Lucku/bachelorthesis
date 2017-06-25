@@ -1,0 +1,492 @@
+; mark_description "Intel(R) C++ Intel(R) 64 Compiler for applications running on Intel(R) 64, Version 17.0.4.210 Build 20170411";
+; mark_description "";
+; mark_description "-c -Qm64 -IC:\\Program Files (x86)\\Intel\\IntelSGXSDK\\include -IC:\\Program Files (x86)\\Intel\\IntelSGXSD";
+; mark_description "K\\include\\tlibc -IC:\\Program Files (x86)\\Intel\\IntelSGXSDK\\include\\libc++ -IC:\\Program Files (x86)\\";
+; mark_description "Intel\\IntelSGXSDK\\include\\ipp -IC:\\Program Files (x86)\\IntelSWTools\\compilers_and_libraries_2017.2.187";
+; mark_description "\\windows\\compiler\\include -Zi -nologo -W3 -Od -Oi -D __INTEL_COMPILER=1700 -D _WINDLL -EHs -EHc -MTd -GS ";
+; mark_description "-arch:AVX -QaxSSE3 -QxSSE3 -Zc:wchar_t -Zc:forScope -FAcs -FaEnclaveSimulation\\ -FoEnclaveSimulation\\ -FdE";
+; mark_description "nclaveSimulation\\vc140.pdb -TP -S";
+	OPTION DOTNAME
+_TEXT	SEGMENT      'CODE'
+TXTST0:
+_2__routine_start_encryptBytes_0:
+; -- Begin  encryptBytes
+_TEXT	ENDS
+_TEXT	SEGMENT      'CODE'
+; mark_begin;
+
+	PUBLIC encryptBytes
+; --- encryptBytes(uint8_t *, size_t, uint8_t *, const uint8_t *, size_t, uint8_t *)
+encryptBytes	PROC 
+; parameter 1(input): rcx
+; parameter 2(length): rdx
+; parameter 3(output): r8
+; parameter 4(key): r9
+; parameter 5(keyLength): 128 + rbp
+; parameter 6(iv): 136 + rbp
+.B1.1::                         ; Preds .B1.0
+                                ; Execution count [0.00e+000]
+
+;;; int encryptBytes(uint8_t *input, size_t length, uint8_t *output, const uint8_t *key, size_t keyLength, uint8_t *iv) {
+
+L2::
+                                                           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:5.117
+$LN0:
+  00000 55               push rbp                               ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:5.117
+$LN1:
+  00001 48 81 ec 80 00 
+        00 00            sub rsp, 128                           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:5.117
+$LN2:
+  00008 48 8d 6c 24 30   lea rbp, QWORD PTR [48+rsp]            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:5.117
+$LN3:
+  0000d 48 89 75 40      mov QWORD PTR [64+rbp], rsi            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:5.117[spill]
+$LN4:
+  00011 48 89 5d 38      mov QWORD PTR [56+rbp], rbx            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:5.117[spill]
+$LN5:
+  00015 48 89 4d 60      mov QWORD PTR [96+rbp], rcx            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:5.117
+$LN6:
+  00019 48 89 55 68      mov QWORD PTR [104+rbp], rdx           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:5.117
+$LN7:
+  0001d 4c 89 45 70      mov QWORD PTR [112+rbp], r8            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:5.117
+$LN8:
+  00021 4c 89 4d 78      mov QWORD PTR [120+rbp], r9            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:5.117
+$LN9:
+
+;;; 
+;;; 	int ctxSize;
+;;; 	ippsAESGetSize(&ctxSize);
+
+  00025 48 8d 45 00      lea rax, QWORD PTR [rbp]               ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:8.2
+$LN10:
+  00029 48 89 c1         mov rcx, rax                           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:8.2
+$LN11:
+  0002c e8 fc ff ff ff  ;       ippsAESGetSize(int *)
+        call      ippsAESGetSize                                ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:8.2
+$LN12:
+                                ; LOE rbp rdi rsp r12 r13 r14 r15 rip eax zmm6 zmm7 zmm8 zmm9 zmm10 zmm11 zmm12 zmm13 zmm14 zmm15
+.B1.9::                         ; Preds .B1.1
+                                ; Execution count [0.00e+000]
+$LN13:
+  00031 89 45 04         mov DWORD PTR [4+rbp], eax             ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:8.2
+$LN14:
+                                ; LOE rbp rdi rsp r12 r13 r14 r15 rip zmm6 zmm7 zmm8 zmm9 zmm10 zmm11 zmm12 zmm13 zmm14 zmm15
+.B1.2::                         ; Preds .B1.9
+                                ; Execution count [0.00e+000]
+$LN15:
+
+;;; 	IppsAESSpec* pAES = (IppsAESSpec*)(new Ipp8u[ctxSize]);
+
+  00034 8b 45 00         mov eax, DWORD PTR [rbp]               ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:9.20
+$LN16:
+  00037 48 63 c0         movsxd rax, eax                        ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:9.20
+$LN17:
+  0003a 48 89 c1         mov rcx, rax                           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:9.20
+$LN18:
+  0003d e8 fc ff ff ff  ;       operator new(unsigned __int64)
+        call      ??2@YAPEAX_K@Z                                ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:9.20
+$LN19:
+                                ; LOE rax rbp rdi rsp r12 r13 r14 r15 rip zmm6 zmm7 zmm8 zmm9 zmm10 zmm11 zmm12 zmm13 zmm14 zmm15
+.B1.10::                        ; Preds .B1.2
+                                ; Execution count [0.00e+000]
+$LN20:
+  00042 48 89 45 18      mov QWORD PTR [24+rbp], rax            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:9.20
+$LN21:
+                                ; LOE rbp rdi rsp r12 r13 r14 r15 rip zmm6 zmm7 zmm8 zmm9 zmm10 zmm11 zmm12 zmm13 zmm14 zmm15
+.B1.3::                         ; Preds .B1.10
+                                ; Execution count [0.00e+000]
+$LN22:
+  00046 48 8b 45 18      mov rax, QWORD PTR [24+rbp]            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:9.20
+$LN23:
+  0004a 48 89 45 20      mov QWORD PTR [32+rbp], rax            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:9.20
+$LN24:
+
+;;; 
+;;; 	ippsAESInit(key, keyLength, pAES, ctxSize);
+
+  0004e 48 8b 45 78      mov rax, QWORD PTR [120+rbp]           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:11.2
+$LN25:
+  00052 8b 95 80 00 00 
+        00               mov edx, DWORD PTR [128+rbp]           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:11.2
+$LN26:
+  00058 48 8b 4d 20      mov rcx, QWORD PTR [32+rbp]            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:11.2
+$LN27:
+  0005c 8b 5d 00         mov ebx, DWORD PTR [rbp]               ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:11.2
+$LN28:
+  0005f 48 89 4d 28      mov QWORD PTR [40+rbp], rcx            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:11.2[spill]
+$LN29:
+  00063 48 89 c1         mov rcx, rax                           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:11.2
+$LN30:
+  00066 48 8b 45 28      mov rax, QWORD PTR [40+rbp]            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:11.2[spill]
+$LN31:
+  0006a 49 89 c0         mov r8, rax                            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:11.2
+$LN32:
+  0006d 41 89 d9         mov r9d, ebx                           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:11.2
+$LN33:
+  00070 e8 fc ff ff ff  ;       ippsAESInit(const Ipp8u *, int, IppsAESSpec *, int)
+        call      ippsAESInit                                   ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:11.2
+$LN34:
+                                ; LOE rbp rdi rsp r12 r13 r14 r15 rip eax zmm6 zmm7 zmm8 zmm9 zmm10 zmm11 zmm12 zmm13 zmm14 zmm15
+.B1.11::                        ; Preds .B1.3
+                                ; Execution count [0.00e+000]
+$LN35:
+  00075 89 45 08         mov DWORD PTR [8+rbp], eax             ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:11.2
+$LN36:
+                                ; LOE rbp rdi rsp r12 r13 r14 r15 rip zmm6 zmm7 zmm8 zmm9 zmm10 zmm11 zmm12 zmm13 zmm14 zmm15
+.B1.4::                         ; Preds .B1.11
+                                ; Execution count [0.00e+000]
+$LN37:
+
+;;; 
+;;; 	IppStatus status = ippsAESEncryptCBC(input, output, length, pAES, iv);
+
+  00078 48 8b 45 60      mov rax, QWORD PTR [96+rbp]            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:13.19
+$LN38:
+  0007c 48 8b 55 70      mov rdx, QWORD PTR [112+rbp]           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:13.19
+$LN39:
+  00080 8b 4d 68         mov ecx, DWORD PTR [104+rbp]           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:13.19
+$LN40:
+  00083 48 8b 5d 20      mov rbx, QWORD PTR [32+rbp]            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:13.19
+$LN41:
+  00087 48 8b b5 88 00 
+        00 00            mov rsi, QWORD PTR [136+rbp]           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:13.19
+$LN42:
+  0008e 48 89 74 24 20   mov QWORD PTR [32+rsp], rsi            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:13.19
+$LN43:
+  00093 89 4d 30         mov DWORD PTR [48+rbp], ecx            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:13.19[spill]
+$LN44:
+  00096 48 89 c1         mov rcx, rax                           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:13.19
+$LN45:
+  00099 8b 45 30         mov eax, DWORD PTR [48+rbp]            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:13.19[spill]
+$LN46:
+  0009c 41 89 c0         mov r8d, eax                           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:13.19
+$LN47:
+  0009f 49 89 d9         mov r9, rbx                            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:13.19
+$LN48:
+  000a2 e8 fc ff ff ff  ;       ippsAESEncryptCBC(const Ipp8u *, Ipp8u *, int, const IppsAESSpec *, const Ipp8u *)
+        call      ippsAESEncryptCBC                             ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:13.19
+$LN49:
+                                ; LOE rbp rdi rsp r12 r13 r14 r15 rip eax zmm6 zmm7 zmm8 zmm9 zmm10 zmm11 zmm12 zmm13 zmm14 zmm15
+.B1.12::                        ; Preds .B1.4
+                                ; Execution count [0.00e+000]
+$LN50:
+  000a7 89 45 0c         mov DWORD PTR [12+rbp], eax            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:13.19
+$LN51:
+                                ; LOE rbp rdi rsp r12 r13 r14 r15 rip zmm6 zmm7 zmm8 zmm9 zmm10 zmm11 zmm12 zmm13 zmm14 zmm15
+.B1.5::                         ; Preds .B1.12
+                                ; Execution count [0.00e+000]
+$LN52:
+  000aa 8b 45 0c         mov eax, DWORD PTR [12+rbp]            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:13.19
+$LN53:
+  000ad 89 45 10         mov DWORD PTR [16+rbp], eax            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:13.19
+$LN54:
+
+;;; 
+;;; 	//IppStatus status = ippsAESEncryptCTR(input, output, length, pAES, iv, 64);
+;;; 
+;;; 	delete[](Ipp8u*) pAES;
+
+  000b0 48 8b 45 20      mov rax, QWORD PTR [32+rbp]            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:17.2
+$LN55:
+  000b4 48 89 c1         mov rcx, rax                           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:17.2
+$LN56:
+  000b7 e8 fc ff ff ff  ;       operator delete(void *)
+        call      ??3@YAXPEAX@Z                                 ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:17.2
+$LN57:
+                                ; LOE rbp rdi rsp r12 r13 r14 r15 rip zmm6 zmm7 zmm8 zmm9 zmm10 zmm11 zmm12 zmm13 zmm14 zmm15
+.B1.13::                        ; Preds .B1.5
+                                ; Execution count [0.00e+000]
+$LN58:
+                                ; LOE rbp rdi rsp r12 r13 r14 r15 rip zmm6 zmm7 zmm8 zmm9 zmm10 zmm11 zmm12 zmm13 zmm14 zmm15
+.B1.6::                         ; Preds .B1.13
+                                ; Execution count [0.00e+000]
+$LN59:
+
+;;; 
+;;; 	return status;
+
+  000bc 8b 45 10         mov eax, DWORD PTR [16+rbp]            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:19.2
+$LN60:
+  000bf 48 8b 5d 38      mov rbx, QWORD PTR [56+rbp]            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:19.2[spill]
+$LN61:
+  000c3 48 8b 75 40      mov rsi, QWORD PTR [64+rbp]            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:19.2[spill]
+$LN62:
+  000c7 48 8d 65 50      lea rsp, QWORD PTR [80+rbp]            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:19.2
+$LN63:
+  000cb 5d               pop rbp                                ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:19.2
+$LN64:
+  000cc c3               ret                                    ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:19.2
+$LN65:
+                                ; LOE
+.B1.7::
+$LN66:
+; mark_end;
+encryptBytes ENDP
+$LNencryptBytes$67:
+$LNencryptBytes$68:
+_TEXT	ENDS
+.xdata	SEGMENT  DWORD   READ  ''
+	ALIGN 004H
+.unwind.encryptBytes.B1_B6	DD	889656577
+	DD	865301
+	DD	943121
+	DD	4060611341
+	DD	20481
+.xdata	ENDS
+.pdata	SEGMENT  DWORD   READ  ''
+	ALIGN 004H
+.pdata.encryptBytes.B1_B6	DD	imagerel .B1.1
+	DD	imagerel .B1.7
+	DD	imagerel .unwind.encryptBytes.B1_B6
+.pdata	ENDS
+_DATA	SEGMENT      'DATA'
+_DATA	ENDS
+; -- End  encryptBytes
+_TEXT	SEGMENT      'CODE'
+_2__routine_start_decryptBytes_1:
+; -- Begin  decryptBytes
+_TEXT	ENDS
+_TEXT	SEGMENT      'CODE'
+; mark_begin;
+
+	PUBLIC decryptBytes
+; --- decryptBytes(uint8_t *, size_t, uint8_t *, const uint8_t *, size_t, uint8_t *)
+decryptBytes	PROC 
+; parameter 1(input): rcx
+; parameter 2(length): rdx
+; parameter 3(output): r8
+; parameter 4(key): r9
+; parameter 5(keyLength): 128 + rbp
+; parameter 6(iv): 136 + rbp
+.B2.1::                         ; Preds .B2.0
+                                ; Execution count [0.00e+000]
+
+;;; int decryptBytes(uint8_t *input, size_t length, uint8_t *output, const uint8_t *key, size_t keyLength, uint8_t *iv) {
+
+L8::
+                                                           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:22.117
+$LN69:
+  000cd 55               push rbp                               ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:22.117
+$LN70:
+  000ce 48 81 ec 80 00 
+        00 00            sub rsp, 128                           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:22.117
+$LN71:
+  000d5 48 8d 6c 24 30   lea rbp, QWORD PTR [48+rsp]            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:22.117
+$LN72:
+  000da 48 89 75 40      mov QWORD PTR [64+rbp], rsi            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:22.117[spill]
+$LN73:
+  000de 48 89 5d 38      mov QWORD PTR [56+rbp], rbx            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:22.117[spill]
+$LN74:
+  000e2 48 89 4d 60      mov QWORD PTR [96+rbp], rcx            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:22.117
+$LN75:
+  000e6 48 89 55 68      mov QWORD PTR [104+rbp], rdx           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:22.117
+$LN76:
+  000ea 4c 89 45 70      mov QWORD PTR [112+rbp], r8            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:22.117
+$LN77:
+  000ee 4c 89 4d 78      mov QWORD PTR [120+rbp], r9            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:22.117
+$LN78:
+
+;;; 
+;;; 	int ctxSize;
+;;; 	ippsAESGetSize(&ctxSize);
+
+  000f2 48 8d 45 00      lea rax, QWORD PTR [rbp]               ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:25.2
+$LN79:
+  000f6 48 89 c1         mov rcx, rax                           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:25.2
+$LN80:
+  000f9 e8 fc ff ff ff  ;       ippsAESGetSize(int *)
+        call      ippsAESGetSize                                ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:25.2
+$LN81:
+                                ; LOE rbp rdi rsp r12 r13 r14 r15 rip eax zmm6 zmm7 zmm8 zmm9 zmm10 zmm11 zmm12 zmm13 zmm14 zmm15
+.B2.9::                         ; Preds .B2.1
+                                ; Execution count [0.00e+000]
+$LN82:
+  000fe 89 45 04         mov DWORD PTR [4+rbp], eax             ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:25.2
+$LN83:
+                                ; LOE rbp rdi rsp r12 r13 r14 r15 rip zmm6 zmm7 zmm8 zmm9 zmm10 zmm11 zmm12 zmm13 zmm14 zmm15
+.B2.2::                         ; Preds .B2.9
+                                ; Execution count [0.00e+000]
+$LN84:
+
+;;; 	IppsAESSpec* pAES = (IppsAESSpec*)(new Ipp8u[ctxSize]);
+
+  00101 8b 45 00         mov eax, DWORD PTR [rbp]               ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:26.20
+$LN85:
+  00104 48 63 c0         movsxd rax, eax                        ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:26.20
+$LN86:
+  00107 48 89 c1         mov rcx, rax                           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:26.20
+$LN87:
+  0010a e8 fc ff ff ff  ;       operator new(unsigned __int64)
+        call      ??2@YAPEAX_K@Z                                ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:26.20
+$LN88:
+                                ; LOE rax rbp rdi rsp r12 r13 r14 r15 rip zmm6 zmm7 zmm8 zmm9 zmm10 zmm11 zmm12 zmm13 zmm14 zmm15
+.B2.10::                        ; Preds .B2.2
+                                ; Execution count [0.00e+000]
+$LN89:
+  0010f 48 89 45 18      mov QWORD PTR [24+rbp], rax            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:26.20
+$LN90:
+                                ; LOE rbp rdi rsp r12 r13 r14 r15 rip zmm6 zmm7 zmm8 zmm9 zmm10 zmm11 zmm12 zmm13 zmm14 zmm15
+.B2.3::                         ; Preds .B2.10
+                                ; Execution count [0.00e+000]
+$LN91:
+  00113 48 8b 45 18      mov rax, QWORD PTR [24+rbp]            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:26.20
+$LN92:
+  00117 48 89 45 20      mov QWORD PTR [32+rbp], rax            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:26.20
+$LN93:
+
+;;; 
+;;; 	ippsAESInit(key, keyLength, pAES, ctxSize);
+
+  0011b 48 8b 45 78      mov rax, QWORD PTR [120+rbp]           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:28.2
+$LN94:
+  0011f 8b 95 80 00 00 
+        00               mov edx, DWORD PTR [128+rbp]           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:28.2
+$LN95:
+  00125 48 8b 4d 20      mov rcx, QWORD PTR [32+rbp]            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:28.2
+$LN96:
+  00129 8b 5d 00         mov ebx, DWORD PTR [rbp]               ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:28.2
+$LN97:
+  0012c 48 89 4d 28      mov QWORD PTR [40+rbp], rcx            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:28.2[spill]
+$LN98:
+  00130 48 89 c1         mov rcx, rax                           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:28.2
+$LN99:
+  00133 48 8b 45 28      mov rax, QWORD PTR [40+rbp]            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:28.2[spill]
+$LN100:
+  00137 49 89 c0         mov r8, rax                            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:28.2
+$LN101:
+  0013a 41 89 d9         mov r9d, ebx                           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:28.2
+$LN102:
+  0013d e8 fc ff ff ff  ;       ippsAESInit(const Ipp8u *, int, IppsAESSpec *, int)
+        call      ippsAESInit                                   ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:28.2
+$LN103:
+                                ; LOE rbp rdi rsp r12 r13 r14 r15 rip eax zmm6 zmm7 zmm8 zmm9 zmm10 zmm11 zmm12 zmm13 zmm14 zmm15
+.B2.11::                        ; Preds .B2.3
+                                ; Execution count [0.00e+000]
+$LN104:
+  00142 89 45 08         mov DWORD PTR [8+rbp], eax             ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:28.2
+$LN105:
+                                ; LOE rbp rdi rsp r12 r13 r14 r15 rip zmm6 zmm7 zmm8 zmm9 zmm10 zmm11 zmm12 zmm13 zmm14 zmm15
+.B2.4::                         ; Preds .B2.11
+                                ; Execution count [0.00e+000]
+$LN106:
+
+;;; 
+;;; 	IppStatus status = ippsAESDecryptCBC(input, output, length, pAES, iv);
+
+  00145 48 8b 45 60      mov rax, QWORD PTR [96+rbp]            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:30.19
+$LN107:
+  00149 48 8b 55 70      mov rdx, QWORD PTR [112+rbp]           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:30.19
+$LN108:
+  0014d 8b 4d 68         mov ecx, DWORD PTR [104+rbp]           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:30.19
+$LN109:
+  00150 48 8b 5d 20      mov rbx, QWORD PTR [32+rbp]            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:30.19
+$LN110:
+  00154 48 8b b5 88 00 
+        00 00            mov rsi, QWORD PTR [136+rbp]           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:30.19
+$LN111:
+  0015b 48 89 74 24 20   mov QWORD PTR [32+rsp], rsi            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:30.19
+$LN112:
+  00160 89 4d 30         mov DWORD PTR [48+rbp], ecx            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:30.19[spill]
+$LN113:
+  00163 48 89 c1         mov rcx, rax                           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:30.19
+$LN114:
+  00166 8b 45 30         mov eax, DWORD PTR [48+rbp]            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:30.19[spill]
+$LN115:
+  00169 41 89 c0         mov r8d, eax                           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:30.19
+$LN116:
+  0016c 49 89 d9         mov r9, rbx                            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:30.19
+$LN117:
+  0016f e8 fc ff ff ff  ;       ippsAESDecryptCBC(const Ipp8u *, Ipp8u *, int, const IppsAESSpec *, const Ipp8u *)
+        call      ippsAESDecryptCBC                             ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:30.19
+$LN118:
+                                ; LOE rbp rdi rsp r12 r13 r14 r15 rip eax zmm6 zmm7 zmm8 zmm9 zmm10 zmm11 zmm12 zmm13 zmm14 zmm15
+.B2.12::                        ; Preds .B2.4
+                                ; Execution count [0.00e+000]
+$LN119:
+  00174 89 45 0c         mov DWORD PTR [12+rbp], eax            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:30.19
+$LN120:
+                                ; LOE rbp rdi rsp r12 r13 r14 r15 rip zmm6 zmm7 zmm8 zmm9 zmm10 zmm11 zmm12 zmm13 zmm14 zmm15
+.B2.5::                         ; Preds .B2.12
+                                ; Execution count [0.00e+000]
+$LN121:
+  00177 8b 45 0c         mov eax, DWORD PTR [12+rbp]            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:30.19
+$LN122:
+  0017a 89 45 10         mov DWORD PTR [16+rbp], eax            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:30.19
+$LN123:
+
+;;; 
+;;; 	//IppStatus status = ippsAESDecryptCTR(input, output, length, pAES, iv, 64);
+;;; 
+;;; 	delete[](Ipp8u*) pAES;
+
+  0017d 48 8b 45 20      mov rax, QWORD PTR [32+rbp]            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:34.2
+$LN124:
+  00181 48 89 c1         mov rcx, rax                           ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:34.2
+$LN125:
+  00184 e8 fc ff ff ff  ;       operator delete(void *)
+        call      ??3@YAXPEAX@Z                                 ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:34.2
+$LN126:
+                                ; LOE rbp rdi rsp r12 r13 r14 r15 rip zmm6 zmm7 zmm8 zmm9 zmm10 zmm11 zmm12 zmm13 zmm14 zmm15
+.B2.13::                        ; Preds .B2.5
+                                ; Execution count [0.00e+000]
+$LN127:
+                                ; LOE rbp rdi rsp r12 r13 r14 r15 rip zmm6 zmm7 zmm8 zmm9 zmm10 zmm11 zmm12 zmm13 zmm14 zmm15
+.B2.6::                         ; Preds .B2.13
+                                ; Execution count [0.00e+000]
+$LN128:
+
+;;; 
+;;; 	return status;
+
+  00189 8b 45 10         mov eax, DWORD PTR [16+rbp]            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:36.2
+$LN129:
+  0018c 48 8b 5d 38      mov rbx, QWORD PTR [56+rbp]            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:36.2[spill]
+$LN130:
+  00190 48 8b 75 40      mov rsi, QWORD PTR [64+rbp]            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:36.2[spill]
+$LN131:
+  00194 48 8d 65 50      lea rsp, QWORD PTR [80+rbp]            ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:36.2
+$LN132:
+  00198 5d               pop rbp                                ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:36.2
+$LN133:
+  00199 c3               ret                                    ;\\Mac\Home\Documents\Studium\6. Semester\Bachelorarbeit\Code\PerformanceTests\Enclave\E_Crypto.cpp:36.2
+$LN134:
+                                ; LOE
+.B2.7::
+$LN135:
+; mark_end;
+decryptBytes ENDP
+$LNdecryptBytes$136:
+$LNdecryptBytes$137:
+_TEXT	ENDS
+.xdata	SEGMENT  DWORD   READ  ''
+	ALIGN 004H
+.unwind.decryptBytes.B1_B6	DD	889656577
+	DD	865301
+	DD	943121
+	DD	4060611341
+	DD	20481
+.xdata	ENDS
+.pdata	SEGMENT  DWORD   READ  ''
+	ALIGN 004H
+.pdata.decryptBytes.B1_B6	DD	imagerel .B2.1
+	DD	imagerel .B2.7
+	DD	imagerel .unwind.decryptBytes.B1_B6
+.pdata	ENDS
+_DATA	SEGMENT      'DATA'
+_DATA	ENDS
+; -- End  decryptBytes
+_DATA	SEGMENT      'DATA'
+_DATA	ENDS
+EXTRN	ippsAESDecryptCBC:PROC
+EXTRN	ippsAESEncryptCBC:PROC
+EXTRN	ippsAESInit:PROC
+EXTRN	ippsAESGetSize:PROC
+EXTRN	??3@YAXPEAX@Z:PROC
+EXTRN	??2@YAPEAX_K@Z:PROC
+EXTRN	__ImageBase:PROC
+	INCLUDELIB <libmmt>
+	INCLUDELIB <LIBCMTD>
+	INCLUDELIB <libirc>
+	INCLUDELIB <svml_dispmt>
+	INCLUDELIB <OLDNAMES>
+	INCLUDELIB <libdecimal>
+	END

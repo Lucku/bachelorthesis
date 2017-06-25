@@ -106,6 +106,13 @@ typedef struct ms_enclaveVByteEncodeEncrypted_t {
 	uint8_t* ms_out;
 } ms_enclaveVByteEncodeEncrypted_t;
 
+typedef struct ms_enclaveVByteEncodeEncryptedPreproc_t {
+	size_t ms_retval;
+	uint8_t* ms_in;
+	size_t ms_length;
+	uint8_t* ms_out;
+} ms_enclaveVByteEncodeEncryptedPreproc_t;
+
 typedef struct ms_enclaveCrypto_t {
 	size_t ms_retval;
 	uint8_t* ms_in;
@@ -592,6 +599,21 @@ static sgx_status_t SGX_CDECL sgx_enclaveVByteEncodeEncrypted(void* pms)
 	return status;
 }
 
+static sgx_status_t SGX_CDECL sgx_enclaveVByteEncodeEncryptedPreproc(void* pms)
+{
+	ms_enclaveVByteEncodeEncryptedPreproc_t* ms = SGX_CAST(ms_enclaveVByteEncodeEncryptedPreproc_t*, pms);
+	sgx_status_t status = SGX_SUCCESS;
+	uint8_t* _tmp_in = ms->ms_in;
+	uint8_t* _tmp_out = ms->ms_out;
+
+	CHECK_REF_POINTER(pms, sizeof(ms_enclaveVByteEncodeEncryptedPreproc_t));
+
+	ms->ms_retval = enclaveVByteEncodeEncryptedPreproc(_tmp_in, ms->ms_length, _tmp_out);
+
+
+	return status;
+}
+
 static sgx_status_t SGX_CDECL sgx_enclaveCrypto(void* pms)
 {
 	ms_enclaveCrypto_t* ms = SGX_CAST(ms_enclaveCrypto_t*, pms);
@@ -770,9 +792,9 @@ err:
 
 SGX_EXTERNC const struct {
 	size_t nr_ecall;
-	struct {void* call_addr; uint8_t is_priv;} ecall_table[16];
+	struct {void* call_addr; uint8_t is_priv;} ecall_table[17];
 } g_ecall_table = {
-	16,
+	17,
 	{
 		{(void*)(uintptr_t)sgx_enclaveJustCopy, 0},
 		{(void*)(uintptr_t)sgx_enclaveNoCopy, 0},
@@ -786,6 +808,7 @@ SGX_EXTERNC const struct {
 		{(void*)(uintptr_t)sgx_enclaveVByte, 0},
 		{(void*)(uintptr_t)sgx_enclaveVByteDecodeEncrypted, 0},
 		{(void*)(uintptr_t)sgx_enclaveVByteEncodeEncrypted, 0},
+		{(void*)(uintptr_t)sgx_enclaveVByteEncodeEncryptedPreproc, 0},
 		{(void*)(uintptr_t)sgx_enclaveCrypto, 0},
 		{(void*)(uintptr_t)sgx_enclaveCompleteProcess, 0},
 		{(void*)(uintptr_t)sgx_encryptBytes, 1},
@@ -795,15 +818,15 @@ SGX_EXTERNC const struct {
 
 SGX_EXTERNC const struct {
 	size_t nr_ocall;
-	uint8_t entry_table[5][16];
+	uint8_t entry_table[5][17];
 } g_dyn_entry_table = {
 	5,
 	{
-		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
-		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
-		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
-		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
-		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
+		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
+		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
+		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
+		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
+		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
 	}
 };
 

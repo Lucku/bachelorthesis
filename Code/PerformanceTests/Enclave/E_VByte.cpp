@@ -144,3 +144,21 @@ size_t enclaveVByte(uint8_t *in, size_t inLength, uint8_t *out, size_t outLength
 
 	return outSize;
 }
+
+size_t enclaveVByteEncodeEncryptedPreproc(uint8_t *in, size_t length, uint8_t *out)
+{
+	uint8_t key[AES_KEY_SIZE] = "123456789012345";
+	uint8_t iv[AES_BLOCK_SIZE] = "123456789012345";
+
+	size_t encodedLength = (length / sizeof(uint32_t)) * 5;
+	encodedLength += encodedLength % 16 == 0 ? 0 : 16 - (encodedLength % 16);
+	uint8_t *encoded = new uint8_t[encodedLength];
+
+	size_t encLength = enclaveVByteEncode(in, length, encoded, encodedLength);
+
+	encryptBytes(encoded, encodedLength, out, key, AES_KEY_SIZE, iv);
+
+	delete[] encoded;
+
+	return encLength + AES_BLOCK_SIZE;
+}

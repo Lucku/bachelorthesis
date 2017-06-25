@@ -49,6 +49,7 @@ size_t completeProcess(uint8_t * in, size_t length, uint8_t *out) {
 	// ********
 
 	// encrypt (8 * length -> 8 * length + AES_BLOCK_SIZE)
+	encLength += encLength % AES_BLOCK_SIZE == 0 ? 0 : AES_BLOCK_SIZE - (encLength % AES_BLOCK_SIZE);
 	Crypto::encryptBytes(encoded, encLength, out, key, AES_KEY_SIZE, iv);
 	delete[] encoded;
 	// ********

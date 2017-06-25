@@ -22,6 +22,7 @@ enclave {
 		/* CRYPTO */
 		/*(05)*/ public size_t enclaveVByteDecodeEncrypted([user_check] uint8_t *in, size_t length, [user_check] uint8_t *out);
 		/*(04)*/ public size_t enclaveVByteEncodeEncrypted([user_check] uint8_t *in, size_t length, [user_check] uint8_t *out);
+		/*HELP*/ public size_t enclaveVByteEncodeEncryptedPreproc([user_check] uint8_t *in, size_t length, [user_check] uint8_t *out);
 		/*(13)*/ public size_t enclaveCrypto([in, size=inLength] uint8_t *in, size_t inLength, [out, size=outLength] uint8_t *out, size_t outLength);
 
 		/* COMBINED PROCESSING */

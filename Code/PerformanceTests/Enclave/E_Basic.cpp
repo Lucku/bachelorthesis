@@ -10,7 +10,7 @@ size_t enclaveIterate(uint8_t *in, size_t length, uint8_t *out) {
 
 	for (unsigned int i = 0; i < length; i++) {
 
-		current = in[i];6
+		current = in[i];
 	}
 
 	return 0;
@@ -60,7 +60,8 @@ size_t enclaveCompleteProcess(uint8_t * in, size_t length, uint8_t *out) {
 	// ********
 
 	// encrypt (8 * length -> 8 * length + AES_BLOCK_SIZE)
-	decryptBytes(encoded, encLength, out, key, AES_KEY_SIZE, iv);
+	encLength += encLength % AES_BLOCK_SIZE == 0 ? 0 : AES_BLOCK_SIZE - (encLength % AES_BLOCK_SIZE);
+	encryptBytes(encoded, encLength, out, key, AES_KEY_SIZE, iv);
 	delete[] encoded;
 	// ********
 

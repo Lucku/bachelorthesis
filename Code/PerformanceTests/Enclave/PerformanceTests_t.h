@@ -26,6 +26,7 @@ size_t enclaveRunLengthEncodeAndSum(uint8_t* in, size_t length, uint8_t* out);
 size_t enclaveVByte(uint8_t* in, size_t inLength, uint8_t* out, size_t outLength);
 size_t enclaveVByteDecodeEncrypted(uint8_t* in, size_t length, uint8_t* out);
 size_t enclaveVByteEncodeEncrypted(uint8_t* in, size_t length, uint8_t* out);
+size_t enclaveVByteEncodeEncryptedPreproc(uint8_t* in, size_t length, uint8_t* out);
 size_t enclaveCrypto(uint8_t* in, size_t inLength, uint8_t* out, size_t outLength);
 size_t enclaveCompleteProcess(uint8_t* in, size_t length, uint8_t* out);
 int encryptBytes(uint8_t* input, size_t length, uint8_t* output, const uint8_t* key, size_t keyLength, uint8_t* iv);
