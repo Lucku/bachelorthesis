@@ -1,4 +1,4 @@
-
+%TODO Buffer statt Datenpuffer
 \chapter{Implementierung}
 
 Bevor konkrete Untersuchungen zu den Leistungsmerkmalen von Intels Technologie ausgewertet werden können, ist es nötig einen Überblick über dessen Einsatz aus Sicht einer Anwendung zu verstehen. In diesem Kapitel wird SGX daher aus Sicht eines Entwicklers untersucht. Das Ziel ist es insgesamt, einen Überblick über die Konzepte zu vermitteln, welche zur Implementierung einer vollständigen Anwendung zum Einsatz kommen, sowie detaillierter auf die auftretenden Besonderheiten einzugehen.
@@ -19,7 +19,6 @@ Der Kontrollfluss passiert die Grenzen der Enclave durch zwei Arten von Funktion
 
 \paragraph{OCALL (Out Call)} Ausgehend von der Enclave erfolgt ein Funktionsaufruf in der unsicheren Anwendung.
 
-\paragraph{}
 Die Festlegung, welche Funktionen nach jeweiligem Schema aufgerufen werden dürfen, erfolgt von Seiten der Enclave. Alle für einen ECALL zulässigen Funktionen sind entsprechend in ihr implementiert, jene als OCALL angegebene müssen durch das uRTS zur Verfügung gestellt werden. Die möglichen Szenarien zum Einsatz eines OCALLs sind etwa die Ein- und Ausgabe von Daten über die Konsole, oder die Synchronisation von Threads. Wie später erklärt wird, sind jene Operationen nicht von innerhalb einer Enclave möglich. Ein Schema über den beschriebenen Kontrollfluss in einer SGX Anwendung ist in Abbildung \ref{fig:sgxcontrolflow} gezeigt.
 
 \begin{figure}[h]
@@ -159,6 +158,7 @@ Die aus der C++ Programmierung bekannten und wichtigen Sprachelemente werden wei
 
 Während mehrere Threads problemlos die Enclave passieren dürfen, gilt entsprechend der Entkopplung vom Betriebssystem, dass jegliche Threads außerhalb der tRTS erzeugt werden müssen. Um eine Synchronisation paralleler Abläufe zu ermöglichen, ist an dieser Stelle noch erwähnenswert, dass Intel eine Sammlung von Funktionen und Objekten wie \textit{Spin Locks} und \textit{Mutexen} bereitstellt.
 
+%TODO Unterkapitel möglicherweise integrieren
 \subsection{Systemtest}
 
 Um ein Bild zu erhalten, in welchem Umfang der Einsatz von SGX zur Erstellung einer sicheren Programmkomponente genutzt werden kann, wurden die zur Verfügung stehenden Mittel getestet und evaluiert. Nachfolgend erfolgt eine kurze Auswertung der erhaltenen Erkenntnisse.

@@ -11,9 +11,9 @@ pp.rcParams['font.sans-serif'] = "Univers"
 pp.rcParams['text.latex.unicode'] = True
 
 # -------------- Configuration -------------- #
-title = u'Eval3'
-file1 = 'iterate_u_b.csv'
-file2 = 'iterate_t_b.csv'
+title = u'Eval7'
+file1 = 'rlesum_u_b.csv'
+file2 = 'rlesum_t_b.csv'
 label1 = u'Regulär'
 label2 = u'SGX Enclave'
 xAxis = 'Data'
@@ -24,8 +24,8 @@ windowSize = 50
 fontsize = 20
 # ------------------------------------------- #
 
-spy1 = pd.read_csv('x64/Real Results/' + file1)
-spy2 = pd.read_csv('x64/Real Results/' + file2)
+spy1 = pd.read_csv('x64/Real Results/' + file1).multiply(4)
+spy2 = pd.read_csv('x64/Real Results/' + file2).multiply(4)
 #spy3 = pd.read_csv("x64/Real Results/crypto_no_copy_t_b.csv")
 #spy4 = pd.read_csv("../Simulation/decompression_t_s.csv")
 

@@ -1,27 +1,95 @@
 
 \chapter{Evaluierung}
-%TODO Intro
 
-\begin{itemize}
-	\item Einheit: MIOPS
-\end{itemize}
+Wie bereits in den vorangegangenen Kapiteln betrachtet wurde, verspricht Intel SGX das Aufweisen guter Sicherheitsmerkmale und eine leichte Systemintegration. Obwohl der herkömmliche Einsatzzweck eher auf die reine Speicherung sensibler Daten beruht, ist es das Ziel dieser Arbeit zu untersuchen, ob es sinnvoll ist, Intel SGX im Zuge der Anfrageverarbeitung in einem hauptspeicherbasierten Datenbanksystem einzusetzen. In diesem Kapitel erfolgt eine Bewertung dieses Anwendungsfalls anhand von Leistungsbenchmarks verschiedener Szenarien der Datenverarbeitung.
+
+Zunächst wird hierzu eine Einführung in das Konzept der Untersuchungen gegeben. Die darauffolgenden Abschnitte befassen sich jeweils mit den konkreten Punkten des Testplans, wobei die erfassten Ergebnisse gezeigt und Beobachtungen getroffen werden. In einem abschließenden Fazit erfolgt eine Auswertung jener Ergebnisse.
 
 \section{Konzept}
-%TODO Was ist in unserem Kontext sinnvoll zu untersuchen und warum?
 
-\begin{itemize}
-	\item jeweils Bulkverarbeitung anstatt einzeln
-	\item jegliche Optimierungen wurden zu Zwecken der Gleichheit im Compiler deaktiviert
-\end{itemize}
+Der folgende Abschnitt befasst sich mit dem konzeptionellen Vorgehen bei der Durchführung der einzelnen Untersuchungen. Es wird zunächst der Frage nachgegangen, welche Tests in dem vorliegenden Kontext sinnvoll sind. Somit liegt ein konkreter Testplan vor, dessen Ergebnisse nachfolgend sukzessive beschrieben werden können. Im zweiten Abschnitt wird die eingesetzte Testumgebung aus Sicht von Soft- und Hardware beschrieben. Hierbei wird vor allem kurz auf wichtige Herangehensweisen in der Implementierung eingegangen.
 
 \subsection{Untersuchungen}
-\subsection{Testumgebung}
+
+Die Datenverarbeitung innerhalb der Enclave wird im Folgenden durch das allgemeine Schema in Abbildung \ref{fig:scenarios} modelliert.
+\begin{figure}[h]
+	\includegraphics[width=0.9\linewidth]{img/EvalScenarios.pdf}
+	\centering
+	\caption{Allgemeines Szenario der Datenverarbeitung}
+	\label{fig:scenarios}
+\end{figure} 
+Es beinhaltet die einzelnen Teilschritte, welche zu einem vollständigen Berechnungsprozess gehören, beginnend mit dem Transfer von gespeicherten und Basisdaten in die sichere Komponente der Enclave. In unserem Kontext liegt ein nicht vertrauenswürdiges Umfeld vor. Es wird daher die Annahme getroffen, dass jene Basisdaten stets in einer verschlüsselten Form vorliegen. Die Zwischenschritte ergeben sich dann wie folgt:
+
+\paragraph{Kopieren}
+Die Basisdaten werden zu Beginn in die Enclave transferiert. Auf technischer Ebene erfolgt dies durch ein Kopieren des Buffers in den gesicherten Speicher. Zum Ende der Verarbeitung erfolgt ein entsprechendes Zurückkopieren des Endergebnisses in die unsichere Domäne.
+
+\paragraph{Entschlüsseln/Verschlüsseln}
+Sobald sich die Daten in der Enclave befinden, müssen sie zunächst unter Hinzunahme eines geheimen, gespeicherten Schlüsseln entschlüsselt werden, um eine Verarbeitung zu ermöglichen. Nachdem die Arbeit auf den Daten beendet wurde, wird wieder eine Verschlüsselung vorgenommen, um die ausgehenden Daten zu schützen.
+
+\paragraph{Verarbeiten}
+Die eigentliche Verarbeitung findet auf den Klartextdaten statt und beinhaltet eine einzelne oder Abfolge von Operationen. Im zweiten Fall entstehen unverschlüsselte Zwischenergebnisse.
+
+\paragraph{}
+Die Schritte vor und nach der eigentlichen Verarbeitung sind offensichtlich mit einem gewissen rechnerischen Aufwand verbunden. Von daher ist es erstrebenswert, möglichst viele der zu verarbeitenden Daten auf einmal zu Kopieren und in der Enclave zu halten. Demgegenüber steht allerdings der stark eingeschränkte Speicherplatz, welcher im PRM zur Verfügung steht. Ein Weg, dem entgegenzuwirken ist der Einsatz von den in Kapitel 3 beschriebenen Kompressionsverfahren. Sie ermöglichen eine Reduzierung der Datenmenge im sicheren Bereich auf Kosten eines weiteren Berechnungsschrittes je für die Komprimierung und Dekomprimierung. Nach Zunahme dieser Schritte ergibt sich das Schema in Abbildung \ref{fig:scenariocomp} Je nach Art der eigentlichen Berechnung ist es mitunter möglich, direkt auf den komprimierten Daten zu arbeiten. Dazu wurde beispielsweise die Bildung des Summenaggregats auf einer lauflängenkodierten Menge betrachtet. Sollte dies nicht der Fall sein, beinhaltet die Menge an Operationen im Verarbeitungsschritt weitere (De)komprimierungsschritte.
+
+\begin{figure}[h]
+	\includegraphics[width=\linewidth]{img/EvalScenariosComp.pdf}
+	\centering
+	\caption{Szenario der Datenverarbeitung mit (De)komprimierung}
+	\label{fig:scenariocomp}
+\end{figure}
+
+Ebenso denkbar ist, dass die Basisdaten bereits in einer komprimierten Form vorliegen, wie dies in einer In-Memory Datenbank durchaus üblich ist. In diesem Fall ist ein Kompressionsschritt vor der Verarbeitung nicht obligatorisch. Stattdessen kann sogar erst eine Dekomprimierung stattfinden, sollte es nicht anders möglich sein die Berechnungen durchzuführen. Denkbar ist dann auch eine Kompression unter Nutzung eines anderen Verfahrens oder eine Doppelte. Ein Vorteil ist dadurch gegeben, dass kleinere Datenmengen in die Enclave kopiert werden müssen, was außerdem in einer schnelleren Entschlüsselung resultiert. Nach der Verarbeitung kann es durchaus möglich sein, dass die Daten auch weiterhin komprimiert bleiben. Üblicherweise findet hier jedoch wieder eine Dekomprimierung der Ergebnisdaten in die ursprüngliche Repräsentation statt, bevor es zur Verschlüsselung und dem Kopieren geht.
+
+Der Vollständigkeit halber muss an dieser Stelle auch angemerkt werden, dass eigenschaftserhaltende Verschlüsselungsverfahren ihren Einsatz finden können, um einen Teil des Aufwandes durch Ver- bzw. Entschlüsselungen einzusparen. Ein mögliches Szenario wäre das Auftreten von Speicherknappheit in der Enclave, wodurch ein Teil der Daten zunächst ausgelagert werden müsste. Da ohnehin eine vorausgehende Verschlüsselung notwendig ist, kann beispielsweise ein deterministisches Verschlüsselungsschema angewandt werden. Dies erlaubt eine parallele Bearbeitung außerhalb der Enclave, bevor es zu einem erneuten Transfer einschließlich Kopiervorgang und Verschlüsselung kommt. Im Falle des deterministischen Verfahrens wäre es etwa möglich, Gleichheitsprädikate zu prüfen und einen Join zwischen zwei Spalten durchzuführen. 
+
+Es wird klar, dass es durchaus eine große Fülle von weiteren Szenarien geben kann. In Bezug auf die Untersuchungen wird sich daher auf die geläufigsten beschränkt. Bei Betrachtung der beiden aufgeführten Schemata sind stets zwei Kopiervorgänge am Gesamtablauf beteiligt. In Kapitel 4 wurden diese als Sicherheitsmaßnahme vorgestellt, welche durch die Edge Routines realisiert wird. Mit dem Setzen des user\textunderscore check Attributs an den Funktionsargumenten wurde zudem ein Mechanismus vorgestellt, welcher ein direktes Arbeiten auf den Daten ohne Kopieren ermöglicht. Demzufolge ergibt sich das in Abbildung \ref{fig:scenarionocopy} gezeigte Schema. Beide Varianten werden zunächst ohne jegliche weitere Verarbeitungsschritte verglichen. Daraufhin kommen der Ent- und Verschlüsselungsschritt hinzu. Zusammengefasst werden die beiden Tests als enclaveinterne Untersuchungen. Das Ziel ist es, herauszufinden, wie groß der durch das Kopieren der Buffer entstehende Overhead ist.
+
+\begin{figure}[h]
+	\includegraphics[width=0.7\linewidth]{img/EvalScenariosNoCopy.pdf}
+	\centering
+	\caption{Szenario der Datenverarbeitung ohne Kopiervorgänge}
+	\label{fig:scenarionocopy}
+\end{figure}
+
+Die darauffolgende Reihe an Tests beschäftigt sich mit dem Aspekt der konkreten Datenverarbeitung. Es wird dabei jeweils ein Ablauf in der Enclave mit einer gleichen Abfolge innerhalb eines regulären Programms verglichen. Anstelle des Verarbeitungsschrittes werden Operationen aus den folgenden Bereichen eingesetzt:
+
 \begin{itemize}
-	\item Intel Performance Library Cryptography eingesetzt
-	\item Anwendungen mit Intel Compiler erstellt
+	\item Allgemeine Datenverarbeitung
+	\begin{itemize}
+		\item Iteration über die Datenmenge
+	\end{itemize}
+	\item Einfache Kompressionsverfahren
+	\begin{itemize}
+		\item VByte (De)kompression
+		\item Lauflängen(de)kodierung
+	\end{itemize}
 \end{itemize}
 
-\section{Enclave interne Untersuchungen}
+Der Kernpunkt dieser Untersuchungen ist herauszufinden, ob die Leistung signifikant durch die sicheren Berechnungen beeinflusst wird. Interessant ist auch, ob die einzelnen Verfahren gewisse Merkmale aufweisen, welche eine Verarbeitung mittels SGX zusätzlich erschweren. Die Zwischenschritte zur Ent- und Verschlüsselung werden zunächst außer Acht gelassen, um einen besseren Eindruck über die jeweilige Operation und das Zusammenspiel mit dem im Falle der Enclave auftretenden Kopiervorgang zu bekommen.
+
+Die dritte Menge von Untersuchungen widmet sich hingegen einer Einbeziehung der kryptographischen Funktionalität. Im Vordergrund steht dessen Kombination mit einer verarbeitenden Operation. Um zu testen, wie die Leistung der kryptographischen Algorithmen abschneidet, wird als erstes das in Abbildung \ref{fig:scenarionocopy} aufgegriffen, in einem herkömmlichen Umfeld durchgeführt und mit dem Verlauf in der Enclave verglichen. Daraufhin wird jeweils die Kompression durch VByte mit der Ent- und Verschlüsselung kombiniert. Das Kopieren wird in allen drei Fällen außer Acht gelassen.
+
+Um ein Gesamtbild von der Leistung unter SGX zu erhalten, wird abschließend ein komplexer Vorgang getestet. Das Ziel ist es herauszufinden, wie gut die Technologie in einer längeren Berechnung abschneidet, während die Bedingungen gegenüber einer regulären Durchführung möglichst identisch sind. Daher findet auch hier kein Kopiervorgang statt.
+%TODO Mitunter ein paar der oberen Details in die einzelnen Beschreibungen der Settings auslagern
+\subsection{Testumgebung}
+\begin{itemize}
+	\item Einheit: MIOPS
+	\item wobei in nachfolgenden Berechnungen ein Integer = 1 Byte, da Eingabewerte oft unterschiedlich sind
+	\item Intel Integrated Performance Primitives Library Cryptography eingesetzt
+	\item bieten hoch optimierte Kryptoimplementierungen an, welche alle Befehlssatzerweiterungen von Intel nutzen
+	\item AES CBC128 als Algorithmus
+	\item Anwendungen mit Intel Compiler erstellt
+	\item jegliche Optimierungen wurden zu Zwecken der Gleichheit im Compiler deaktiviert
+	\item jeweils Bulkverarbeitung anstatt einzeln
+	\item Begründung: EInzelverarbeitung macht in Enclave überhaupt keinen Sinn durch die vielen Funktionsaufrufe
+	\item jeweils Mittelwert aus 200 Werten
+	\item Hardwarespezifikation als Liste
+	\item Prozessor: ...
+	\item Arbeitsspeicher: ...
+\end{itemize}
+
+\section{Enclaveinterne Untersuchungen}
 \subsubsection{Overhead beim Kopieren der Daten in und aus Enclave}
 
 \begin{itemize}
@@ -49,7 +117,14 @@
 \end{itemize}
 
 \section{Datenverarbeitung in der Enclave}
-\subsubsection{Allgemein}
+
+\begin{itemize}
+	\item Fokus auf die Operation im allgemeinen Modell
+	\item Verschlüsselung wird außer Acht gelassen
+	\item Kopieren -> Operation -> Kopieren
+\end{itemize}
+
+\paragraph{Allgemein}
 
 \begin{itemize}
 	\item \textbf{(3)} Iteration über Datenmengen 
@@ -60,7 +135,9 @@
 		\label{fig:eval3}
 	\end{figure}
 \end{itemize}
-\subsubsection{Einfache Kompressionsverfahren}
+
+\paragraph{Einfache Kompressionsverfahren}
+
 \begin{itemize}
 	\item \textbf{(4)} VByte Kompression außerhalb vs. in Enclave
 	\begin{figure}[h]
@@ -116,9 +193,16 @@
 
 \end{itemize}
 \section{Kryptographische Verarbeitung}
-\begin{itemize}
+\begin{itemize}	
+	\item \textbf{(10)} Entschlüsselung und Verschlüsselung außerhalb vs. in Enclave
+	\begin{figure}[h]
+		\includegraphics[width=\linewidth]{img/Eval12.pdf}
+		\centering
+		\caption{Vergleich Entschlüsselung und Verschlüsselung außerhalb und innerhalb der Enclave (ohne Kopieren)}
+		\label{fig:eval12}
+	\end{figure}
 	
-	\item \textbf{(10)} Entschlüsselung und Dekomprimierung außerhalb vs. in Enclave
+	\item \textbf{(11)} Entschlüsselung und Dekomprimierung außerhalb vs. in Enclave
 	\begin{figure}[h]
 		\includegraphics[width=\linewidth]{img/Eval10.pdf}
 		\centering
@@ -126,7 +210,7 @@
 		\label{fig:eval10}
 	\end{figure}
 	
-	\item \textbf{(11)} Komprimierung und Verschlüsselung außerhalb vs. in Enclave
+	\item \textbf{(12)} Komprimierung und Verschlüsselung außerhalb vs. in Enclave
 	\begin{figure}[h]
 		\includegraphics[width=\linewidth]{img/Eval11.pdf}
 		\centering
@@ -134,14 +218,8 @@
 		\label{fig:eval11}
 	\end{figure}
 	
-	\item \textbf{(12)} Entschlüsselung und Verschlüsselung außerhalb vs. in Enclave
-	\begin{figure}[h]
-		\includegraphics[width=\linewidth]{img/Eval12.pdf}
-		\centering
-		\caption{Vergleich Entschlüsselung und Verschlüsselung außerhalb und innerhalb der Enclave (ohne Kopieren)}
-		\label{fig:eval12}
-	\end{figure}
 \end{itemize}
+
 \section{Kombinierte Verarbeitungsschritte}
 
 \begin{itemize}
@@ -157,3 +235,8 @@
 
 \section{Fazit}
 %TODO notes
+
+\begin{itemize}
+	\item auf Messfehler eingehen
+	\item Vermutung: Größe der Unterschiede zwischen den einzelnen Algorithmen voranging begründet durch den zu kopierenden Buffer am Ende (je Größer Verhältnis |Ausgabewerte|/|Eingabewerte|, je größer die Differenz)
+\end{itemize}

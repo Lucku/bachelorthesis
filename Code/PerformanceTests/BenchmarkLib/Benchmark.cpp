@@ -48,9 +48,9 @@ void Benchmark::benchmark(const char *file, bytefunc f, sizefunc s, int testRang
 		uint64_t time = singleBenchmark(f, in, i, out);
 
 		switch (mode) {
-		case TIME:	data	<< i / stepSize << "," << time << std::endl;												break;
-		case MIOPS: data	<< i / stepSize << "," << (((double)i) * 1000) / (time * stepSize) << std::endl;			break;
-		default:	data	<< i / stepSize << "," << (((double)i) * 1000000000)	/ (time * stepSize) << std::endl;
+		case TIME:	data	<< i << "," << time << std::endl;									break;
+		case MIOPS: data	<< i << "," << (((double)i) * 1000) / time << std::endl;			break;
+		default:	data	<< i << "," << (((double)i) * 1000000000)	/ time << std::endl;
 		}
 
 		delete[] in;

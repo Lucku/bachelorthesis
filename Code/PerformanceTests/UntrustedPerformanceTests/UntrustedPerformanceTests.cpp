@@ -15,8 +15,8 @@ int main()
 	b->registerFunction(iterate, IDENT, "iterate", 1);
 	b->registerFunction(vByteEncode, DIVMULT(4, 5), "compression", 4);
 	b->registerFunctionWithPreprocessing(vByteDecode, MULT(4), vByteEncode, MULT(5), "decompression", 1);
-	b->registerFunction(vByteEncodeEncrypted, DIVMULTADD(4, 5, AES_BLOCK_SIZE), "compression_enc", 4);
-	b->registerFunctionWithPreprocessing(vByteDecodeEncrypted, MULT(4), vByteEncodeEncryptedPreproc, MULTADD(5, AES_BLOCK_SIZE), "decompression_enc", 1);
+	b->registerFunction(vByteEncodeEncrypted, DIVMULTADD(4, 5, AES_BLOCK_SIZE), "compression_enc", 16);
+	b->registerFunctionWithPreprocessing(vByteDecodeEncrypted, MULT(4), vByteEncodeEncryptedPreproc, MULTADD(5, AES_BLOCK_SIZE), "decompression_enc", 16);
 	b->registerFunction(runLengthEncode, MULT(2), "runlengthencode", 4);
 	b->registerFunctionWithPreprocessing(runLengthDecode, MULT(6), runLengthEncode, MULT(2), "runlengthdecode", 8);
 	b->registerFunction(runLengthEncodeAndSum, CONSTANT(8), "rlesum", 4);

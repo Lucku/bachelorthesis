@@ -24,8 +24,8 @@ int main()
 	b->registerFunction(ecall(eid, enclaveIterate), IDENT, "iterate", 1);
 	b->registerFunction(ecall(eid, enclaveVByteEncode, DIVMULT(4, 5)), DIVMULT(4, 5), "compression", 4);
 	b->registerFunctionWithPreprocessing(ecall(eid, enclaveVByteDecode, MULT(4)), MULT(4), ecall(eid, enclaveVByteEncode, MULT(5)), MULT(5), "decompression", 1);
-	b->registerFunction(ecall(eid, enclaveVByteEncodeEncrypted), DIVMULTADD(4, 5, AES_BLOCK_SIZE), "compression_enc", 4);
-	b->registerFunctionWithPreprocessing(ecall(eid, enclaveVByteDecodeEncrypted), MULT(4), ecall(eid, enclaveVByteEncodeEncryptedPreproc), MULTADD(5, AES_BLOCK_SIZE), "decompression_enc", 1);
+	b->registerFunction(ecall(eid, enclaveVByteEncodeEncrypted), DIVMULTADD(4, 5, AES_BLOCK_SIZE), "compression_enc", 16);
+	b->registerFunctionWithPreprocessing(ecall(eid, enclaveVByteDecodeEncrypted), MULT(4), ecall(eid, enclaveVByteEncodeEncryptedPreproc), MULTADD(5, AES_BLOCK_SIZE), "decompression_enc", 16);
 	b->registerFunction(ecall(eid, enclaveRunLengthEncode, MULT(2)), MULT(2), "runlengthencode", 4);
 	b->registerFunctionWithPreprocessing(ecall(eid, enclaveRunLengthDecode, MULT(6)), MULT(6), ecall(eid, enclaveRunLengthEncode, MULT(2)), MULT(2), "runlengthdecode", 8);
 	b->registerFunction(ecall(eid, enclaveRunLengthEncodeAndSum), CONSTANT(8), "rlesum", 4);
