@@ -11,37 +11,32 @@ pp.rcParams['font.sans-serif'] = "Univers"
 pp.rcParams['text.latex.unicode'] = True
 
 # -------------- Configuration -------------- #
-title = u'Eval1'
-file1 = 'no_copy_t_b.csv'
-file2 = 'just_copy_t_b.csv'
-label1 = u'Kein Kopieren'
-label2 = u'Kopieren'
+title = u'Eval10'
+file1 = 'decompression_enc_u_b.csv'
+file2 = 'decompression_enc_t_b.csv'
+label1 = u'Regulär'
+label2 = u'SGX Enclave'
 xAxis = 'Data'
 xLabel = r'\textbf{Bytes}'
 yAxis = 'MIOPS'
-yLabel = r'\textbf{MIPS}'
-windowSize = 50
+yLabel = r'\textbf{Millionen Integer Operationen je Sekunde}'
+windowSize = 1000
 fontsize = 20
 # ------------------------------------------- #
 
-spy1 = pd.read_csv('x64/Real Results/' + file1)
-spy2 = pd.read_csv('x64/Real Results/' + file2)
+spy1 = pd.read_csv('malloc_u_b.csv')
 #spy3 = pd.read_csv("x64/Real Results/crypto_no_copy_t_b.csv")
 #spy4 = pd.read_csv("../Simulation/decompression_t_s.csv")
 
 spy1.set_index(xAxis, inplace=True)
-spy2.set_index(xAxis, inplace=True)
 #spy3.set_index(xAxis, inplace=True)s
 #spy4.set_index(xAxis, inplace=True)
 
-diff = spy1.subtract(spy2)
 
 #diff = pd.concat([spy1, spy2]).groupby(level=0).transform(Series.diff)
 #diff.set_index(xAxis, inplace=True)
 
 spy1[yAxis].rolling(window=windowSize).mean().plot(figsize=(16,8), label=label1, fontsize=fontsize)
-spy2[yAxis].rolling(window=windowSize).mean().plot(figsize=(16,8), label=label2)
-diff[yAxis].rolling(window=windowSize * 5).mean().plot(figsize=(16,8), label='Differenz')
 #spy3[yAxis].rolling(window=windowSize).mean().plot(figsize=(16,12), label="Innerhalb von SGX Enclave (Ohne Kopieren)", color='orange')
 #spy4[yAxis].rolling(window=windowSize).mean().plot(figsize=(16,12), label="sgx single processing")
 

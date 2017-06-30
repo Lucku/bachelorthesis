@@ -171,7 +171,7 @@ void BenchmarkSuite::start()
 	std::cout << "Choose test range maximum of bytes: [default: 200000]" << std::endl;
 	int testRange = readIntFromConsole(DEFAULT_BM_BIG);
 
-	if (testRange < 1 || testRange > DEFAULT_BM_BIG) goto error;
+	if (testRange < 1) goto error;
 
 	if (func == size + 1) {
 
