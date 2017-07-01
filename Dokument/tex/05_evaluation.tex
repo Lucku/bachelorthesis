@@ -11,7 +11,7 @@ Der folgende Abschnitt befasst sich mit dem konzeptionellen Vorgehen bei der Dur
 
 \subsection{Untersuchungen}
 
-Die Datenverarbeitung innerhalb der Enclave wird im Folgenden durch das allgemeine Schema in Abbildung \ref{fig:scenarios} modelliert.
+Die Datenverarbeitung innerhalb der Enclave wird im Folgenden durch das allgemeine Schema des Datenflusses in Abbildung \ref{fig:scenarios} modelliert.
 \begin{figure}[h]
 	\includegraphics[width=0.9\linewidth]{img/EvalScenarios.pdf}
 	\centering
@@ -43,7 +43,7 @@ Ebenso denkbar ist, dass die Basisdaten bereits in einer komprimierten Form vorl
 
 Der Vollständigkeit wegen muss an dieser Stelle auch angemerkt werden, dass eigenschaftserhaltende Verschlüsselungsverfahren ihren Einsatz finden können, um einen Teil des Aufwandes durch Ver- bzw. Entschlüsselungen einzusparen. Ein mögliches Szenario wäre das Auftreten von Speicherknappheit in der Enclave, wodurch ein Teil der Daten zunächst ausgelagert werden müsste. Da ohnehin eine vorausgehende Verschlüsselung notwendig ist, kann beispielsweise ein deterministisches Verschlüsselungsschema angewandt werden. Dies erlaubt eine parallele Bearbeitung außerhalb der Enclave, bevor es zu einem erneuten Transfer einschließlich Kopiervorgang und Verschlüsselung kommt. Im Falle des deterministischen Verfahrens wäre es etwa möglich, Gleichheitsprädikate zu prüfen und einen Join zwischen zwei Spalten durchzuführen. 
 
-Es wird klar, dass es durchaus eine große Fülle von weiteren Szenarien geben kann. In Bezug auf die Untersuchungen wird sich daher auf die geläufigsten beschränkt. Bei Betrachtung der beiden aufgeführten Schemata sind stets zwei Kopiervorgänge am Gesamtablauf beteiligt. In Kapitel 4 wurden diese als Sicherheitsmaßnahme vorgestellt, welche durch die Edge Routines realisiert wird. Mit dem Setzen des user\textunderscore check Attributs an den Funktionsargumenten wurde zudem ein Mechanismus vorgestellt, welcher ein direktes Arbeiten auf den Daten ohne Kopieren ermöglicht. Demzufolge ergibt sich das in Abbildung \ref{fig:scenarionocopy} gezeigte Schema. Beide Varianten werden zunächst ohne einen konkreten Verarbeitungsschritt verglichen. Die beiden hierzu getätigten Tests werden als enclaveinterne Untersuchungen zusammengefasst. Das Ziel ist es, herauszufinden, wie groß der durch das Kopieren der Buffer entstehende Overhead ist.
+Es wird klar, dass es durchaus eine große Fülle von weiteren Szenarien geben kann. In Bezug auf die Untersuchungen wird sich daher auf die geläufigsten beschränkt. Bei Betrachtung der beiden aufgeführten Datenflussschemata sind stets zwei Kopiervorgänge am Gesamtablauf beteiligt. In Kapitel 4 wurden diese als Sicherheitsmaßnahme vorgestellt, welche durch die Edge Routines realisiert wird. Mit dem Setzen des user\textunderscore check Attributs an den Funktionsargumenten wurde zudem ein Mechanismus vorgestellt, welcher ein direktes Arbeiten auf den Daten ohne Kopieren ermöglicht. Demzufolge ergibt sich das in Abbildung \ref{fig:scenarionocopy} gezeigte Schema. Beide Varianten werden zunächst ohne einen konkreten Verarbeitungsschritt verglichen. Die beiden hierzu getätigten Tests werden als enclaveinterne Untersuchungen zusammengefasst. Das Ziel ist es, herauszufinden, wie groß der durch das Kopieren der Buffer entstehende Overhead ist.
 
 \begin{figure}[h]
 	\includegraphics[width=0.7\linewidth]{img/EvalScenariosNoCopy.pdf}
@@ -156,13 +156,13 @@ Als erstes wird mit der Iteration über die Eingabemenge ein Verfahren untersuch
 	\label{fig:eval3}
 \end{figure}
 
-Es ist diesmal gut zu erkennen, dass die Anlaufphasen der beiden Kurven sehr unterschiedlich verlaufen. Die Berechnung außerhalb einer Enclave erreicht schon sehr zeitig bei einer Datenmenge von 5000 Byte seine tatsächliche Verarbeitungsrate von 750 MIPS. Die grüne Kurve hingegen weist erst ab ca. 25000 Byte einen ungefähr konstanten Wert auf. Der ECALL besteht insgesamt aus mehreren Funktionsaufrufen durch die Edge Routines, dessen Kern der eigentliche Funktionsaufruf in die Enclave bildet. Jener verhält sich wie ein Sprung in den Kernel Mode und ist mit entsprechendem Aufwand verbunden. So müssen etwa alte Registerinhalte gesichert und der eintretende logische Prozessor an eine Thread Control Structure gebunden werden. Somit nimmt die reine Prozedur des ECALLs deutlich mehr zeit in Anspruch und hat stets einen höheren Anteil an der Gesamtdauer als dies beim Funktionsaufruf in einer regulären Ausführung der Fall ist. Die Datenrate erreicht letztlich jedoch einen Wert von 680 MIPS und liegt somit nur 70 MIPS tiefer. Dies ist geringer als der Offset, welcher in der vorigen Untersuchung beobachtet wurde. Die Bedingungen der beiden Untersuchungen sind bezüglich des Kopiervorganges identisch, d.h. die Ausgabebuffer sind jeweils in beiden Fällen so groß wie die Eingabe, wodurch der Kopiervorgang die gleiche Zeit beansprucht. Ausschlaggebend sind jedoch die signifikant geringeren Datenraten des eigentlichen Verarbeitungsschrittes. Folglich nimmt der Kopiervorgang anteilig weniger Zeit am Gesamtprozess in Anspruch. Sobald auch die grüne Kurve den Grenzwert erreicht hat, macht jener quasi den einzigen Unterschied im Vergleich aus der beiden Durchgänge aus.
+Es ist diesmal gut zu erkennen, dass die Anlaufphasen der beiden Kurven sehr unterschiedlich verlaufen. Die Berechnung außerhalb einer Enclave erreicht schon sehr zeitig bei einer Datenmenge von 5000 Byte seine tatsächliche Verarbeitungsrate von 750 MIPS. Die grüne Kurve hingegen weist erst ab ca. 25.000 Byte einen ungefähr konstanten Wert auf. Der ECALL besteht insgesamt aus mehreren Funktionsaufrufen durch die Edge Routines, dessen Kern der eigentliche Funktionsaufruf in die Enclave bildet. Jener verhält sich wie ein Sprung in den Kernel Mode und ist mit entsprechendem Aufwand verbunden. So müssen etwa alte Registerinhalte gesichert und der eintretende logische Prozessor an eine Thread Control Structure gebunden werden. Somit nimmt die reine Prozedur des ECALLs deutlich mehr zeit in Anspruch und hat stets einen höheren Anteil an der Gesamtdauer als dies beim Funktionsaufruf in einer regulären Ausführung der Fall ist. Die Datenrate erreicht letztlich jedoch einen Wert von 680 MIPS und liegt somit nur 70 MIPS tiefer. Dies ist geringer als der Offset, welcher in der vorigen Untersuchung beobachtet wurde. Die Bedingungen der beiden Untersuchungen sind bezüglich des Kopiervorganges identisch, d.h. die Ausgabebuffer sind jeweils in beiden Fällen so groß wie die Eingabe, wodurch der Kopiervorgang die gleiche Zeit beansprucht. Ausschlaggebend sind jedoch die signifikant geringeren Datenraten des eigentlichen Verarbeitungsschrittes. Folglich nimmt der Kopiervorgang anteilig weniger Zeit am Gesamtprozess in Anspruch. Sobald auch die grüne Kurve den Grenzwert erreicht hat, macht jener quasi den einzigen Unterschied im Vergleich aus der beiden Durchgänge aus.
 
 \paragraph{Einfache Kompressionsverfahren}
 
 An dieser Stelle wird die Verarbeitung durch jeweils eines der in Kapitel 3 betrachteten Kompressionsverfahren, der einfachen Lauflängenkodierung und VByte übernommen. Getestet wurde zunächst jeweils die Dekompression und Kompression. Im Falle von VByte wurde zudem ein kombinierter Ablauf aus beiden Vorgängen untersucht. Auf diese Weise soll der Fall nachgebildet werden, dass die Basisdaten zum Zwecke des Einsparens an Speicherplatz zunächst komprimiert und nach der eigentlichen Verarbeitung wieder dekomprimiert werden, so wie dies im Schema in Abbildung \ref{fig:scenariocomp} betrachtet wurde.
 
-Zum Testen der VByte Kompression wurden zufällig generierte Daten bereitgestellt, deren Größe ein Vielfaches von 4 Byte (32 Bit) aufweist. Dies ist nötig, da VByte in der eingesetzten Form auf entsprechend großen Integern arbeitet. Die Verläufe der Verarbeitungsgeschwindigkeit sind in \ref{fig:eval4} zu sehen. Da es sich bei den eingehenden Daten um zufällige Werte handelt, ist mit Sicherheit davon auszugehen, dass keine guten Kompressionsraten entstanden sind und die Berechnung stets entfernt davon war, im Best Case zu verlaufen. Die Anlaufphase der blauen Kurve ist erwartungsgemäß sehr kurz. Der Grenzwert wird sogar schon nach etwa 300 Byte erreicht. Der Grund hierfür ist die höhere Schrittfolge von 4 Byte. Gegenüber der Iteration wird somit schon relativ zeitig auf einer Menge an Daten gearbeitet, welche den konstanten Funktionsaufruf vernachlässigbar macht. Auf Seiten der sicheren Verarbeitung jedoch tritt dies erst bei 40.000 Byte ein. Von dort an beträgt der Offset jedoch nur noch geringe 30 MIPS, was sich wiederum auf die geringeren Verarbeitungsraten zurückführen lässt. Allerdings besitzt diese Untersuchung das Merkmal, dass der Ausgabebuffer nicht einfach nur gleich groß ist wie jener zur Eingabe. Da VByte im schlechtesten Fall einen 4 Byte Integer durch 5 Byte kodiert, muss für die Ausgabe ein Speicher reserviert werden, welcher 1.25 mal so groß ausfällt. Hierbei zeigt die durch SGX zur Verfügung gestellte Sicherheitsmaßnahme des Kopierens seine Schwäche, dass Ein- und Ausgabegrößen vor Aufruf des ECALLs bekannt sein müssen. Somit muss unabhängig von der resultierenden Größe komprimierter Daten der volle Buffer zurückkopiert werden.
+Zum Testen der VByte Kompression wurden zufällig generierte Daten bereitgestellt, deren Größe ein Vielfaches von 4 Byte (32 Bit) aufweist. Dies ist nötig, da VByte in der eingesetzten Form auf entsprechend großen Integern arbeitet. Die Verläufe der Verarbeitungsgeschwindigkeit sind in \ref{fig:eval4} zu sehen. Da es sich bei den eingehenden Daten um zufällige Werte handelt, ist mit Sicherheit davon auszugehen, dass keine guten Kompressionsraten entstanden sind und die Berechnung stets entfernt davon war, im Best Case zu verlaufen. Die Anlaufphase der blauen Kurve ist erwartungsgemäß sehr kurz. Der Grenzwert wird sogar schon nach etwa 300 Byte erreicht. Verantwortlich ist auch hier die höhere Verarbeitungszeit, an welcher der Funktionsaufruf folglich weniger Anteile hat. Auf Seiten der sicheren Verarbeitung jedoch tritt dies erst bei 40.000 Byte ein. Von dort an beträgt der Offset jedoch nur noch geringe 30 MIPS, was sich wiederum auf die geringeren Verarbeitungsraten zurückführen lässt. Allerdings besitzt diese Untersuchung das Merkmal, dass der Ausgabebuffer nicht einfach nur gleich groß ist wie jener zur Eingabe. Da VByte im schlechtesten Fall einen 4 Byte Integer durch 5 Byte kodiert, muss für die Ausgabe ein Speicher reserviert werden, welcher 1.25 mal so groß ausfällt. Hierbei zeigt die durch SGX zur Verfügung gestellte Sicherheitsmaßnahme des Kopierens seine Schwäche, dass Ein- und Ausgabegrößen vor Aufruf des ECALLs bekannt sein müssen. Somit muss unabhängig von der resultierenden Größe komprimierter Daten der volle Buffer zurückkopiert werden.
 
 \begin{figure}[h]
 	\includegraphics[width=\linewidth]{img/Eval4.pdf}
@@ -180,9 +180,8 @@ Das relativ geringe Verhältnis von Ausgabe- zu Eingabedaten sorgt im Zuge der K
 	\label{fig:eval5}
 \end{figure}
 
-Sowohl die Kompression als auch die Dekompression mittels VByte wurden nochmals in einem Ablauf zusammengefasst. In Abbildung \ref{fig:eval6} sind die entstandenen Verläufe zu sehen.
+Sowohl die Kompression als auch die Dekompression mittels VByte wurden nochmals in einem Ablauf zusammengefasst. In Abbildung \ref{fig:eval6} sind die entstandenen Verläufe zu sehen. Die eingehenden Daten werden zunächst komprimiert und daraufhin wieder dekomprimiert. Da in diesem vereinfachten Fall als Resultat stets die Eingangsdaten entstehen, ist der Ausgabebuffer ebenso groß wie jene. Im Diagramm kann man daher feststellen, dass die beiden Kurven einen sehr geringen Offset von etwa 20 MIPS aufweisen. Dies ist zusätzlich durch die vergleichsweise geringe Verarbeitungsrate von etwas mehr als 350 MIPS und der unsicheren Ausführung bedingt. Das Ergebnis zeigt schon einmal deutlich, dass die Berechnung in der Enclave eine durchaus vergleichbare Rate erzielen kann, sofern die durchgeführte Operation komplexerer Natur ist und der ausgehende Kopiervorgang möglichst klein ausfällt.
 
-\item \textbf{(6)} VByte Dekompression und Kompression außerhalb vs. in Enclave
 \begin{figure}[h]
 	\includegraphics[width=\linewidth]{img/Eval6.pdf}
 	\centering
@@ -190,29 +189,26 @@ Sowohl die Kompression als auch die Dekompression mittels VByte wurden nochmals 
 	\label{fig:eval6}
 \end{figure}
 
-\begin{itemize}
-	
-	\item \textbf{(7)} Lauflängenkodierung außerhalb vs. in Enclave
-	\begin{figure}[h]
-		\includegraphics[width=\linewidth]{img/Eval7.pdf}
-		\centering
-		\caption{Vergleich Lauflängenkodierung außerhalb und innerhalb der Enclave}
-		\label{fig:eval7}
-	\end{figure}
+Die Beobachtungen, welche unter dem Einsatz von VByte und der Iteration getroffen wurden, haben bereits viele Erkenntnisse über das Verhalten der sicheren Domäne in Bezug auf die Datenverarbeitung hervorgebracht. Im Gegensatz dazu weist die Kompression durch ein Lauflängenkodierungsverfahren unterschiedliche Merkmale auf. Der in diesem Kontext interessante Unterschied ist die hohe Variabilität der Kompressionsrate. Sowohl bei der Kompression, aber vor allem bei einer Dekompression ist es durchaus möglich, dass die resultierende Ausgabemenge eine sehr unterschiedliche Länge besitzt.
 
-	\item \textbf{(8)} Lauflängendekodierung außerhalb vs. in Enclave
-	\begin{figure}[h]
-		\includegraphics[width=\linewidth]{img/Eval8.pdf}
-		\centering
-		\caption{Vergleich Lauflängendekodierung außerhalb und innerhalb der Enclave}
-		\label{fig:eval8}
-	\end{figure}
+Ebenso wie bei der Kompression durch VByte besteht die Eingabe der Lauflängenkodierung aus 32 Bit Integerwerten. Der Ausgabebuffer muss doppelt so groß gewählt werden wie der Eingabebuffer. Das liegt daran, dass im ungünstigsten Fall jeder auftretende Wert verschieden seines Vorgängers ist und einen Lauflängenwert von 1 erhält. Jene Kennzeichnungen besitzen im eingesetzten Verfahren ebenso eine Größe von 4 Byte. In Abbildung \ref{fig:eval7} ist entsprechend zu erkennen, dass die Verläufe der Kurven um knapp 160 MIPS auseinanderliegen. Die Verarbeitungsraten in der regulären Anwendung ähneln jenen der VByte Dekompression, wodurch die Anlaufphasen der blauen und grünen Kurve ebenso bei jeweils ungefähr 5000 und 25.000 MIPS enden. Der Offset ist jedoch geringer, da das Verhältnis der Ausgabe- zur Eingabegröße nur halb so groß ausfällt. Bei etwa 3000 MIPS ist ein kleiner Einbruch der Datenrate zu erkennen, welcher durch einen anderen Prozess im Testsystem ausgelöst wurde. Jene Einbrüche sind in der Anlaufphase besonders auffällig, da die dafür verantwortlichen Unterbrechungen bei den anfänglich kleinen Gesamtzeiten einen größeren Einfluss besitzen.
 
-	\begin{itemize}
-		\item großer Versatz dadurch, dass sehr große Buffer für die Dekodierung reserviert werden, haben 6-fache Größe, Herauskopieren nimmt viel Zeit in Anspruch
-	\end{itemize}
+\begin{figure}[h]
+	\includegraphics[width=\linewidth]{img/Eval7.pdf}
+	\centering
+	\caption{Vergleich Lauflängenkodierung}
+	\label{fig:eval7}
+\end{figure}
 
-\end{itemize}
+Wie das Ergebnis in Abbildung \ref{fig:eval8} erahnen lässt, bringt die Lauflängendekodierung ein besonderes Problem mit sich. Der große Leistungsunterschied von der regulärer und sicherer Verarbeitung ergibt sich aus der Tatsache, dass der Ausgabebuffer sehr groß gewählt werden muss. Es lässt sich nur sehr schwer abschätzen, wie groß jener ausfallen muss, wenn die Form der zuvor komprimierten Daten nicht bekannt ist. Um keine unrealistisch hohen Lauflängen zuzulassen wurden die zufällig generierten Eingabedaten zusätzlich lauflängenkodiert. Dennoch wurde für die Ausgabe vorsichtigerweise jeweils ein Buffer gewählt, welcher 6-mal so groß ist wie die Eingabe. Als Schrittgröße wurden diesmal 8 Byte festgelegt, da die Dekodierung mindestens ein Paar von Lauflänge und Wert benötigt. Man kann anhand der erreichten Verarbeitungsrate von 2400 MIPS gut erkennen, dass das Verfahren grundsätzlich sehr schnell arbeitet. Im Unterschied zu den bisherigen Untersuchungen sorgt dies in Kombination mit dem aufwendigen Kopiervorgang dafür, dass die sichere Berechnung fast nur halb so schnell abläuft. Nach ca. 15.000 Byte erreicht sie die anhaltende Rate von 1100 MIPS. Man kann schlussfolgern, dass eine schnelle Verarbeitung durch einen langsamen Kopiervorgang signifikant ausgebremst wird.
+
+\begin{figure}[h]
+	\includegraphics[width=\linewidth]{img/Eval8.pdf}
+	\centering
+	\caption{Vergleich Lauflängendekodierung}
+	\label{fig:eval8}
+\end{figure}
+
 \section{Kryptographische Verarbeitung}
 \begin{itemize}	
 	\item \textbf{(10)} Entschlüsselung und Verschlüsselung außerhalb vs. in Enclave

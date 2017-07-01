@@ -11,16 +11,16 @@ pp.rcParams['font.sans-serif'] = "Univers"
 pp.rcParams['text.latex.unicode'] = True
 
 # -------------- Configuration -------------- #
-title = u'Eval1'
-file1 = 'no_copy_t_b.csv'
-file2 = 'just_copy_t_b.csv'
+title = u'EvalRLEInvestigation'
+file1 = 'runlengthdecode_u_b.csv'
+file2 = 'runlengthdecode_t_b.csv'
 label1 = u'Kein Kopieren'
 label2 = u'Kopieren'
 xAxis = 'Data'
 xLabel = r'\textbf{Bytes}'
 yAxis = 'MIOPS'
 yLabel = r'\textbf{MIPS}'
-windowSize = 50
+windowSize = 1
 fontsize = 20
 # ------------------------------------------- #
 

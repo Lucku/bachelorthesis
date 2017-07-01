@@ -23,12 +23,12 @@
 \contentsline {figure}{\numberline {5.8}{\ignorespaces Untersuchungsschemata der einfachen Datenverarbeitung}}{32}{figure.5.8}
 \contentsline {figure}{\numberline {5.9}{\ignorespaces Vergleich Iteration \IeC {\"u}ber Datenmengen}}{32}{figure.5.9}
 \contentsline {figure}{\numberline {5.10}{\ignorespaces Vergleich VByte Kompression}}{34}{figure.5.10}
-\contentsline {figure}{\numberline {5.11}{\ignorespaces Vergleich VByte Dekompression}}{35}{figure.5.11}
-\contentsline {figure}{\numberline {5.12}{\ignorespaces Vergleich VByte Dekompression und Kompression au\IeC {\ss }erhalb und innerhalb der Enclave}}{35}{figure.5.12}
-\contentsline {figure}{\numberline {5.13}{\ignorespaces Vergleich Laufl\IeC {\"a}ngenkodierung au\IeC {\ss }erhalb und innerhalb der Enclave}}{36}{figure.5.13}
-\contentsline {figure}{\numberline {5.14}{\ignorespaces Vergleich Laufl\IeC {\"a}ngendekodierung au\IeC {\ss }erhalb und innerhalb der Enclave}}{36}{figure.5.14}
+\contentsline {figure}{\numberline {5.11}{\ignorespaces Vergleich VByte Dekompression}}{34}{figure.5.11}
+\contentsline {figure}{\numberline {5.12}{\ignorespaces Vergleich VByte Kompression und Dekompression}}{35}{figure.5.12}
+\contentsline {figure}{\numberline {5.13}{\ignorespaces Vergleich Laufl\IeC {\"a}ngenkodierung}}{36}{figure.5.13}
+\contentsline {figure}{\numberline {5.14}{\ignorespaces Vergleich Laufl\IeC {\"a}ngendekodierung}}{36}{figure.5.14}
 \contentsline {figure}{\numberline {5.15}{\ignorespaces Vergleich Entschl\IeC {\"u}sselung und Verschl\IeC {\"u}sselung au\IeC {\ss }erhalb und innerhalb der Enclave (ohne Kopieren)}}{37}{figure.5.15}
-\contentsline {figure}{\numberline {5.16}{\ignorespaces Vergleich Entschl\IeC {\"u}sselung und Dekomprimierung au\IeC {\ss }erhalb und innerhalb der Enclave}}{37}{figure.5.16}
+\contentsline {figure}{\numberline {5.16}{\ignorespaces Vergleich Entschl\IeC {\"u}sselung und Dekomprimierung au\IeC {\ss }erhalb und innerhalb der Enclave}}{38}{figure.5.16}
 \contentsline {figure}{\numberline {5.17}{\ignorespaces Vergleich Komprimierung und Verschl\IeC {\"u}sselung au\IeC {\ss }erhalb und innerhalb der Enclave}}{38}{figure.5.17}
-\contentsline {figure}{\numberline {5.18}{\ignorespaces Vergleich Verarbeitungsabfolge au\IeC {\ss }erhalb und innerhalb der Enclave}}{38}{figure.5.18}
+\contentsline {figure}{\numberline {5.18}{\ignorespaces Vergleich Verarbeitungsabfolge au\IeC {\ss }erhalb und innerhalb der Enclave}}{39}{figure.5.18}
 \addvspace {10\p@ }
