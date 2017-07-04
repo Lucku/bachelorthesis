@@ -10,6 +10,11 @@ using namespace Funs;
 /* Performance Tests without using an Intel SGX enclave */
 int main()
 {
+	Benchmark *bulk = new BulkBenchmark("test", 1, Benchmark::MeasurementMode::MIOPS);
+
+	bulk->benchmark("complete_u_b.csv", completeProcess, MULTADD(10, AES_BLOCK_SIZE), 262144 * 3, 262144, vByteEncodeEncryptedPreproc, MULTADD(5, AES_BLOCK_SIZE));
+
+
 	BenchmarkSuite *b = new BenchmarkSuite('u');
 
 	b->registerFunction(iterate, IDENT, "iterate", 1);
@@ -21,7 +26,7 @@ int main()
 	b->registerFunctionWithPreprocessing(runLengthDecode, MULT(6), runLengthEncode, MULT(2), "runlengthdecode", 8);
 	b->registerFunction(runLengthEncodeAndSum, CONSTANT(8), "rlesum", 4);
 	b->registerFunctionWithPreprocessing(vByte, DIVMULT(4, 5), vByteEncode, MULT(5), "vbyte", 4);
-	b->registerFunctionWithPreprocessing(completeProcess, MULTADD(8, AES_BLOCK_SIZE), vByteEncodeEncryptedPreproc, MULTADD(5, AES_BLOCK_SIZE), "complete", 16);
+	b->registerFunctionWithPreprocessing(completeProcess, MULTADD(10, AES_BLOCK_SIZE), vByteEncodeEncryptedPreproc, MULTADD(5, AES_BLOCK_SIZE), "complete", 16);
 	b->registerFunction(crypto, MULTADD(1, AES_BLOCK_SIZE), "crypto", 16);
 
 	b->start();

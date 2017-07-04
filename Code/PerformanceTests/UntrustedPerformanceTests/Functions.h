@@ -5,4 +5,3 @@
 size_t iterate(uint8_t *in, size_t length, uint8_t *out);
 size_t completeProcess(uint8_t * in, size_t length, uint8_t *out);
 size_t crypto(uint8_t *in, size_t length, uint8_t *out);
-size_t mallocate(uint8_t *in, size_t length, uint8_t *out);

@@ -11,21 +11,21 @@ pp.rcParams['font.sans-serif'] = "Univers"
 pp.rcParams['text.latex.unicode'] = True
 
 # -------------- Configuration -------------- #
-title = u'EvalRLEInvestigation'
-file1 = 'runlengthdecode_u_b.csv'
-file2 = 'runlengthdecode_t_b.csv'
-label1 = u'Kein Kopieren'
-label2 = u'Kopieren'
+title = u'Eval13'
+file1 = 'complete_u_b_2.csv'
+file2 = 'complete_t_b.csv'
+label1 = u'Regulär'
+label2 = u'SGX Enclave'
 xAxis = 'Data'
 xLabel = r'\textbf{Bytes}'
 yAxis = 'MIOPS'
 yLabel = r'\textbf{MIPS}'
-windowSize = 1
+windowSize = 100
 fontsize = 20
 # ------------------------------------------- #
 
-spy1 = pd.read_csv('x64/Real Results/' + file1)
-spy2 = pd.read_csv('x64/Real Results/' + file2)
+spy1 = pd.read_csv('x64/Real Results/' + file1)#.multiply(4)
+spy2 = pd.read_csv('x64/Real Results/' + file2).multiply(16)
 #spy3 = pd.read_csv("x64/Real Results/crypto_no_copy_t_b.csv")
 #spy4 = pd.read_csv("../Simulation/decompression_t_s.csv")
 
@@ -41,7 +41,7 @@ diff = spy1.subtract(spy2)
 
 spy1[yAxis].rolling(window=windowSize).mean().plot(figsize=(16,8), label=label1, fontsize=fontsize)
 spy2[yAxis].rolling(window=windowSize).mean().plot(figsize=(16,8), label=label2)
-diff[yAxis].rolling(window=windowSize * 5).mean().plot(figsize=(16,8), label='Differenz')
+diff[yAxis].rolling(window=windowSize).mean().plot(figsize=(16,8), label='Differenz')
 #spy3[yAxis].rolling(window=windowSize).mean().plot(figsize=(16,12), label="Innerhalb von SGX Enclave (Ohne Kopieren)", color='orange')
 #spy4[yAxis].rolling(window=windowSize).mean().plot(figsize=(16,12), label="sgx single processing")
 
