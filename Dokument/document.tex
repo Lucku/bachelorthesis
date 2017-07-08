@@ -1,5 +1,5 @@
 
-\documentclass[ngerman]{tudscrreprt}
+\documentclass[ngerman, twoside]{tudscrreprt}
 
 \usepackage{mystyle}
 
@@ -20,8 +20,12 @@
 \maketitle
 \TUDoption{abstract}{single,fill,notoc}
 
+\cleardoublepage
+
 % Selbstständigkeitserklärung
 \confirmation
+
+\cleardoublepage
 
 \pagenumbering{roman}
 
@@ -50,7 +54,6 @@
 \include{tex/05_evaluation}
 % 6. Fazit
 \include{tex/06_summary}
-
 
 \newpage
 \bibliographystyle{plaindin}

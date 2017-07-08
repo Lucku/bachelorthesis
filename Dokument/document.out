@@ -6,29 +6,30 @@
 \BOOKMARK [1][-]{section.2.2}{Datenbanksicherheit in nicht vertrauensw\374rdigen Umgebungen}{chapter.2}% 6
 \BOOKMARK [1][-]{section.2.3}{Bestehende L\366sungsans\344tze}{chapter.2}% 7
 \BOOKMARK [1][-]{section.2.4}{Intel SGX im Kontext sicherer Datenbanken}{chapter.2}% 8
-\BOOKMARK [0][-]{chapter.3}{Kompression}{}% 9
-\BOOKMARK [1][-]{section.3.1}{Grundlagen}{chapter.3}% 10
-\BOOKMARK [1][-]{section.3.2}{Verwandte Arbeiten}{chapter.3}% 11
-\BOOKMARK [1][-]{section.3.3}{Algorithmen}{chapter.3}% 12
-\BOOKMARK [2][-]{subsection.3.3.1}{VByte}{section.3.3}% 13
-\BOOKMARK [2][-]{subsection.3.3.2}{Laufl\344ngenkodierung}{section.3.3}% 14
-\BOOKMARK [0][-]{chapter.4}{Implementierung}{}% 15
-\BOOKMARK [1][-]{section.4.1}{Grundlegendes Programmiermodell}{chapter.4}% 16
-\BOOKMARK [1][-]{section.4.2}{Voraussetzungen zur Benutzung}{chapter.4}% 17
-\BOOKMARK [1][-]{section.4.3}{Entwicklung einer Enclave}{chapter.4}% 18
-\BOOKMARK [2][-]{subsection.4.3.1}{Definition der Enclave}{section.4.3}% 19
-\BOOKMARK [2][-]{subsection.4.3.2}{Konfigurationsm\366glichkeiten}{section.4.3}% 20
-\BOOKMARK [2][-]{subsection.4.3.3}{Implementierungspraktiken}{section.4.3}% 21
-\BOOKMARK [1][-]{section.4.4}{Grenzen der Programmierung}{chapter.4}% 22
-\BOOKMARK [2][-]{subsection.4.4.1}{Funktionale Einschr\344nkungen}{section.4.4}% 23
-\BOOKMARK [2][-]{subsection.4.4.2}{Systemtest}{section.4.4}% 24
-\BOOKMARK [1][-]{section.4.5}{Fazit}{chapter.4}% 25
-\BOOKMARK [0][-]{chapter.5}{Evaluierung}{}% 26
-\BOOKMARK [1][-]{section.5.1}{Konzept}{chapter.5}% 27
-\BOOKMARK [2][-]{subsection.5.1.1}{Untersuchungen}{section.5.1}% 28
-\BOOKMARK [2][-]{subsection.5.1.2}{Testumgebung}{section.5.1}% 29
-\BOOKMARK [1][-]{section.5.2}{Enclaveinterne Untersuchungen}{chapter.5}% 30
-\BOOKMARK [1][-]{section.5.3}{Einfache Datenverarbeitung}{chapter.5}% 31
-\BOOKMARK [1][-]{section.5.4}{Kryptographische Verarbeitung}{chapter.5}% 32
-\BOOKMARK [1][-]{section.5.5}{Fazit}{chapter.5}% 33
-\BOOKMARK [0][-]{chapter.6}{Fazit und Ausblick}{}% 34
+\BOOKMARK [1][-]{section.2.5}{Fazit}{chapter.2}% 9
+\BOOKMARK [0][-]{chapter.3}{Kompression}{}% 10
+\BOOKMARK [1][-]{section.3.1}{Grundlagen}{chapter.3}% 11
+\BOOKMARK [1][-]{section.3.2}{Verwandte Arbeiten}{chapter.3}% 12
+\BOOKMARK [1][-]{section.3.3}{Algorithmen}{chapter.3}% 13
+\BOOKMARK [2][-]{subsection.3.3.1}{VByte}{section.3.3}% 14
+\BOOKMARK [2][-]{subsection.3.3.2}{Laufl\344ngenkodierung}{section.3.3}% 15
+\BOOKMARK [0][-]{chapter.4}{Implementierung}{}% 16
+\BOOKMARK [1][-]{section.4.1}{Grundlegendes Programmiermodell}{chapter.4}% 17
+\BOOKMARK [1][-]{section.4.2}{Voraussetzungen zur Benutzung}{chapter.4}% 18
+\BOOKMARK [1][-]{section.4.3}{Entwicklung einer Enclave}{chapter.4}% 19
+\BOOKMARK [2][-]{subsection.4.3.1}{Definition der Enclave}{section.4.3}% 20
+\BOOKMARK [2][-]{subsection.4.3.2}{Konfigurationsm\366glichkeiten}{section.4.3}% 21
+\BOOKMARK [2][-]{subsection.4.3.3}{Implementierungspraktiken}{section.4.3}% 22
+\BOOKMARK [1][-]{section.4.4}{Grenzen der Programmierung}{chapter.4}% 23
+\BOOKMARK [2][-]{subsection.4.4.1}{Funktionale Einschr\344nkungen}{section.4.4}% 24
+\BOOKMARK [2][-]{subsection.4.4.2}{Systemtest}{section.4.4}% 25
+\BOOKMARK [1][-]{section.4.5}{Fazit}{chapter.4}% 26
+\BOOKMARK [0][-]{chapter.5}{Evaluierung}{}% 27
+\BOOKMARK [1][-]{section.5.1}{Konzept}{chapter.5}% 28
+\BOOKMARK [2][-]{subsection.5.1.1}{Untersuchungen}{section.5.1}% 29
+\BOOKMARK [2][-]{subsection.5.1.2}{Testumgebung}{section.5.1}% 30
+\BOOKMARK [1][-]{section.5.2}{Enclaveinterne Untersuchungen}{chapter.5}% 31
+\BOOKMARK [1][-]{section.5.3}{Einfache Datenverarbeitung}{chapter.5}% 32
+\BOOKMARK [1][-]{section.5.4}{Kryptographische Verarbeitung}{chapter.5}% 33
+\BOOKMARK [1][-]{section.5.5}{Fazit}{chapter.5}% 34
+\BOOKMARK [0][-]{chapter.6}{Fazit und Ausblick}{}% 35

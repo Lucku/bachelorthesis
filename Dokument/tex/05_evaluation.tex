@@ -1,4 +1,5 @@
 %TODO Möglicherweise Vorkommen von "Schemata" durch "Datenflussschemata" ersetzen
+%TODO Auch auf Memory Encryption Engine bei Datenverarbeitung eingehen!!
 \chapter{Evaluierung}
 
 Wie bereits in den vorangegangenen Kapiteln betrachtet wurde, verspricht Intel \ac{SGX} das Aufweisen guter Sicherheitsmerkmale und eine leichte Systemintegration. Obwohl der herkömmliche Einsatzzweck eher auf die reine Speicherung sensibler Daten beruht, ist es das Ziel dieser Arbeit zu untersuchen, ob es sinnvoll ist, Intel \ac{SGX} im Zuge der Anfrageverarbeitung in einem hauptspeicherbasierten Datenbanksystem einzusetzen. In diesem Kapitel erfolgt eine Bewertung dieses Anwendungsfalls anhand von Leistungsbenchmarks verschiedener Szenarien der Datenverarbeitung.
@@ -51,24 +52,12 @@ Es wird klar, dass es durchaus eine große Fülle von weiteren Szenarien geben k
 	\caption{Szenario der Datenverarbeitung ohne Kopiervorgänge}
 	\label{fig:scenarionocopy}
 \end{figure}
-%TODO Erwähnen: Iteration als ganz grundlegende Operation
-Die darauffolgende Reihe an Tests beschäftigt sich mit dem Aspekt der konkreten Datenverarbeitung. Es wird dabei jeweils ein Ablauf in der Enclave mit einer gleichen Abfolge innerhalb eines regulären Programms verglichen. Anstelle des Verarbeitungsschrittes werden Operationen aus den folgenden Bereichen eingesetzt:
 
-\begin{itemize}
-	\item Allgemeine Datenverarbeitung
-	\begin{itemize}
-		\item Iteration über die Datenmenge
-	\end{itemize}
-	\item Einfache Kompressionsverfahren
-	\begin{itemize}
-		\item VByte (De)kompression
-		\item Lauflängen(de)kodierung
-	\end{itemize}
-\end{itemize}
+Die darauffolgende Reihe an Tests beschäftigt sich mit dem Aspekt der konkreten Datenverarbeitung. Es wird dabei jeweils ein Ablauf in der Enclave mit einer gleichen Abfolge innerhalb eines regulären Programms verglichen. Anstelle des Verarbeitungsschrittes werden die entsprechende Operationen eingesetzt. Angefangen wird mit einer einfachen Iteration über die Eingabemenge als grundlegenden Baustein vieler komplexerer Operationen. Daraufhin werden jeweils die Kompression und Dekompression mittels VByte und Lauflängenkodierung als leichtgewichtige Kompressionsverfahren untersucht.
 
 Der Kernpunkt dieser Untersuchungen ist herauszufinden, ob die Leistung signifikant durch die sicheren Berechnungen beeinflusst wird. Interessant ist auch, ob die einzelnen Verfahren gewisse Merkmale aufweisen, welche eine Verarbeitung mittels \ac{SGX} zusätzlich erschweren. Die Zwischenschritte zur Ent- und Verschlüsselung werden zunächst außer Acht gelassen, um einen besseren Eindruck über die jeweilige Operation und das Zusammenspiel mit dem im Falle der Enclave auftretenden Kopiervorgang zu bekommen.
 
-Die dritte Menge von Untersuchungen widmet sich hingegen einer Einbeziehung der kryptographischen Funktionalität. Im Vordergrund steht dessen Kombination mit einer verarbeitenden Operation. Um zu testen, wie die Leistung der kryptographischen Algorithmen abschneidet, wird als erstes das in Abbildung \ref{fig:scenarionocopy} aufgegriffen, in einem herkömmlichen Umfeld durchgeführt und mit dem Verlauf in der Enclave verglichen. Daraufhin wird jeweils die Kompression durch VByte mit der Ent- und Verschlüsselung kombiniert. Um ein Gesamtbild von der Leistung unter \ac{SGX} zu erhalten, wird abschließend ein komplexer Vorgang getestet. Das Ziel ist es herauszufinden, wie gut die Technologie in einer längeren Berechnung abschneidet, während die Bedingungen gegenüber einer regulären Durchführung möglichst identisch sind. %Das Kopieren wird in allen vier Fällen außer Acht gelassen.
+Die dritte Menge von Untersuchungen widmet sich hingegen einer Einbeziehung der kryptographischen Funktionalität. Im Vordergrund steht dessen Kombination mit einer verarbeitenden Operation. Um zu testen, wie die Leistung der kryptographischen Algorithmen abschneidet, wird als erstes das in Abbildung \ref{fig:scenarionocopy} aufgegriffen, in einem herkömmlichen Umfeld durchgeführt und mit dem Verlauf in der Enclave verglichen. Daraufhin wird jeweils die Kompression durch VByte mit der Ent- und Verschlüsselung kombiniert. Um ein Gesamtbild von der Leistung unter \ac{SGX} zu erhalten, wird abschließend ein komplexer Vorgang getestet. Das Ziel ist es herauszufinden, wie gut die Technologie in einer umfangreicheren Berechnung abschneidet.
 %TODO Mitunter ein paar der oberen Details in die einzelnen Beschreibungen der Settings auslagern
 \subsection{Testumgebung}
 %TODO Es wurden Mittelwerte gebildet mit Fenstergröße 50
@@ -85,9 +74,8 @@ Um Schwankungen in den Berechnungen, etwa aufgrund des Schedulings entgegenzuwir
 
 Die beschriebene Methodik zur Leistungsanalyse wurde in eine gesonderte Bibliothek ausgelagert. Zum Zwecke der Untersuchungen wurden zudem zwei unabhängige C++ Anwendungen erstellt. Erstere bindet eine Enclave ein, in welcher die zu testenden Operationen umgesetzt sind. Über jene Anwendung erfolgen die Messungen der sicheren Domäne. Die zweite ist ein Gegenstück ohne die Nutzung von \ac{SGX}. In diesem Fall sind die Abläufe auf gewöhnliche Art implementiert. Die zum Einsatz gekommenen Kompressionsalgorithmen wurden zum Zwecke der Untersuchungen zur Verfügung gestellt. Beide Anwendungen nutzten dahingegen die \textit{Intel Integrated Performance Primitives Cryptography} Bibliothek zur Einbettung der benötigten kryptographischen Algorithmen. Konkret kam in allen entsprechenden Tests eine hardwarebeschleunigte Implementierung von \ac{AES} im Modus \ac{CBC} und der Schlüssellänge 128 Bit zum Einsatz. Kompiliert wurden beide Programme mit dem Intel C++ Compiler in der Version 17. Jegliche Compileroptimierungen wurden jeweils zur Gewährleistung eines fairen und sauberen Testergebnisses deaktiviert. 
 
-Alle Untersuchungen fanden unter Windows 10 auf der gleichen Hardware statt. Das System verfügte über 16 GB RAM und als Prozessor diente ein Intel Core i5-7600 (Kaby Lake) mit 3,50 GHz Taktfrequenz.
+Alle Untersuchungen fanden unter Windows 10 auf der gleichen Hardware statt. Das System verfügte über 16 GB Hauptspeicher und als Prozessor diente ein Intel Core i5-7600 (Kaby Lake) mit 3,50 GHz Taktfrequenz.
 
-%TODO Achtung! Jeweils darauf eingehen, welche Art von Daten als Eingabe vorliegt
 \section{Enclaveinterne Untersuchungen}
 
 Die erste Reihe an Untersuchungen ist zunächst sehr grundlegend und vergleichsweise einfach aufgebaut. Sie beschäftigt sich mit dem Vergleich der Ansätze zur Vor- und Nachbereitung der eigentlichen Datenverarbeitung in einer Enclave. Im Vordergrund steht das durch die Edge Routines durchgesetzte Kopieren der Ein- und Ausgabedaten zwischen der Enclave und unsicheren Anwendung, welche ihre Dienste beansprucht. Verglichen wird dies mit einem Vorgehen, in welchem das Kopieren durch Setzen des user\textunderscore check Attributes in der Enclavedefinition entfällt. Wie bereits im vorangegangenen Kapitel beschrieben, ist jene Maßnahme nur mit äußerster Vorsicht zu treffen.
