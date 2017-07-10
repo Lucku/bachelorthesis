@@ -23,6 +23,7 @@ int SGX_UBRIDGE(SGX_CDECL, sgx_thread_set_multiple_untrusted_events_ocall, (cons
 
 sgx_status_t enclaveAllocateHeapMemory(sgx_enclave_id_t eid, int numBytes);
 sgx_status_t enclaveAllocateStackMemory(sgx_enclave_id_t eid);
+sgx_status_t enclaveVectorization(sgx_enclave_id_t eid, float* a, float* b, float* c, float* d, float* e, int n);
 
 #ifdef __cplusplus
 }

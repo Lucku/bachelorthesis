@@ -3,45 +3,45 @@
 
 Kompression ist ein weitverbreitetes Mittel zur Erzielung von Leistungsverbesserungen im Bereich der Datenverarbeitung. Einen zunehmenden Einsatz fanden sie vor allem in den immer stärker verbreiteten In-Memory Datenbanken, welche sämtliche Daten nicht wie zuvor üblich auf der Festplatte speichern, sondern den deutlich schneller verfügbaren Hauptspeicher nutzen.
 
-Wie bereits im letzten Kapitel beschrieben, hat Intel mit seinen Secure Guard Extensions die Möglichkeit geschaffen, Daten innerhalb von sicheren Vertrauensbereiche (Enclaves) zu verarbeiten. Dies ermöglicht es mitunter, eine Umgebung zu schaffen, in welcher auf verschlüsselten Informationen ohne Beeinträchtigung der Vertraulichkeit im Klartext gerechnet werden kann. Der zusätzliche Einsatz von Kompressionsverfahren kann in diesem Szenario sinnvoll sein, um die Transferzeiten von Daten in eine Enclave, sowie den zeitlichen Verlust durch kryptographischen Operationen, je durch eine höhere Datendichte, zu verringern.
+Wie bereits im letzten Kapitel beschrieben, hat Intel mit seinen Software Guard Extensions die Möglichkeit geschaffen, Daten innerhalb von sicheren Vertrauensbereiche (Enclaves) zu verarbeiten. Dies ermöglicht es mitunter, eine Umgebung zu schaffen, in welcher auf verschlüsselten Informationen ohne Beeinträchtigung der Vertraulichkeit im Klartext gerechnet werden kann. Der zusätzliche Einsatz von Kompressionsverfahren kann in diesem Szenario sinnvoll sein, um die Transferzeiten von Daten in eine Enclave, sowie den zeitlichen Verlust durch kryptographische Operationen, je durch eine höhere Datendichte, zu verringern.
 
-Im aktuellen Kapitel soll ein Einblick in den Einsatz und die Funktionsweise von Kompressionsverfahren in Datenbanksystemen gegeben werden. Zunächst wird etwas genauer auf die grundlegende Motivation ihres Einsatzes in diesem Kontext eingegangen. Verwandte Arbeiten zu dem Thema und eine damit verbundene zeitliche Darstellung der Forschungsentwicklungen wird nachfolgend beleuchtet, gefolgt von der Betrachtung konkreter Algorithmen. Letztere sind von besonderer Relevanz, da sie den Kern der Untersuchungen dieser Arbeit darstellen und später in einer SGX Enclave zum Einsatz kommen werden.
+Im aktuellen Kapitel soll ein Einblick in den Einsatz und die Funktionsweise von Kompressionsverfahren in Datenbanksystemen gegeben werden. Zunächst wird etwas genauer auf die grundlegende Motivation eingegangen. Nachfolgend werden verwandte Arbeiten zu dem Thema und eine damit verbundene zeitliche Darstellung der Forschungsergebnisse beleuchtet, gefolgt von der Betrachtung konkreter Algorithmen. Letztere sind von besonderer Relevanz, da sie Teil der späteren Untersuchungen dieser Arbeit sind und in einer \ac{SGX} Enclave zum Einsatz kommen werden.
 
 \section{Grundlagen}
 
-Durch das Verdichten von Daten, erlauben Kompressionsverfahren eine effizientere Nutzung der Ressource Speicher zugunsten der Datenverarbeitungszeit. Somit begünstigen sie eine bessere Ausnutzung der Speicherhierarchie, an deren Spitze die kleinen Prozessorregister mit schnellen Zugriffszeiten stehen und die Basis durch große, aber vergleichsweise sehr langsame Festplattenspeicher gebildet wird. Von Vorteil ist hierbei die Möglichkeit, eine höhere weil dichtere Datenmenge auf dem gleichen physischen Speicherplatz, etwa dem Prozessorcache, zu halten. Zudem werden Datentransferraten zwischen den einzelnen Stufen der Hierarchie erhöht \cite{Croft2009}. Zugrundeliegend ist ein \textit{Time-Memory Tradeoff}, denn die Einsparung an Speicherplatz kommt auf Kosten zusätzlicher Berechnungszeit dadurch, dass die Daten vor der eigentlichen Verarbeitung dekomprimiert werden müssen.
+Durch das Verdichten von Daten, erlauben Kompressionsverfahren eine effizientere Nutzung der Ressource Speicher zugunsten der Datenverarbeitungszeit. Somit begünstigen sie eine bessere Ausnutzung der Speicherhierarchie, an deren Spitze die kleinen Prozessorregister mit schnellen Zugriffszeiten stehen und die Basis durch große, aber vergleichsweise sehr langsame Festplattenspeicher gebildet wird. Von Vorteil ist hierbei die Möglichkeit, eine höhere weil dichtere Datenmenge auf dem gleichen physischen Speicherplatz, etwa dem Prozessorcache, zu halten. Zudem werden Datentransferraten zwischen den einzelnen Stufen der Hierarchie erhöht \cite{Croft2009}. Zugrundeliegend ist ein \textit{Time-Memory Tradeoff}, denn die Einsparung an Speicherplatz kommt auf Kosten zusätzlicher Berechnungszeit dadurch, dass Daten in der Regel vor der eigentlichen Verarbeitung dekomprimiert werden müssen.
 
-Durch ihre Arbeit auf dem Hauptspeicher nutzen In-Memory Datenbanken bereits eine höhere Stufe der Speicherhierarchie, als dies bei festplattenbasierten System der Fall ist. Um die Verarbeitungsgeschwindigkeit weiter zu verbessern, ist es nötig, die Transferzeiten von Daten zur \ac{CPU} weitestgehend zu verringern. Eine größtmögliche Komprimierungsrate durch den Einsatz von Verfahren wie Huffman oder Lempel-Ziv anzustreben, erscheint aber keineswegs sinnvoll, da die zeitlichen Einsparungen in Bezug auf die zu transferierende Datenmenge durch den Zwang der aufwendigen Dekomprimierung zunichte gemacht werden \cite{Abadi2006}. Notwendig sind demnach leichtgewichtige Verfahren, sodass sich Daten schnell genug dekomprimieren lassen, um insgesamt echte Leistungsverbesserungen zu erzielen. Einige Verfahren wie die Lauflängenkodierung erlauben sogar die schnellere Verarbeitung auf komprimierten Daten selbst.
+Durch ihre Arbeit auf dem Hauptspeicher nutzen In-Memory Datenbanken bereits eine höhere Stufe der Speicherhierarchie, als dies bei festplattenbasierten System der Fall ist. Um die Verarbeitungsgeschwindigkeit weiter zu verbessern, ist es nötig, die Transferzeiten von Daten zur \ac{CPU} weitestgehend zu verringern. Eine größtmögliche Kompressionsrate durch den Einsatz von Verfahren wie Huffman oder Lempel-Ziv anzustreben, erscheint aber keineswegs sinnvoll, da die zeitlichen Einsparungen in Bezug auf die zu transferierende Datenmenge durch den Zwang einer aufwendigen Dekomprimierung zunichte gemacht werden \cite{Abadi2006}. Notwendig sind demnach leichtgewichtige Verfahren, sodass dieser Vorgang schnell genug verläuft, um insgesamt echte Leistungsverbesserungen zu erzielen. Einige Verfahren wie die Lauflängenkodierung erlauben sogar die schnellere Verarbeitung auf komprimierten Daten selbst.
 
 \section{Verwandte Arbeiten}
 
-Die ersten Untersuchungen über den Einsatz von Kompressionstechniken in großen Datenbanken wurden 1982 veröffentlicht. Eine Gesamtverringerung der Datenmenge von 30-90\% war ein vielversprechendes Ergebnis, obwohl jene Verfahren zu jener Zeit noch kaum genutzt wurden \cite{Severance1982}. Des weiteren wurde gezeigt, dass gespeicherte Daten verschiedene Eigenschaften besitzen, welche manche Kompressionsverfahren eher begünstigen als andere.
+Die ersten Untersuchungen über den Einsatz von Kompressionstechniken in großen Datenbanken wurden 1982 veröffentlicht. Eine Gesamtverringerung der Datenmenge von 30-90\% war ein vielversprechendes Ergebnis, obwohl jene Verfahren zu jener Zeit noch kaum genutzt wurden \cite{Severance1982}. Des weiteren wurde gezeigt, dass gespeicherte Daten verschiedene Eigenschaften besitzen, welche einige Kompressionsverfahren eher begünstigen als andere.
 
-In späteren Publikationen bedachte man nun nicht nur mehr die reine Datenhaltung, sondern auch die Nutzung zur effizienteren Datenverarbeitung im \textit{Query Processing}. Da eine Dekomprimierung vor Berechnungen obligatorisch ist, geht der Vorteil von Einsparung an Speicherplatz in gewissen Maßen verloren. Beschrieben wurden daher Kompressionsverfahren, welche es erlaubten, soweit wie möglich direkt auf den komprimieren Daten zu arbeiten um den verfügbaren Speicher möglichst effektiv zu nutzen \cite{Graefe1991}.
+In späteren Publikationen bedachte man nun nicht mehr nur die reine Datenhaltung, sondern auch die Nutzung zur effizienteren Datenverarbeitung in der Anfrageverarbeitung. Beschrieben wurden Kompressionsverfahren, welche es erlaubten, soweit wie möglich direkt auf den komprimieren Daten zu arbeiten um den verfügbaren Speicher möglichst effektiv zu nutzen \cite{Graefe1991}.
 
-Allgemein adressierten frühere Ansätze vor allem traditionell relationale Datenbanksysteme, wobei die zu komprimierenden Einheiten etwa einzelne Tabellenreihen darstellten. Die in den letzten Jahren stark aufstrebenden spaltenorientierten Datenbanken bieten hingegen ein höheres Potenzial zur Kompression, dadurch, dass benachbart gespeicherte Werte in der Regel einer Spalte angehören und den gleichen Datentyp besitzen \cite{Abadi2006}. Besonders geeignet sind in diesem Fall Kompressionsschemata, welche auf Datenlokalität, also das enge Beieinanderliegen ähnlicher Daten, beruhen. Es wurde zudem gezeigt, dass das physische Datenbankdesign und das eingesetzte Verfahren zur Kompression auf einander abgestimmt sein müssen, um die besten Leistungsverbesserungen zu erzielen. Entsprechend spielt die Natur des zu erwartenden \textit{Query Workloads} eine entscheidende Rolle bei dessen Auswahl für jede individuelle Spalte.
+Allgemein adressierten frühere Ansätze vor allem traditionell relationale Datenbanksysteme, wobei die zu komprimierenden Einheiten etwa einzelne Tabellenreihen darstellten. Die in den vergangenen Jahren stark aufstrebenden spaltenorientierten Datenbanken bieten hingegen ein höheres Potenzial zur Kompression, da benachbart gespeicherte Werte in der Regel einer Spalte angehören und den gleichen Datentyp besitzen \cite{Abadi2006}. Besonders geeignet sind in diesem Fall Kompressionsschemata, welche auf Datenlokalität, also das enge Beieinanderliegen ähnlicher Daten, beruhen. Es wurde zudem gezeigt, dass das physische Datenbankdesign und das eingesetzte Verfahren zur Kompression auf einander abgestimmt sein müssen, um die besten Leistungsverbesserungen zu erzielen. Entsprechend spielt die Natur des zu erwartenden \textit{Query Workloads} eine entscheidende Rolle bei dessen Auswahl für jede individuelle Spalte.
 
 \section{Algorithmen}
 
 Die Grundlage von verlustfreier Kompression stellt die Darstellung einer Eingabesequenz an Daten in einer verkürzten Form dar, indem gewisse überschüssige Informationen, wie sie etwa durch Redundanz entstehen, reduziert werden. Es lassen sich verschiedene Herangehensweisen unterteilen, welche einzeln oder in kombinierter Form bei Kompressionsverfahren zum Einsatz kommen \cite{Abadi2006}\cite{Croft2009}:
 
-\subparagraph{Nullunterdrückung}
+\paragraph{Nullunterdrückung}
 Führende Leerstellen bzw. Nullen in der binären Repräsentation werden entfernt und durch entsprechende Angaben zu deren Anzahl und der Position des Auftretens ersetzt.
 
-\subparagraph{Deltakodierung}
+\paragraph{Deltakodierung}
 Gespeichert werden lediglich die Differenzen aufeinanderfolgender Werte, da diese in manchen Szenarien deutlich kleiner ausfallen, als die (absoluten) Werte selbst.
 
-\subparagraph{Wörterbuchkodierung}
+\paragraph{Wörterbuchkodierung}
 Es erfolgt eine eindeutige Abbildung häufig auftretender Sequenzen auf kürzere Codes.
 
-\subparagraph{Lauflängenkodierung}
+\paragraph{Lauflängenkodierung}
 Abfolgen gleicher Werte werden durch eine einzige Darstellung bestehend aus Wert und Lauflänge ersetzt.
 
-\subparagraph{Bitvektorkodierung}
+\paragraph{Bitvektorkodierung}
 Anstatt der Folge von Werten selbst, werden jeweils die Positionen des Auftretens jedes Wertes kodiert, sodass jeder Wert einen individuellen Bitvektor besitzt.
 
 \paragraph{}
-In diesem Unterkapitel soll mit VByte ein konkreter einfacher Algorithmus behandelt werden, welcher sich die Nullunterdrückung zunutze macht. Anschließend wird ein möglicher Ansatz zur Lauflängenkodierung untersucht und auf seine besonderen Eigenschaften bei der Datenverarbeitung eingegangen.
+In diesem Unterkapitel soll mit VByte ein konkreter, leichtgewichtiger Algorithmus behandelt werden, welcher sich die Nullunterdrückung zunutze macht. Anschließend wird ein möglicher Ansatz zur Lauflängenkodierung untersucht und auf seine besonderen Eigenschaften bei der Datenverarbeitung eingegangen.
 
 \subsection{VByte}
 
@@ -68,21 +68,14 @@ Anders als VByte sind Verfahren der Lauflängenkodierung \cite{Reghbati1981} (od
 \end{figure}
 
 Sofern eine Integerwertefolge durch die Komprimierung mittels \ac{RLE} verdichtet wurde, wird in gleichem Maße die Bildung des Summenaggregats begünstigt. Anstatt die Werte einzeln aufzusummieren, bietet sich hierbei ein direktes Arbeiten auf den komprimierten Werten an, da Additionen durch die Berechnung von $Wert * Laufl\ddot{a}nge$ eingespart werden können. Im Beispiel von Abbildung \ref{fig:rle} ergeben sich 10 Operationen durch die Berechnung auf den unkomprimierten Werten:
-
 \begin{equation*}
 	1 + 1 + 1 + 2 + 3 + 3 + 4 + 4 + 5 + 5 + 5 = 34
 \end{equation*}
-
 Für entsprechende Berechnung auf komprimierten Werten sind nur 9 Operationen notwendig, während Berechnungskosten für die Dekomprimierung entfallen:
-
 \begin{equation*}
 	1 * 3 + 2 * 1 + 3 * 2 + 4 * 2 + 5 * 3 = 34
 \end{equation*}
 
 \section{Fazit}
-%TODO
 
-
-\paragraph{}
-%In diesem und dem vorhergehenden Kapitel wurden mit der Sicherheit in Datenbanksystemen und der Kompression als Hilfsmittel in der Datenverarbeitung die grundlegenden Konzepte dieser Arbeit untersucht. Neben verschiedenen Ansätzen zur Gewährleistung der Vertraulichkeit wurde Intel \ac{SGX} als aktuelle auf Hardware basierende Entwicklung eingeführt, welche sich die Definition von Enclaves als sichere, nur durch den Prozessor zugreifbare Vertrauensbereiche zunutze macht. Die Platzbeschränkungen sowie Transferzeiten von Daten in jene Bereiche gestalten sich als Herausforderungen, welchen durch eine Datenkompression entgegengewirkt werden kann. Daher wurde eine entsprechende Einführung in den bestehenden Einsatz von Kompressionsverfahren innerhalb datenverarbeitender Systeme gegeben und einige Herangehensweisen zu deren Umsetzung erklärt. Zur Nutzung in den folgenden Untersuchungen dieser Arbeit waren abschließend zwei konkrete Algorithmen, VByte und ein Lauflängenkodierungsverfahren, im Fokus.
-%TODO Outro ggf. überarbeiten, um die Arbeit richtig abzurunden
+Durch eine effizientere Nutzung der Speicherhierarchie sind Kompressionsverfahren wichtige Werkzeuge zur Leistungsverbesserung in der Datenverarbeitung. Leichtgewichtige Varianten erlauben höhere Datentransferraten, während der zusätzliche Aufwand einer Dekomprimierung vergleichsweise gering ausfällt. Die Grundlage wird durch eine Reduzierung überschüssiger Informationen in der Datensequenz gebildet. Mit VByte wurde eines jener Verfahren betrachtet, welches sich die Unterdrückung von Nullen zunutze macht. Ein nachfolgend erklärtes Lauflängenkodierungsverfahren ersetzt aufeinanderfolgende, gleiche Sequenzen von Integern durch ein Tupel aus Wert und Lauflänge. Während entsprechende Kompressionsverfahren in hauptspeicherbasierten Datenbanken bereits verbreitet sind, eignen sie sich vor allem auch im Kontext einer \ac{SGX} Enclave, um die Verarbeitungsleistung im Angesicht der vorliegenden Platzbeschränkungen, sowie Transferzeiten von Daten zu erhöhen.

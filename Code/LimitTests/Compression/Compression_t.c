@@ -74,7 +74,7 @@ static sgx_status_t SGX_CDECL sgx_vByteEncode(void* pms)
 	size_t _len_in = _tmp_length * sizeof(*_tmp_in);
 	uint32_t* _in_in = NULL;
 	uint8_t* _tmp_out = ms->ms_out;
-	size_t _len_out = 4 * sizeof(*_tmp_out);
+	size_t _len_out = 5 * sizeof(*_tmp_out);
 	uint8_t* _in_out = NULL;
 
 	if ((size_t)_tmp_length > (SIZE_MAX / sizeof(*_tmp_in))) {
@@ -82,7 +82,7 @@ static sgx_status_t SGX_CDECL sgx_vByteEncode(void* pms)
 		goto err;
 	}
 
-	if (4 > (SIZE_MAX / sizeof(*_tmp_out))) {
+	if (5 > (SIZE_MAX / sizeof(*_tmp_out))) {
 		status = SGX_ERROR_INVALID_PARAMETER;
 		goto err;
 	}

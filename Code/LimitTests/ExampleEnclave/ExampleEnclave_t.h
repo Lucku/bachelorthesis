@@ -16,6 +16,7 @@ extern "C" {
 
 void enclaveAllocateHeapMemory(int numBytes);
 void enclaveAllocateStackMemory();
+void enclaveVectorization(float* a, float* b, float* c, float* d, float* e, int n);
 
 sgx_status_t SGX_CDECL ocallLogProgress(const char* message, size_t len);
 sgx_status_t SGX_CDECL sgx_oc_cpuidex(int cpuinfo[4], int leaf, int subleaf);

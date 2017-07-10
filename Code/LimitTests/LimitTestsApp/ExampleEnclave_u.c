@@ -6,6 +6,15 @@ typedef struct ms_enclaveAllocateHeapMemory_t {
 } ms_enclaveAllocateHeapMemory_t;
 
 
+typedef struct ms_enclaveVectorization_t {
+	float* ms_a;
+	float* ms_b;
+	float* ms_c;
+	float* ms_d;
+	float* ms_e;
+	int ms_n;
+} ms_enclaveVectorization_t;
+
 typedef struct ms_ocallLogProgress_t {
 	char* ms_message;
 	size_t ms_len;
@@ -115,6 +124,20 @@ sgx_status_t enclaveAllocateStackMemory(sgx_enclave_id_t eid)
 {
 	sgx_status_t status;
 	status = sgx_ecall(eid, 1, &ocall_table_ExampleEnclave, NULL);
+	return status;
+}
+
+sgx_status_t enclaveVectorization(sgx_enclave_id_t eid, float* a, float* b, float* c, float* d, float* e, int n)
+{
+	sgx_status_t status;
+	ms_enclaveVectorization_t ms;
+	ms.ms_a = a;
+	ms.ms_b = b;
+	ms.ms_c = c;
+	ms.ms_d = d;
+	ms.ms_e = e;
+	ms.ms_n = n;
+	status = sgx_ecall(eid, 2, &ocall_table_ExampleEnclave, &ms);
 	return status;
 }
 

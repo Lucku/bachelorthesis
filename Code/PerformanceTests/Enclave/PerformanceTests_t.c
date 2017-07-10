@@ -197,7 +197,7 @@ static sgx_status_t SGX_CDECL sgx_enclaveJustCopy(void* pms)
 	CHECK_REF_POINTER(pms, sizeof(ms_enclaveJustCopy_t));
 	CHECK_UNIQUE_POINTER(_tmp_in, _len_in);
 	CHECK_UNIQUE_POINTER(_tmp_out, _len_out);
-	
+
 	if (_tmp_in != NULL) {
 		_in_in = (uint8_t*)malloc(_len_in);
 		if (_in_in == NULL) {
