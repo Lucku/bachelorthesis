@@ -1,7 +1,9 @@
 \select@language {ngerman}
+\select@language {english}
+\select@language {ngerman}
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {2.1}{\ignorespaces Einflussbereich in der Systemhierarchie}}{4}{figure.2.1}
+\contentsline {figure}{\numberline {2.1}{\ignorespaces Einflussbereiche in der Systemhierarchie}}{4}{figure.2.1}
 \contentsline {figure}{\numberline {2.2}{\ignorespaces Zeitliche Einordnung verwandter Arbeiten nach Kategorie}}{6}{figure.2.2}
 \contentsline {figure}{\numberline {2.3}{\ignorespaces Ablauf einer Datenbankanfrage unter TrustedDB}}{7}{figure.2.3}
 \contentsline {figure}{\numberline {2.4}{\ignorespaces Architektur von CryptDB}}{8}{figure.2.4}
