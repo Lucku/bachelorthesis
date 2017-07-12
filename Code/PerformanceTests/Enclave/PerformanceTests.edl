@@ -4,29 +4,29 @@ enclave {
     trusted {
 		
 		/* ENCLAVE EXCLUSIVE */
-		/*(09)*/ public size_t enclaveJustCopy([in, size=length] uint8_t *in, size_t length, [out, size=length] uint8_t *out);
-		/*(10)*/ public size_t enclaveNoCopy([user_check] uint8_t *in, size_t length, [user_check] uint8_t *out);
-		/*(14)*/ public size_t enclaveCryptoNoCopy([user_check] uint8_t* in, size_t length, [user_check] uint8_t *out);
+		public size_t enclaveJustCopy([in, size=length] uint8_t *in, size_t length, [out, size=length] uint8_t *out);
+		public size_t enclaveNoCopy([user_check] uint8_t *in, size_t length, [user_check] uint8_t *out);
+		public size_t enclaveCryptoNoCopy([user_check] uint8_t* in, size_t length, [user_check] uint8_t *out);
 
 		/* BASIC */
-		/*(01)*/ public size_t enclaveIterate([in, size=length] uint8_t *in, size_t length, [out, size=length] uint8_t *out);
+		public size_t enclaveIterate([in, size=length] uint8_t *in, size_t length, [out, size=length] uint8_t *out);
 		
 		/* SIMPLE COMPRESSION SCHEMES */
-		/*(02)*/ public size_t enclaveVByteEncode([in, size=inLength] uint8_t *in, size_t inLength, [out, size=outLength] uint8_t *out, size_t outLength);
-		/*(03)*/ public size_t enclaveVByteDecode([in, size=inLength] uint8_t *in, size_t inLength, [out, size=outLength] uint8_t *out, size_t outLength);
-		/*(06)*/ public size_t enclaveRunLengthEncode([in, size=inLength] uint8_t *in, size_t inLength, [out, size=outLength] uint8_t *out, size_t outLength);
-		/*(07)*/ public size_t enclaveRunLengthDecode([in, size=inLength] uint8_t *in, size_t inLength, [out, size=outLength] uint8_t *out, size_t outLength);
-		/*(08)*/ public size_t enclaveRunLengthEncodeAndSum([in, size=length] uint8_t *in, size_t length, [out, size=8] uint8_t *out);
-		/*(11)*/ public size_t enclaveVByte([in, size=inLength] uint8_t *in, size_t inLength, [out, size=outLength] uint8_t *out, size_t outLength);		
+		public size_t enclaveVByteEncode([in, size=inLength] uint8_t *in, size_t inLength, [out, size=outLength] uint8_t *out, size_t outLength);
+		public size_t enclaveVByteDecode([in, size=inLength] uint8_t *in, size_t inLength, [out, size=outLength] uint8_t *out, size_t outLength);
+		public size_t enclaveRunLengthEncode([in, size=inLength] uint8_t *in, size_t inLength, [out, size=outLength] uint8_t *out, size_t outLength);
+		public size_t enclaveRunLengthDecode([in, size=inLength] uint8_t *in, size_t inLength, [out, size=outLength] uint8_t *out, size_t outLength);
+		public size_t enclaveRunLengthEncodeAndSum([in, size=length] uint8_t *in, size_t length, [out, size=8] uint8_t *out);
+		public size_t enclaveVByte([in, size=inLength] uint8_t *in, size_t inLength, [out, size=outLength] uint8_t *out, size_t outLength);		
 		
 		/* CRYPTO */
-		/*(05)*/ public size_t enclaveVByteDecodeEncrypted([user_check] uint8_t *in, size_t length, [user_check] uint8_t *out);
-		/*(04)*/ public size_t enclaveVByteEncodeEncrypted([user_check] uint8_t *in, size_t length, [user_check] uint8_t *out);
-		/*HELP*/ public size_t enclaveVByteEncodeEncryptedPreproc([user_check] uint8_t *in, size_t length, [user_check] uint8_t *out);
-		/*(13)*/ public size_t enclaveCrypto([in, size=inLength] uint8_t *in, size_t inLength, [out, size=outLength] uint8_t *out, size_t outLength);
+		public size_t enclaveVByteDecodeEncrypted([user_check] uint8_t *in, size_t length, [user_check] uint8_t *out);
+		public size_t enclaveVByteEncodeEncrypted([user_check] uint8_t *in, size_t length, [user_check] uint8_t *out);
+		public size_t enclaveVByteEncodeEncryptedPreproc([user_check] uint8_t *in, size_t length, [user_check] uint8_t *out);
+		public size_t enclaveCrypto([in, size=inLength] uint8_t *in, size_t inLength, [out, size=outLength] uint8_t *out, size_t outLength);
 
 		/* COMBINED PROCESSING */
-		/*(12)*/ public size_t enclaveCompleteProcess([user_check] uint8_t *in, size_t length, [user_check] uint8_t *out);
+		public size_t enclaveCompleteProcess([user_check] uint8_t *in, size_t length, [user_check] uint8_t *out);
 				
 
 		/* Utilities */
